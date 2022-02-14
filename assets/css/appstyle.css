@@ -1,0 +1,173 @@
+.navbar-header {
+  background: #2d3436;
+  border: #2d3436;
+  color: #fff;
+}
+
+.navbar-menu {
+  background: none;
+  border: none;
+  color: #fff;
+  margin-bottom: -10px;
+  padding-left: 1px;
+  padding-right: 1px;
+}
+
+.flat {
+  border-radius: 0px;
+}
+
+.card-header {
+  height: 40px;
+}
+
+.card-header-actions i {
+  color: #fff;
+}
+
+.card-border-app {
+  border: 1px solid #187DA0;
+}
+
+.btn-teal {
+  background: #1ABC9C;
+  color: #fff;
+}
+
+.btn-teal:hover {
+  background: #1f866b;
+  color: #fff;
+}
+
+.btn-tool {
+  width: 66px;
+  height: 50px;
+  border-radius: 0;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+}
+
+.btn-tool:hover {
+  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+  transform: translateY(-7px);
+}
+
+.btn-kanan {
+  padding-left: 1px;
+  float: left !important;
+}
+
+.btn-transaksi {
+  width: 90px;
+}
+
+.btn-putih {
+  background: transparent;
+  border: 1px solid #fff;
+
+}
+
+.btn-putih:hover {
+  background: transparent;
+  color: #fff !important;
+  border: 1px solid #fff;
+
+}
+
+
+
+/* card */
+.card-header-actions a {
+  color: #fff;
+
+}
+
+.card-header-actions a:hover {
+  color: rgb(149, 214, 245);
+}
+
+/* Modal */
+
+.modal-app {
+  border: 7px solid #6BADF6;
+  border-radius: 0;
+}
+
+.modal-header-app {
+  height: 30px;
+  padding: 0.70rem 0.50rem;
+  background-color: #6BADF6;
+}
+
+.modal-title-app {
+  font-weight: 400;
+  color: black;
+  margin-left: -0.50rem;
+}
+
+.modal-btn-close {
+  background: #C75050 !important;
+  color: #fff !important;
+  opacity: 1;
+  font-weight: 100;
+
+}
+
+.modal-btn-close:hover {
+  background: rgb(240, 54, 54) !important;
+  color: #fff;
+}
+
+/* Input */
+.has-icon .form-control {
+  padding-left: 2.375rem;
+}
+
+.has-icon .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+}
+
+/* Nav-tabs */
+.tabs-app.active {
+  background: blue;
+  color: white;
+}
+
+.editable-submit {
+  background: #1ABC9C;
+}
+
+.table-striped>tbody>tr:nth-child(2n+1)>td,
+.table-striped>tbody>tr:nth-child(2n+1)>th {
+  background-color: #EBF2FA;
+}
+
+.thead-blue {
+  background-color: #99BFE6;
+
+}
+
+.thead-blue th {
+  font-weight: 500;
+}
+
+.spiner {
+  margin: 0 auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  display: block;
+}
