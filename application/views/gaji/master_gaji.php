@@ -3,9 +3,9 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item">Home</li>
         <li class="breadcrumb-item">
-            Admin
+            Gaji
         </li>
-        <li class="breadcrumb-item active">Role</li>
+        <li class="breadcrumb-item active">Master Gaji</li>
         <!-- Breadcrumb Menu-->
     </ol>
     <div class="container-fluid">
@@ -13,21 +13,22 @@
 
             <div class="row">
                 <div class="col-lg">
-                    <?= form_error('menu', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
-                    <?= $this->session->flashdata('massage'); ?>
+                    <div class="alert alert-success" role="alert" style="display:none;"></div>
+                    <div class="alert alert-danger" role="alert" style="display:none;"></div>
+                    <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
                     <div class="clearfix">
-                        <span class="float-right"><a id="tambah" class="btn btn-teal flat mb-2 " href="javascript:;">Tambah Data Upah</a></span>
+                        <span class="float-left"><a id="tambah" class="btn btn-teal flat mb-2 " href="javascript:;"><i class="fa fa-plus"></i> Tambah Data Upah </a></span>
                     </div>
                     <div class="card card-border-app  flat">
-                        <div class="card-header bg-primary">Upah
+                        <div class="card-header bg-primary">List Upah Karyawan
                             <div class="card-header-actions">
-                                <a class="card-header-action btn-setting" href="#">
+                                <a class="card-header-action btn-setting" href="javascript:;">
                                     <i class="icon-settings"></i>
                                 </a>
                                 <a class="card-header-action btn-minimize" href="#" data-toggle="collapse" data-target="#collapseExample" aria-expanded="true">
                                     <i class="icon-arrow-up"></i>
                                 </a>
-                                <a class="card-header-action btn-close" href="#">
+                                <a class="card-header-action btn-close" href="javascript:;">
                                     <i class="icon-close"></i>
                                 </a>
                             </div>
@@ -40,7 +41,7 @@
                                         <tr>
                                             <th class="text-center"> Aksi</th>
                                             <th>Nama</th>
-                                            <th class="text-center" >Jabatan</th>
+                                            <th class="text-center">Jabatan</th>
                                             <th class="text-center">Gaji Pokok</th>
                                             <th class="text-center">Tunjangan</th>
                                             <th class="text-center">Um</th>
@@ -49,23 +50,24 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php foreach ($gaji as $p) : ?>
-                                     <?php $ttlUpah = $p['gaji_pokok'] + $p['tunjangan'] + $p['um']; ?>
-                      <tr>
-                         
-                      <td class="text-center"> 
-                             <button class="btn btn-sm btn-square btn-primary "><i class="fa fa-pencil mr-2 "></i>Edit</button>     
-                             <button class="btn btn-sm btn-square btn-danger "><i class="fa fa-times mr-2 "></i>Hapus</button>                                    
-                         </td>
-                        <td><b><?= $p['nama_karyawan'];?></b></td>
-                        <td><?= $p['jabatan_karyawan']; ?></td>
-                        <td class="text-primary"><?= number_format($p['gaji_pokok'], 0, ',', '.'); ?></td>
-                        <td ><?= number_format($p['tunjangan'], 0, ',', '.'); ?></td>
-                        <td><?= number_format($p['um'], 0, ',', '.'); ?></td>
-                        <td class="text-success"><b><?= number_format($ttlUpah, 0, ',', '.'); ?> </b></td>
-                        <td ><small class="text-primary"><?= $p['name']; ?></small>, <small><?= date('d-m-Y H:i:s', $p['date_update']); ?></small> </td>
-                      </tr>
-                    <?php endforeach; ?>
+                                        <?php foreach ($gaji as $p) : ?>
+                                            <?php $ttlUpah = $p['gaji_pokok'] + $p['tunjangan'] + $p['um']; ?>
+                                            <tr>
+
+                                                <td class="text-center">
+                                                    <a class="btn btn-sm btn-square btn-primary text-white item-edit" href="javascript:;" data-id="<?= $p['id_gaji']; ?>" data-idKry="<?= $p['id_kry']; ?>" data-nama="<?= $p['nama_karyawan']; ?>" data-gp="<?= $p['gaji_pokok']; ?>" data-tj="<?= $p['tunjangan']; ?>" data-um="<?= $p['um']; ?>">
+                                                        <i class="fa fa-pencil mr-2 text-white"></i>Edit</a>
+                                                    <button class="btn btn-sm btn-square btn-danger "><i class="fa fa-times mr-2 "></i>Hapus</button>
+                                                </td>
+                                                <td class="text-uppercase"><b><?= $p['nama_karyawan']; ?></b></td>
+                                                <td><?= $p['jabatan_karyawan']; ?></td>
+                                                <td class="text-primary text-right"><?= number_format($p['gaji_pokok'], 0, ',', '.'); ?></td>
+                                                <td class="text-right"><?= number_format($p['tunjangan'], 0, ',', '.'); ?></td>
+                                                <td class="text-right"><?= number_format($p['um'], 0, ',', '.'); ?></td>
+                                                <td class="text-success text-right"><b><?= number_format($ttlUpah, 0, ',', '.'); ?> </b></td>
+                                                <td><small class="text-primary"><?= $p['name']; ?></small>, <small><?= date('d-m-Y H:i:s', $p['date_update']); ?></small> </td>
+                                            </tr>
+                                        <?php endforeach; ?>
                                     </tbody>
                                 </table>
 
@@ -84,27 +86,46 @@
 
 <!-- Modal -->
 
-<div class="modal fade" id="modal-role" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-gaji" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content modal-app">
             <div class="modal-header modal-header-app flat">
-                <p class="modal-title modal-title-app">Add New Role</p>
+                <p class="modal-title modal-title-app">Tambah Data Gaji</p>
                 <button class="close modal-btn-close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form id="form-role" action="">
+            <form id="form-gaji" action="" method="post">
                 <div class="modal-body flat">
                     <div class="form-group">
-                        <input name="id" type="hidden">
-                        <input class="form-control flat" name="nama" type="text" placeholder="Insert name role" autocomplete="off">
-                        <div class="invalid-feedback"></div>
+                        <input type="hidden" name="id">
+                        <input type="hidden" name="idKry">
+                        <input type="hidden" name="id_user" value="<?= $user['id']; ?>">
+
+                        <select class="form-control" name="nama" id="nama" required>
+                            <option value="">Pilih Karyawan</option>
+                            <?php foreach ($karyawan as $k) : ?>
+                                <option class="text-uppercase" value="<?= $k['id_karyawan']; ?>"><?= $k['nama_karyawan']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="gaji_pokok" type="text" placeholder="Gaji Pokok" autocomplete="off" required>
+                        <span id="pesan"></span></p>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="tunjangan" type="text" placeholder="Tunjangan" autocomplete="off" required>
+                        <span id="pesanTj"></span></p>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="um" type="text" placeholder="Uang Makan" autocomplete="off" required>
+                        <span id="pesanUm"></span></p>
                     </div>
                 </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success flat" type="submit"><i class="fa fa-floppy-o"></i> Simpan</button>
+                </div>
             </form>
-            <div class="modal-footer">
-                <button class="btn btn-success flat" type="button" id="btnSimpan"><i class="fa fa-floppy-o"></i> Simpan</button>
-            </div>
         </div>
         <!-- /.modal-content-->
     </div>
@@ -119,110 +140,6 @@
     $(document).ready(function() {
         $('#table-gaji').DataTable();
     });
-
-    // Klick Tambah
-    $("#tambah").click(function() {
-        console.log('tes');
-        $('#form-role')[0].reset();
-        $('#modal-role').modal('show');
-        $('#modal-role').find('.modal-title').text('Tambah Role');
-        $('#form-role').attr('action', base_url + 'admin/tambah_role');
-    });
-
-
-
-    // Tambah Role/ Klick Simpan Role
-    $('#btnSimpan').on('click', function() {
-        var url = $('#form-role').attr('action');
-        var data = $('#form-role').serialize();
-        // Validasi ====
-        var namarole = $('input[name=nama]');
-        var result = '';
-        if (namarole.val() == '') {
-            namarole.addClass('is-invalid');
-            $('#form-role').find('.invalid-feedback').text('Invalid feedback');
-        } else {
-            namarole.removeClass('is-invalid');
-            $('#form-role').find('.invalid-feedback').text('');
-            result += '1';
-        }
-
-        if (result == '1') {
-            $.ajax({
-                type: 'post',
-                url: url,
-                data: data,
-                dataType: 'json',
-                success: function(response) {
-                    if (response.success) {
-                        $('#modal-role').modal('hide');
-                        $('#form-role')[0].reset();
-                        if (response.type == 'add') {
-                            var type = 'Tambah';
-                        } else if (response.type == 'update') {
-                            var type = 'Ubah';
-                        }
-                        setTimeout(function() {
-                            toastr.options = {
-                                closeButton: true,
-                                progressBar: true,
-                                showMethod: 'fadeIn',
-                                timeOut: 4000
-                            };
-                            toastr.success('Data Role Berhasil di ' + type + '!', 'Berhasil...');
-
-                        }, 100);
-
-                        list_role();
-                    } else {
-                        alert('Belum ada perubahan data');
-                        return false;
-                    }
-                },
-                error: function() {
-                    alert('could not add data');
-
-                }
-            });
-        }
-
-    });
-
-
     // Klik Edit Role
-    // ubah role
-    $('#list_gaji').on('click', '.item-edit', function() {
-        const id = $(this).attr('data');
-        $('#form-role')[0].reset();
-        $("#modal-role").modal("show");
-        $('#modal-role').find('.modal-title').text('Ubah Role');
-        $('#form-role').attr('action', base_url + 'admin/ubah_role');
-
-        $.ajax({
-            type: 'get',
-            url: base_url + 'admin/get_role',
-            data: {
-                id: id
-            },
-            dataType: 'json',
-            success: function(data) {
-                $('input[name=id]').val(data.id);
-                $('input[name=nama]').val(data.role);
-            }
-        });
-    });
-
-    // Klik Akses
-    $('#list_role').on('click', '.item-access', function() {
-
-        var id = $(this).attr('data');
-        var roleId = btoa(id);
-
-        window.location.href = base_url + 'admin/roleaccess/' + roleId;
-    });
-
-
-  
-  
 </script>
 <?php $this->load->view('template/footHtml'); ?>

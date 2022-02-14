@@ -16,7 +16,7 @@ class Gaji_model extends CI_model
   }
 
 
- 
+
 
   public function simpan($idKry, $gp, $tj, $um)
   {
@@ -30,6 +30,8 @@ class Gaji_model extends CI_model
     );
     $this->db->insert('tb_gaji', $data);
   }
+
+
   public function ubah($id, $idKry, $gp, $tj, $um)
   {
     $data = array(
@@ -44,37 +46,12 @@ class Gaji_model extends CI_model
     $this->db->update('tb_gaji', $data);
   }
 
-  function cari_sales($sales)
+
+
+  // GAJIAN=========
+  public function get_gajian()
   {
-    $this->db->like('nama_sales', $sales, 'both');
-    $this->db->order_by('nama_sales', 'ASC');
-    $this->db->where('is_active', 1);
-    $this->db->limit(10);
-    return $this->db->get('sales')->result();
-  }
-
-  public function get()
-  {
-    $idSales = $this->input->get('idSales');
-    $this->db->where('id', $idSales);
-    $query = $this->db->get('sales');
-    if ($query->num_rows() > 0) {
-      return $query->row();
-    } else {
-      return false;
-    }
-  }
-
-
-
-
-
-  public function hapus($id)
-  {
-    $data = array(
-      'is_active' => 2
-    );
-    $this->db->where('id', $id);
-    $this->db->update('sales', $data);
+    $query = $this->db->get('list_gaji');
+    return $query;
   }
 }

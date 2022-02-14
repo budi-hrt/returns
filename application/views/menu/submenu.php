@@ -21,14 +21,15 @@
                             <?= validation_errors(); ?>
                         </div>
                     <?php endif; ?>
-                  
+
                     <?= $this->session->flashdata('massage'); ?>
                     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('submenuupdate'); ?>"></div>
                     <div class="alert alert-success" role="alert" style="display:none;">Menu Updated</div>
                     <a class="btn btn-primary mb-3" href="#submenuModal" data-toggle="modal" data-target="#submenuModal">Add New Submenu</a>
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-align-justify"></i>Table Menu</div>
+                            <i class="fa fa-align-justify"></i>Table Menu
+                        </div>
                         <div class="card-body">
                             <table class="table table-responsive-sm table-bordered table-striped table-sm" id="Mytable">
                                 <thead>
@@ -54,7 +55,7 @@
                                             <td><i class="<?= $sm['icon_sub']; ?> icon"></i> <?= $sm['icon_sub']; ?></td>
                                             <td class="text-center"><?= $sm['is_active']; ?></td>
                                             <td class="text-center">
-                                                <a class="badge badge-sm badge-success item-edit" href="javascript:;" data="<?= $sm['id'];?>">Edit</a>
+                                                <a class="badge badge-sm badge-success item-edit" href="javascript:;" data="<?= $sm['id']; ?>">Edit</a>
                                                 <a class="badge badge-sm badge-danger item-delete" href="javascript:;">Delete</a>
                                             </td>
                                         </tr>
@@ -62,7 +63,7 @@
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
-                      
+
                         </div>
                     </div>
                 </div>
@@ -176,14 +177,14 @@
 </div>
 <!-- /.modal-->
 
-<?php $this->load->view('template/footer2') ;?>
-<script src="<?= base_url('assets/js/menu.js');?>"></script>
+<?php $this->load->view('template/footer2'); ?>
+<script src="<?= base_url('assets/js/menu.js'); ?>"></script>
 <script>
-// Flash alert
-        const flashdata = $('.flash-data').data('flashdata');
-        if (flashdata == 'submenuupdate') {
-            $('.alert-success').html('Submenu berhasil di ubah!').fadeIn().delay(3000).fadeOut('slow');
-        }
+    // Flash alert
+    const flashdata = $('.flash-data').data('flashdata');
+    if (flashdata == 'submenuupdate') {
+        $('.alert-success').html('Submenu berhasil di ubah!').fadeIn().delay(3000).fadeOut('slow');
+    }
 </script>
 
-<?php $this->load->view('template/footHtml') ;?>
+<?php $this->load->view('template/footHtml'); ?>
