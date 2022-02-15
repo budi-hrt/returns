@@ -40,10 +40,10 @@
                           foreach ($gaji as $g) : ?>
                             <tr>
                               <td><?= $no++; ?></td>
-                              <td><input type="text" name="id_karyawan[]" value="<?= $g['id_kry']; ?>"></td>
+                              <td><input type="text" name="id_karyawan" value="<?= $g['id_kry']; ?>"></td>
                               <td><input type="text" name="gp" value="<?= $g['gaji_pokok']; ?>"></td>
                               <td><input type="text" name="tj" value="<?= $g['tunjangan']; ?>"></td>
-                              <td><input type="text" name="um" value="<?= $g['um']; ?>"></td>
+                              <td><input type="text" name="uang_makan" value="<?= $g['um']; ?>"></td>
                             </tr>
                           <?php endforeach; ?>
                         </tbody>
@@ -132,10 +132,9 @@
                   <thead class="thead-light">
                     <tr>
                       <th class="text-center"> Aksi</th>
-                      <th class="text-center">Nama</th>
-                      <th class="text-center">Gaji Pokok</th>
-                      <th class="text-center">Tunjangan</th>
-                      <th class="text-center">Uang Makan</th>
+                      <th class="text-center">Keterangan</th>
+                      <th class="text-center">Priode</th>
+                      <th class="text-center">Total Gaji</th>
                       <th class="text-center" width="90px">Updated by</th>
                     </tr>
                   </thead>

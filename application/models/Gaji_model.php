@@ -48,15 +48,49 @@ class Gaji_model extends CI_model
 
 
 
-  // GAJIAN=========
+  // GAJIAN========= gaji/sdpa/0001
+
+  public function kode_gajian()
+  {
+
+    $q = $this->db->query("SELECT MAX(RIGHT(kode_gajian,3)) AS kd_max FROM tb_gajian");
+    $kd = "";
+    if ($q->num_rows() > 0) {
+      foreach ($q->result() as $k) {
+        $tmp = ((int) $k->kd_max) + 1;
+        $kd = sprintf("%04s", $tmp);
+      }
+    } else {
+      $kd = "001";
+    }
+    $car = "UPH";
+
+    return $car . "-" . $kd;
+  }
+
+  public function get_detil_gaji()
+  {
+  }
+
+
   public function get_gajian()
   {
     $query = $this->db->get('tb_gajian');
     return $query;
   }
 
-  public function form_gajian() {
-    
+
+  public function simpan_gajian($kode, $bulan, $tahun, $ket_gaji, $id_user)
+  {
+
+    $data = array(
+      'kode_gajian' => $kode,
+      'bulan' => $bulan,
+      'tahun' => $tahun,
+      'ket_gajian' => $ket_gaji,
+      'id_user' => $id_user,
+      'date_update' => time()
+    );
+    $this->db->insert('tb_gajian', $data);
   }
-  
 }

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.9
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 14, 2022 at 08:40 AM
+-- Generation Time: Feb 15, 2022 at 04:13 PM
 -- Server version: 5.7.24
--- PHP Version: 7.4.19
+-- PHP Version: 7.2.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -73,6 +73,45 @@ INSERT INTO `barang` (`kode`, `barcode`, `nama_barang`, `id_kategori`, `id_subka
 (10001, '8990289833', 'Nota Kontan', 3, 4, 'Pcs', 'Dos', 250, 2, 0, 1, 1),
 (10002, '8996001355046', 'Wafer Superstar', 1, 6, 'Pak', 'Dos', 10, 4, 0, 1, 1),
 (10003, '8992775212103', 'Kacang Telur', 1, 7, 'Pcs', 'Dos', 10, 5, 0, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `detil_gajian`
+--
+
+CREATE TABLE `detil_gajian` (
+  `id_gajian` int(11) NOT NULL,
+  `kode_gaji` varchar(50) NOT NULL,
+  `id_kryn` int(11) NOT NULL,
+  `terima_gp` int(11) NOT NULL,
+  `terima_tj` int(11) NOT NULL,
+  `terima_um` int(11) NOT NULL,
+  `pot_bpjs` int(11) NOT NULL,
+  `pot_pph21` int(11) NOT NULL,
+  `pot_absensi` int(11) NOT NULL,
+  `pot_pinjaman` int(11) NOT NULL,
+  `pot_lain` int(11) NOT NULL,
+  `id_usr` int(11) NOT NULL,
+  `date_update` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `detil_gajian`
+--
+
+INSERT INTO `detil_gajian` (`id_gajian`, `kode_gaji`, `id_kryn`, `terima_gp`, `terima_tj`, `terima_um`, `pot_bpjs`, `pot_pph21`, `pot_absensi`, `pot_pinjaman`, `pot_lain`, `id_usr`, `date_update`) VALUES
+(8, 'UPH-0001', 7, 4000000, 500000, 0, 0, 0, 0, 0, 0, 1, 1644941086),
+(9, 'UPH-0001', 1, 4000000, 500000, 0, 0, 0, 0, 0, 0, 1, 1644941086),
+(10, 'UPH-0001', 2, 4000000, 500000, 0, 0, 0, 0, 0, 0, 1, 1644941086),
+(11, 'UPH-0001', 11, 4000000, 500000, 0, 0, 0, 0, 0, 0, 1, 1644941086),
+(12, 'UPH-0001', 5, 4000000, 500000, 0, 0, 0, 0, 0, 0, 1, 1644941086),
+(13, 'UPH-0001', 4, 4000000, 500000, 0, 0, 0, 0, 0, 0, 1, 1644941086),
+(14, 'UPH-0001', 13, 4000000, 500000, 0, 0, 0, 0, 0, 0, 1, 1644941086),
+(15, 'UPH-0001', 16, 4000000, 500000, 0, 0, 0, 0, 0, 0, 1, 1644941086),
+(16, 'UPH-0001', 15, 4000000, 500000, 0, 0, 0, 0, 0, 0, 1, 1644941086),
+(17, 'UPH-0001', 6, 4000000, 500000, 0, 0, 0, 0, 0, 0, 1, 1644941086),
+(18, 'UPH-0001', 12, 4000000, 500000, 0, 0, 0, 0, 0, 0, 1, 1644941086);
 
 -- --------------------------------------------------------
 
@@ -1656,11 +1695,39 @@ INSERT INTO `tb_gaji` (`id_gaji`, `id_kry`, `gaji_pokok`, `tunjangan`, `um`, `da
 (4, 4, 4500000, 500000, 0, 1644759059, 1),
 (5, 5, 2675000, 700000, 0, 1644759073, 1),
 (6, 6, 6000000, 1000000, 0, 1644759087, 1),
-(7, 7, 3000000, 200000, 0, 1644759158, 1),
+(7, 7, 3000000, 200000, 0, 1644843222, 1),
 (8, 11, 3000000, 300000, 0, 1644759218, 1),
 (9, 12, 4000000, 500000, 0, 1644761824, 1),
 (10, 13, 6000000, 500000, 0, 1644759244, 1),
-(11, 15, 4500000, 500000, 0, 1644759259, 1);
+(11, 15, 4500000, 500000, 0, 1644759259, 1),
+(12, 16, 2500000, 500000, 0, 1644842274, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_gajian`
+--
+
+CREATE TABLE `tb_gajian` (
+  `id_gajian` int(11) NOT NULL,
+  `kode_gajian` varchar(50) NOT NULL,
+  `bulan` int(11) NOT NULL,
+  `tahun` int(11) NOT NULL,
+  `ket_gajian` varchar(50) NOT NULL,
+  `total_terima` int(11) NOT NULL,
+  `total_potongan` int(11) NOT NULL,
+  `total_gajian` int(11) NOT NULL,
+  `status` int(2) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `date_update` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_gajian`
+--
+
+INSERT INTO `tb_gajian` (`id_gajian`, `kode_gajian`, `bulan`, `tahun`, `ket_gajian`, `total_terima`, `total_potongan`, `total_gajian`, `status`, `id_user`, `date_update`) VALUES
+(6, 'UPH-0001', 2, 2022, 'GAJI FEBRUARI 2022', 0, 0, 0, 0, 1, 1644941086);
 
 -- --------------------------------------------------------
 
@@ -1955,7 +2022,8 @@ INSERT INTO `user_access_sub_menu` (`id`, `user_id`, `submenu_id`, `menu_id`) VA
 (27, 1, 19, 5),
 (28, 1, 12, 4),
 (29, 1, 20, 6),
-(30, 1, 21, 9);
+(30, 1, 21, 9),
+(31, 1, 22, 9);
 
 -- --------------------------------------------------------
 
@@ -2063,7 +2131,8 @@ INSERT INTO `user_sub_menu` (`id`, `menu_id`, `title`, `url`, `icon_sub`, `is_ac
 (18, 5, 'Purchase Order', 'pembelian/po', 'icon-cursor', 1),
 (19, 5, 'Stok In', 'pembelian/stok_in', 'icon-social-linkedin', 1),
 (20, 6, 'Gudang', 'master/gudang', 'icon-home', 1),
-(21, 9, 'Master Gaji', 'gaji/master_gaji', 'icon-pencil', 1);
+(21, 9, 'Master Gaji', 'gaji/master_gaji', 'icon-pencil', 1),
+(22, 9, 'Management Gaji', 'gaji/management_gaji', 'icon-dolar', 1);
 
 -- --------------------------------------------------------
 
@@ -2093,6 +2162,12 @@ ALTER TABLE `access_dashboard`
 --
 ALTER TABLE `barang`
   ADD PRIMARY KEY (`kode`);
+
+--
+-- Indexes for table `detil_gajian`
+--
+ALTER TABLE `detil_gajian`
+  ADD PRIMARY KEY (`id_gajian`);
 
 --
 -- Indexes for table `detil_pembelian`
@@ -2173,6 +2248,12 @@ ALTER TABLE `tb_gaji`
   ADD PRIMARY KEY (`id_gaji`);
 
 --
+-- Indexes for table `tb_gajian`
+--
+ALTER TABLE `tb_gajian`
+  ADD PRIMARY KEY (`id_gajian`);
+
+--
 -- Indexes for table `tb_karyawan`
 --
 ALTER TABLE `tb_karyawan`
@@ -2241,6 +2322,12 @@ ALTER TABLE `user_token`
 --
 ALTER TABLE `access_dashboard`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `detil_gajian`
+--
+ALTER TABLE `detil_gajian`
+  MODIFY `id_gajian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `detil_pembelian`
@@ -2318,7 +2405,13 @@ ALTER TABLE `suplier`
 -- AUTO_INCREMENT for table `tb_gaji`
 --
 ALTER TABLE `tb_gaji`
-  MODIFY `id_gaji` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_gaji` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `tb_gajian`
+--
+ALTER TABLE `tb_gajian`
+  MODIFY `id_gajian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tb_karyawan`
@@ -2348,7 +2441,7 @@ ALTER TABLE `user_access_menu`
 -- AUTO_INCREMENT for table `user_access_sub_menu`
 --
 ALTER TABLE `user_access_sub_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `user_dashboard`
@@ -2372,7 +2465,7 @@ ALTER TABLE `user_role`
 -- AUTO_INCREMENT for table `user_sub_menu`
 --
 ALTER TABLE `user_sub_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `user_token`
