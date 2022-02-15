@@ -51,7 +51,12 @@ class Gaji_model extends CI_model
   // GAJIAN=========
   public function get_gajian()
   {
-    $query = $this->db->get('list_gaji');
+    $query = $this->db->get('tb_gajian');
     return $query;
   }
+
+  public function form_gajian() {
+    
+  }
+  
 }
