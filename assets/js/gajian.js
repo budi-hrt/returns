@@ -8,8 +8,10 @@ const kode_pending = () => {
     dataType: 'json',
     success: function (data) {
       $('input[name=kode_pending]').val(data.kode_pending.kode_gajian);
-      let kode = $('#kode_pending').val();
-      console.log(kode);
+      $('input[name=ket_gaji]').val(data.kode_pending.ket_gajian);
+      $('#bulan').val(data.kode_pending.bulan);
+      $('#tahun').val(data.kode_pending.tahun);
+
       disable();
     }
   });
