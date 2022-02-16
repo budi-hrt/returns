@@ -161,7 +161,7 @@ switch (ENVIRONMENT)
 	// The controller function you wish to be called.
 	// $routing['function']	= '';
 
-
+	date_default_timezone_set('Asia/Kuala_Lumpur');
 /*
  * -------------------------------------------------------------------
  *  CUSTOM CONFIG VALUES

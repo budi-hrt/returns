@@ -7,7 +7,7 @@ class Gaji_model extends CI_model
   {
     $this->db->select('g.id_gaji,g.gaji_pokok,g.tunjangan,g.um,g.id_kry,k.nama_karyawan,k.jabatan_karyawan,u.name,g.date_update');
     $this->db->from('tb_karyawan k');
-    $this->db->join('tb_gaji g', 'g.id_kry=k.id_karyawan', 'dsc');
+    $this->db->join('tb_gaji g', 'g.id_kry=k.id_karyawan', 'left');
     $this->db->join('user u', 'u.id=g.id_user', 'dsc');
     $this->db->order_by('k.nama_karyawan', 'asc');
     $this->db->where('k.aktif', 1);
@@ -68,8 +68,16 @@ class Gaji_model extends CI_model
     return $car . "-" . $kd;
   }
 
-  public function get_detil_gaji()
+  public function get_list()
   {
+    $this->db->select('d.id_gajian,d.kode_gaji,d.terima_gp,d.terima_tj,d.terima_um,d.status,d.id_usr,d.date_update ,k.nama_karyawan, u.name,d.pot_bpjs,d.pot_pph21,d.pot_pinjaman,d.pot_absensi,d.pot_lain');
+    $this->db->from('detil_gajian d');
+    $this->db->join('tb_karyawan k','k.id_karyawan=d.id_kryn','left');
+    $this->db->join('user u', 'u.id=d.id_usr');
+    $this->db->order_by('k.nama_karyawan', 'asc');
+    $this->db->where('d.status','pending');
+    $query =  $this->db->get();
+    return $query;
   }
 
 
@@ -92,5 +100,18 @@ class Gaji_model extends CI_model
       'date_update' => time()
     );
     $this->db->insert('tb_gajian', $data);
+  }
+
+  public function get_kode_pending()
+  {
+      $this->db->select('*');
+      $this->db->where('status', 'pending');
+      $this->db->limit(1);
+      $query = $this->db->get('tb_gajian');
+      if ($query->num_rows() > 0) {
+          return $query->row();
+      } else {
+          return false;
+      }
   }
 }

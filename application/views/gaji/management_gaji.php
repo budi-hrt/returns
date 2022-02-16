@@ -28,11 +28,14 @@
                 <div class="card-body">
 
 
-                  <form action="<?= base_url('gaji/management_gaji/simpan_detil'); ?>" method="post">
+                  <!-- <form action="<?= base_url('gaji/management_gaji/simpan_detil'); ?>" method="post"> -->
+                  <?= form_open('gaji/management_gaji/simpan_detil','id="form_management"');?>
                     <!-- table bantu -->
                     <div style="display: none;">
                       <input type="text" name="kode" value="<?= $kode; ?>">
                       <input type="text" name="id_user" value="<?= $user['id']; ?>">
+                      <input type="text" name="kode_pending" id="kode_pending" >
+
                       <table>
                         <tbody>
                           <?php
@@ -41,9 +44,9 @@
                             <tr>
                               <td><?= $no++; ?></td>
                               <td><input type="text" name="id_karyawan[]" value="<?= $g['id_kry']; ?>"></td>
-                              <td><input type="text" name="gp" value="<?= $g['gaji_pokok']; ?>"></td>
-                              <td><input type="text" name="tj" value="<?= $g['tunjangan']; ?>"></td>
-                              <td><input type="text" name="um" value="<?= $g['um']; ?>"></td>
+                              <td><input type="text" name="gp[]" value="<?= $g['gaji_pokok']; ?>"></td>
+                              <td><input type="text" name="tj[]" value="<?= $g['tunjangan']; ?>"></td>
+                              <td><input type="text" name="um[]" value="<?= $g['um']; ?>"></td>
                             </tr>
                           <?php endforeach; ?>
                         </tbody>
@@ -86,7 +89,8 @@
                         </div>
                       </div>
                       <div class="col-sm-2">
-                        <button class="btn btn-sm btn-success flat" type="submit" style="margin-top:12px">Buat data gaji</button>
+                        <button class="btn btn-sm btn-success flat" id="buat" type="submit" style="margin-top:12px">Buat data gaji</button>
+                        <button class="btn btn-sm btn-danger flat" id="simpan_keluar" type="submit" style="margin-top:12px;display:none">Simpan & Keluar</button>
                       </div>
                     </div>
                   </form>
@@ -131,29 +135,45 @@
                 <table class="table table-responsive-sm table-bordered table-sm" id="table-listGaji">
                   <thead class="thead-light">
                     <tr>
-                      <th class="text-center"> Aksi</th>
-                      <th class="text-center">Nama</th>
-                      <th class="text-center">Gaji Pokok</th>
-                      <th class="text-center">Tunjangan</th>
-                      <th class="text-center">Uang Makan</th>
-                      <th class="text-center" width="90px">Updated by</th>
+                      <th class="text-center" rowspan="2"> Aksi</th>
+                      <th class="text-center" rowspan="2">Nama</th>
+                      <th class="text-center" rowspan="2">Gaji Pokok</th>
+                      <th class="text-center" rowspan="2">Tunjangan</th>
+                      <th class="text-center" rowspan="2">UM</th>
+                      <th class="text-center" colspan="5">Potongan</th>
+                      <th class="text-center" rowspan="2" width="90px">Ttl Terima</th>
+                    </tr>
+                    <tr>
+                      <td class="bg-success">BPJS</td>
+                      <td class="bg-warning">Pph21</td>
+                      <td class="bg-danger">Absensi</td>
+                      <td class="bg-secondary">Pinjaman</td>
+                      <td class="bg-info">Lain lain</td>
                     </tr>
                   </thead>
                   <tbody>
-                    <?php foreach ($gajian as $p) : ?>
-                      <!-- <?php $ttlUpah = $p['gaji_pokok'] + $p['tunjangan'] + $p['um']; ?> -->
-
+                    <?php foreach ($list_gaji as $p) : ?>
+                      <?php $uph = $p['terima_gp'] +$p['terima_tj']+$p['terima_um'];
+                            $pot=$p['pot_bpjs']+$p['pot_pph21']+$p['pot_absensi']+$p['pot_pinjaman']+$p['pot_lain'];
+                            $ttl_terima= $uph-$pot;
+                      ;?>
                       <tr>
 
                         <td class="text-center">
-                          <a class="btn btn-sm btn-square btn-primary text-white item-edit" href="javascript:;" data-id="<?= $p['id_list_gaji']; ?>" data-priode="<?= $p['priode']; ?>" data-ket="<?= $p['ket_list_gaji']; ?>" data-total="<?= $p['total_list']; ?>">
-                            <i class="fa fa-pencil mr-2 text-white"></i>Edit</a>
-                          <button class="btn btn-sm btn-square btn-danger "><i class="fa fa-times mr-2 "></i>Hapus</button>
+                          <a class="item-edit" href="javascript:;" data-id="<?= $p['id_gajian']; ?>" data-kode="<?= $p['kode_gaji']; ?>" >
+                            <i class="icon-pencil mr-2"></i></a>
+                          <a class="item-hapus" href="javascript:;"><i class="icon-trash mr-2 text-danger"></i></a>
                         </td>
-                        <td class="text-uppercase"><b><?= $p['priode']; ?></b></td>
-                        <td><?= $p['ket_list_gaji']; ?></td>
-                        <td class="text-right"><?= number_format($p['total_list'], 0, ',', '.'); ?></td>
-                        <td><small class="text-primary"><?= $p['name']; ?></small>, <small><?= date('d-m-Y H:i:s', $p['date_update']); ?></small> </td>
+                        <td ><b><?= $p['nama_karyawan']; ?></b></td>
+                        <td class="text-right"><?= number_format($p['terima_gp'], 0, ',', '.'); ?></td>
+                        <td class="text-right"><?= number_format($p['terima_tj'], 0, ',', '.'); ?></td>
+                        <td class="text-right"><?= number_format($p['terima_um'], 0, ',', '.'); ?></td>
+                        <td class="text-right text-danger"><?= number_format($p['pot_bpjs'], 0, ',', '.'); ?></td>
+                        <td class="text-right text-danger"><?= number_format($p['pot_pph21'], 0, ',', '.'); ?></td>
+                        <td class="text-right text-danger"><?= number_format($p['pot_absensi'], 0, ',', '.'); ?></td>
+                        <td class="text-right text-danger"><?= number_format($p['pot_pinjaman'], 0, ',', '.'); ?></td>
+                        <td class="text-right text-danger"><?= number_format($p['pot_lain'], 0, ',', '.'); ?></td>
+                        <td class="text-right"><b><?= number_format($ttl_terima, 0, ',', '.'); ?></b></td>
                       </tr>
                     <?php endforeach; ?>
                   </tbody>
@@ -215,9 +235,7 @@
 <script src="<?= base_url('assets/js/gajian.js'); ?>"></script>
 
 <script>
-  $(document).ready(function() {
-    $('#table-listGaji').DataTable();
-  });
+
   // Klik Edit Role
 </script>
 <?php $this->load->view('template/footHtml'); ?>

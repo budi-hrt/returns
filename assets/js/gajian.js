@@ -1,17 +1,29 @@
-$('#table-gajian').dataTable();
-
-// Klick Tambah
-$("#tambah").click(function () {
-
-  $('#form-gajian')[0].reset();
-  $('#modal-gajian').modal('show');
-  $('#modal-gajian').find('.modal-title').text('Tambah gaji');
-  $('#form-gajian').attr('action', base_url + 'gaji/kelola_gaji/tambah');
+$(document).ready(function () {
+  $('#table-listGaji').DataTable();
+  kode_pending();
 });
+const kode_pending = () => {
+  $.ajax({
+    url: base_url + 'gaji/management_gaji/kode_pending',
+    dataType: 'json',
+    success: function (data) {
+      $('input[name=kode_pending]').val(data.kode_pending.kode_gajian);
+      let kode = $('#kode_pending').val();
+      console.log(kode);
+      disable();
+    }
+  });
+}
 
-$('#priode').datepicker({
-  dateFormat: "dd-mm-yy",
-  changeMonth: true,
-  changeYear: true,
+const disable = () => {
+  let kode_pending = $("#kode_pending").val();
+  if (kode_pending !== '') {
+    document.getElementById('bulan').disabled = true;
+    document.getElementById('tahun').disabled = true;
+    // $('#buat').hide();
+    $("#buat").css("display", "none");
+    $("#simpan_keluar").css("display", "block");
+  }
+}
 
-});
+

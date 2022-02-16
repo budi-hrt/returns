@@ -21,8 +21,8 @@ class Management_gaji extends CI_Controller
     // $data['detil'] = $this->gaji->get_detil_gaji()->result_array();
     $data['gaji'] = $this->gaji->get_all()->result_array();
     $data['kode'] = $this->gaji->kode_gajian();
-    $data['karyawan'] = $this->karyawan->get_all()->result_array();
-    $this->load->view('template/header', $data);
+    $data['list_gaji'] = $this->gaji->get_list()->result_array();
+    $this->load->view('template/header_m', $data);
     $this->load->view('template/sidebar', $data);
     $this->load->view('gaji/management_gaji', $data);
   }
@@ -45,22 +45,21 @@ class Management_gaji extends CI_Controller
       $this->session->set_flashdata('message', 'kode');
     } else {
 
-      $data = array();
-      $index = 0; // Set index array awal dengan 0
-      foreach ($id_kry as $id) { // Kita buat perulangan berdasarkan nis sampai data terakhir
-        array_push($data, array(
-          'kode_gaji' => $kode,
-          'id_kryn' => $id,
-          'terima_gp' => $t_gp,
-          'terima_tj' => $t_tj,
-          'terima_um' => $t_um,
+      $result=array();
+      foreach ($id_kry as $key => $value) {
+        $result[]=array(
+          'kode_gaji'=>$kode,
+          'id_kryn'=>$id_kry[$key],
+          'terima_gp' => $t_gp[$key],
+         'terima_tj' => $t_tj[$key],
+         'terima_um' => $t_um[$key],
           'id_usr' => $id_user,
           'date_update' => time()
-        ));
-
-        $index++;
+        );
       }
-      $this->db->insert_batch('detil_gajian', $data);
+      
+      
+      $this->db->insert_batch('detil_gajian', $result);
       $this->gaji->simpan_gajian($kode, $bulan, $tahun, $ket_gaji, $id_user);
       redirect('gaji/management_gaji');
       $this->session->set_flashdata('message', 'kode');
@@ -93,4 +92,10 @@ class Management_gaji extends CI_Controller
     $this->load->view('template/sidebar', $data);
     $this->load->view('gaji/detil_gajian', $data);
   }
+
+public function kode_pending() {
+  $data['kode_pending'] = $this->gaji->get_kode_pending();
+        echo json_encode($data);
+}
+
 }
