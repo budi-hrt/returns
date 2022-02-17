@@ -10,23 +10,112 @@
   </ol>
   <div class="container-fluid">
     <div class="animated fadeIn">
+      
       <div class="row">
 
         <!-- Kategori -->
         <div class="col-lg-5">
           <div class="flash-data" data-flashdata="<?= $this->session->flashdata('massege'); ?>"></div>
           <div class="clearfix">
-            <span class="float-left">
+                  <span class="float-left">
               <h5>Form iuran Bpjs</h5>
             </span>
           </div>
           <div class="card card-border-app flat">
+
+
+          
             <div class="card-header ">
               <i class="fa fa-align-justify"></i>Form Input
             </div>
-            <div class="card-body">
+          <div class="card-body">
+          <div class="row align-items-center">
+          <div class="form-group col-sm-3">
+                        <label for="ccmonth">Bulan</label>
+                        <select class="form-control form-control-sm" name="bulan" id="bulan">
+                        <option selected="selected" value="">Pilih</option>
+                        <?php
+                             $bln = array(1 => "Januari", "Februari", "Maret", "April", "Mei", "Juni", "July", "Agustus", "September", "Oktober", "November", "Desember");
+                                for ($bulan = 1; $bulan <= 12; $bulan++) {
+                                 if ($bulan <= 9) {
+                                      echo "<option value='0$bulan'>$bln[$bulan]</option>";
+                                  } else {
+                                     echo "<option value='$bulan'>$bln[$bulan]</option>";
+                                  }
+                                  }
+                        ?>
+                        </select>
+          </div>
+           <div class="form-group col-sm-3">
+                        <label for="tahun">Tahun</label>
+                        <select class="form-control form-control-sm" name="tahun" id="tahun">
+                          <option value="<?= date('Y'); ?>" selected><?= date('Y'); ?></option>
+                          <?php
+                          for ($i = date('Y'); $i >= 2017; $i--) {
+                            echo "<option value='$i'> $i </option>";
+                          }
+                          ?>
+                        </select>
+          </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                          <label for="keterangan">Keterangan</label>
+                          <input class="form-control form-control-sm" name="ket_gaji" id="ket_gaji" type="text" placeholder="Keterangan" autocomplete="off">
+                        </div>
+                      </div>
+              </div>
+              <div class="row">
+              <div class="collapse show" id="collapseExample">
+                            <div class="card-body">
+                                
+                                <div class="form-group row row has-icon" >
+                                    <label class="col-md-3 col-form-label" for="email">Karyawan</label>
+                                    <div class="col-md-9">
+                                    <span class="fa fa-search form-control-feedback "></span>
+                                      <input type="hidden" name="id_kry">
+                                        <input type="text" class="form-control flat" name="karyawan" placeholder="Cari Karyawan...">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label" for="is_active">Hitung Iuran</label>
+                                                    <div class="col-md-9">
+                                                        <div class="form-check checkbox">
+                                                            <input class="form-check-input" name="manual" id="manual" type="checkbox" value="1" checked>
+                                                            <label class="form-check-label" for="manual">Manual</label>
+                                                        </div>
+                                                        <div class="form-check checkbox">
+                                                            <input class="form-check-input" name="otomatis" id="otomatis" type="checkbox" value="" >
+                                                            <label class="form-check-label" for="otomatis">Otomatis</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                      
 
 
+
+
+                                <div class="form-group row">
+                                    <div class="col-sm-3">Picture</div>
+                                    <div class="col-sm-9">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                               
+                                            </div>
+
+                                            <div class="col-md-9">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="customFile" name="image">
+                                                    <label class="custom-file-label" for="image">Choose file</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+              </div>            
 
             </div>
           </div>

@@ -49,7 +49,7 @@
                               <td><input type="text" name="um[]" value="<?= $g['um']; ?>"></td>
                             </tr>
                           <?php endforeach; ?>
-                        </tbody>
+                              </tbody>
                       </table>
                       <!-- akhir table bantu -->
                     </div>
