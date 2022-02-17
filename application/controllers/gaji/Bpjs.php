@@ -40,6 +40,11 @@ class Bpjs extends CI_Controller
     $this->load->view('bpjs/form_bpjs', $data);
   }
 
+
+
+
+
+
   public function simpan_detil()
   {
     $kode = $_POST['kode'];;

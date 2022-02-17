@@ -51,6 +51,7 @@
 
     <script>
         var base_url = "<?= base_url(); ?>";
+        var site_url = "<?= site_url(); ?>";
     </script>
 </head>
 

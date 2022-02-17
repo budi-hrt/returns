@@ -10,53 +10,27 @@ class Karyawan_model extends CI_model
     return $query;
   }
 
-  function cari_sales($sales)
+  function cari_karyawan($karyawan)
   {
-    $this->db->like('nama_sales', $sales, 'both');
-    $this->db->order_by('nama_sales', 'ASC');
-    $this->db->where('is_active', 1);
-    $this->db->limit(10);
-    return $this->db->get('sales')->result();
+    $this->db->where('aktif', 1);
+    $this->db->like('nama_karyawan', $karyawan, 'both');
+    $this->db->order_by('nama_karyawan', 'ASC');
+    $this->db->limit(5);
+    return $this->db->get('tb_karyawan')->result();
   }
 
-  public function get()
+  public function get_json()
   {
-    $idSales = $this->input->get('idSales');
-    $this->db->where('id', $idSales);
-    $query = $this->db->get('sales');
+    $id = $this->input->get('idKry');
+    $this->db->select('g.gaji_pokok,g.tunjangan,g.um');
+    $this->db->from('tb_gaji g');
+    $this->db->join('tb_karyawan k', 'k.id_karyawan=g.id_kry', 'right');
+    $this->db->where('k.id_karyawan', $id);
+    $query = $this->db->get();
     if ($query->num_rows() > 0) {
       return $query->row();
     } else {
       return false;
     }
-  }
-
-  public function simpan($kode, $nama)
-  {
-    $data = array(
-      'kode_sales' => $kode,
-      'nama_sales' => $nama,
-      'foto' => 'no-profile.jpg',
-      'is_active' => 1
-    );
-    $this->db->insert('sales', $data);
-  }
-
-  public function ubah($id, $nama)
-  {
-    $data = array(
-      'nama_sales' => $nama
-    );
-    $this->db->where('id', $id);
-    $this->db->update('sales', $data);
-  }
-
-  public function hapus($id)
-  {
-    $data = array(
-      'is_active' => 2
-    );
-    $this->db->where('id', $id);
-    $this->db->update('sales', $data);
   }
 }

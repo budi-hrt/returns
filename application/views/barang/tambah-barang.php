@@ -18,7 +18,8 @@
                     <!-- end flashdata -->
                     <div class="card card-border-app flat">
                         <div class="card-header bg-primary flat">
-                            <strong>Form</strong> Tambah Barang</div>
+                            <strong>Form</strong> Tambah Barang
+                        </div>
                         <div class="card-body">
 
 
