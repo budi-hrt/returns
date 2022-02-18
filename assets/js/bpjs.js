@@ -3,7 +3,7 @@ $(document).ready(function () {
   list_kategori();
   // Subkategori
   list_subkategori();
-  hitungTotal();
+ 
 
   // Autocomplate
   $("#karyawan").autocomplete({
@@ -12,10 +12,10 @@ $(document).ready(function () {
       $('[name="id_kry"]').val(ui.item.description);
       $('[name="karyawan"]').val(ui.item.label);
       document.getElementById("bpjs_ks").focus();
-      // $(".hitung").css("display", "block");
       $('.hitung').show();
       $('.upah').hide();
-      hitungTotal();
+       var upah = parseInt($('[name="upah"]').val());
+      hitungTotal(upah);
     }
   });
   // input nama produk
@@ -29,6 +29,19 @@ $(document).ready(function () {
     $('#otomatis').prop('checked', false);
   });
 
+  $('#bpjs_ks').on('input',function () {
+    let ks = normalisasi($('[name="bpjs_ks"]').val());
+    let tk = normalisasi($('[name="bpjs_ktk"]').val());
+    let ttl = ks+tk;
+    $('[name="total"]').val(money(ttl));
+  });
+
+
+
+  $('.money').mask('000.000.000.000.000', {
+    reverse: true
+});
+
   // Ahir document ready
 });
 
@@ -39,8 +52,20 @@ $(document).ready(function () {
 $('#otomatis').on('click', function () {
   const idKry = $('#id_kry').val();
   $('#manual').prop('checked', false);
+    cari_upah(idKry);
+ 
+});
+$('#manual').on('click', function () {
+  const idKry = $('#id_kry').val();
+  $('#otomatis').prop('checked', false);
+  $('.upah').hide();
+ var upah= $('[name="upah"]').val('');
+ hitungTotal(upah);
+ document.getElementById("bpjs_ks").focus();
+});
 
 
+const cari_upah=(idKry)=>{
   $.ajax({
     url: base_url + 'master/karyawan/get_json',
     type: "get",
@@ -49,50 +74,68 @@ $('#otomatis').on('click', function () {
     },
     dataType: 'json',
     success: function (data) {
-      // === Cari upah ===
-      var gp = parseInt(data.gaji_pokok);
-      var tj = parseInt(data.tunjangan);
-      var um = parseInt(data.um);
-      gp = isNaN(gp) ? 0 : gp
-      tj = isNaN(tj) ? 0 : tj
-      um = isNaN(um) ? 0 : um
-      upah = gp + tj + um;
-      if (upah === 0) {
-        alert('Karyawan belum punya upah');
-        $('#manual').prop('checked', true);
-        $('#otomatis').prop('checked', false);
-        $('.upah').hide();
-        document.getElementById("bpjs_ks").focus();
-        hitungTotal();
-      } else {
-        $('[name="upah"]').val(upah);
-        $('.upah').show();
-        // === Hitung Bpjs Kesehatan ===
-        // const iurBpjsKs = upah * 1 / 100;
-        // const iurBpjsKtk = upah * 3 / 100;
-        // const ttlIuran = iurBpjsKs + iurBpjsKtk;
-        // $('[name="bpjs_ks"]').val(iurBpjsKs);
-        // $('[name="bpjs_ktk"]').val(iurBpjsKtk);
-        // $('[name="total"]').val(ttlIuran);
-        hitungTotal();
-      }
-      //==== akhir Upah =====
-
+      // === hitung upah ===
+      hitung_upah(data);
+      //==== akhir hitung Upah =====
     }
 
-
-
   });
-});
-
-const hitungTotal = () => {
-  var uph = parseInt($('[name="upah"]').val());
-  uph = isNaN(uph) ? 0 : uph
-  const iurBpjsKs = uph * 1 / 100;
-  const iurBpjsKtk = uph * 3 / 100;
-  const ttlIuran = iurBpjsKs + iurBpjsKtk;
-  $('[name="bpjs_ks"]').val(iurBpjsKs);
-  $('[name="bpjs_ktk"]').val(iurBpjsKtk);
-  $('[name="total"]').val(ttlIuran);
 }
 
+const hitung_upah=(data)=>{
+  var gp = parseInt(data.gaji_pokok);
+  var tj = parseInt(data.tunjangan);
+  var um = parseInt(data.um);
+  gp = isNaN(gp) ? 0 : gp
+  tj = isNaN(tj) ? 0 : tj
+  um = isNaN(um) ? 0 : um
+  upah = gp + tj + um;
+  if (upah === 0) {
+    alert('Karyawan belum punya upah');
+    $('#manual').prop('checked', true);
+    $('#otomatis').prop('checked', false);
+    $('.upah').hide();
+    document.getElementById("bpjs_ks").focus();
+    hitungTotal(upah);
+  } else {
+    $('[name="upah"]').val(money(upah));
+    $('.upah').show();
+    hitungTotal(upah);
+  }
+}
+
+
+
+const hitungTotal = (upah) => {
+  // var uph = parseInt($('[name="upah"]').val());
+ 
+  upah = isNaN(upah) ? 0 : upah
+ 
+  const iurBpjsKs = upah * 1 / 100;
+  const iurBpjsKtk = upah  * 3 / 100;
+  const ttlIuran = iurBpjsKs + iurBpjsKtk;
+  // let ttl=ttlIuran.toFixed(0);
+  // let ttlIur= ttl.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+  $('[name="bpjs_ks"]').val(money(iurBpjsKs));
+  $('[name="bpjs_ktk"]').val(money(iurBpjsKtk));
+  $('[name="total"]').val(money(ttlIuran));
+
+}
+
+const money=(angka)=>{
+//   $('.money').mask('000.000.000.000.000', {
+//     reverse: true
+// });
+let ttl=angka.toFixed(0);
+  let ttlIur= ttl.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+  return ttlIur;
+
+}
+
+const normalisasi=(angka)=>{
+  var a = angka.replace(".", "");
+  var angkaJadi = parseInt(a);
+  return angkaJadi;
+ 
+  console.log(angkaJadi);
+}

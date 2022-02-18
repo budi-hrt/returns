@@ -94,25 +94,25 @@
                   <div class="form-group row upah" style="display: none;">
                     <label class="col-md-3 col-form-label" for="gaji">Upah</label>
                     <div class="col-md-6">
-                      <input type="text" class="form-control flat" name="upah" readonly>
+                      <input type="text" class="form-control flat  text-right" name="upah" readonly>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="bps_ks">Bpjs <small>Kesehatan</small></label>
                     <div class="col-md-6">
-                      <input type="text" class="form-control flat" name="bpjs_ks" id="bpjs_ks">
+                      <input type="text" class="form-control flat money text-right" name="bpjs_ks" id="bpjs_ks">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="bpjs_ktk">Bpjs KTK</label>
                     <div class="col-md-6">
-                      <input type="text" class="form-control flat" name="bpjs_ktk" id="bpjs_ktk">
+                      <input type="text" class="form-control flat money text-right" name="bpjs_ktk" id="bpjs_ktk">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="total"><b>TOTAL IURAN</b></label>
                     <div class="col-md-6">
-                      <input type="text" class="form-control flat" name="total" id="total" readonly>
+                      <input type="text" class="form-control flat text-right" name="total" id="total" readonly>
                     </div>
                   </div>
 
@@ -252,6 +252,7 @@
 
 
 <?php $this->load->view('template/footer'); ?>
+<script src="<?= base_url('assets/mask-input/jquery.mask.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/bpjs.js'); ?>"></script>
 
 <script>
