@@ -40,51 +40,27 @@ class Bpjs extends CI_Controller
     $this->load->view('bpjs/form_bpjs', $data);
   }
 
-
-
-
-
-
-  public function simpan_detil()
+  public function kode()
   {
-    $kode = $_POST['kode'];;
-    $id_user = $_POST['id_user'];
-    $bulan = $this->input->post('bulan');
-    $tahun = $this->input->post('tahun');
-    $ket_gaji = $this->input->post('ket_gaji');
-    $id_kry = $_POST['id_karyawan'];
-    $t_gp = $_POST['gp'];
-    $t_tj = $_POST['tj'];
-    $t_um = $_POST['um'];
-    $cek = $this->db->get_where('tb_gajian', ['bulan' => $bulan, 'tahun' => $tahun]);
-    if ($cek->num_rows() > 0) {
-      redirect('gaji/management_gaji');
-      $this->session->set_flashdata('message', 'kode');
-    } else {
-
-      $result = array();
-      foreach ($id_kry as $key => $value) {
-        $result[] = array(
-          'kode_gaji' => $kode,
-          'id_kryn' => $id_kry[$key],
-          'terima_gp' => $t_gp[$key],
-          'terima_tj' => $t_tj[$key],
-          'terima_um' => $t_um[$key],
-          'id_usr' => $id_user,
-          'date_update' => time()
-        );
+    $cek = $this->db->get_where('tb_bpjs', ['status' => 'pending']);
+    if ($cek->num_rows() <> 0) {
+      $data['kode'] = $this->bpjs->get_kode();
+      $msg['success'] = false;
+      $msg['type'] = 'ada';
+      if ($data) {
+        $msg['success'] = true;
+        echo json_encode([$data, $msg]);
       }
-
-
-      $this->db->insert_batch('detil_gajian', $result);
-      $this->gaji->simpan_gajian($kode, $bulan, $tahun, $ket_gaji, $id_user);
-      redirect('gaji/management_gaji');
-      $this->session->set_flashdata('message', 'kode');
+    } else {
+      $data['kode'] = $this->bpjs->kode();
+      $msg['success'] = false;
+      $msg['type'] = 'blm';
+      if ($data) {
+        $msg['success'] = true;
+        echo json_encode([$data, $msg]);
+      }
     }
   }
-
-
-
 
 
 
@@ -97,6 +73,29 @@ class Bpjs extends CI_Controller
     $this->load->view('template/header', $data);
     $this->load->view('template/sidebar', $data);
     $this->load->view('gaji/form_gaji', $data);
+  }
+
+
+  public function input_iuran()
+  {
+    $kode = $this->input->post('kode_iuran_bpjs');
+    $bulan = $this->input->post('bulan');
+    $tahun = $this->input->post('tahun');
+    $ket = $this->input->post('ket_bpjs');
+    $id_kry = $this->input->post('id_kry');
+    $bpjs_ks = str_replace('.', '', $this->input->post('bpjs_ks'));
+    $bpjs_ktk = str_replace('.', '', $this->input->post('bpjs_ktk'));
+    $total = str_replace('.', '', $this->input->post('total'));
+    $id_user = $this->input->post('id_user');
+    $cek = $this->db->get_where('tb_bpjs', ['kode_bpjs' => $kode]);
+    if ($cek->num_rows() <> 0) {
+      $this->bpjs->simpan_detil_bpjs($kode, $bulan, $tahun, $id_kry, $bpjs_ks, $bpjs_ktk, $id_user);
+      redirect('gaji/bpjs/form_bpjs');
+    } else {
+      $this->bpjs->simpan_tb($kode, $bulan, $tahun, $ket, $id_user);
+      $this->bpjs->simpan_detil_bpjs($kode, $bulan, $tahun, $id_kry, $bpjs_ks, $bpjs_ktk, $id_user);
+      redirect('gaji/bpjs/form_bpjs');
+    }
   }
 
   public function detil_gajian()

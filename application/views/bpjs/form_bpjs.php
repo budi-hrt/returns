@@ -28,12 +28,13 @@
             <div class="card-header ">
               <i class="fa fa-align-justify"></i>Form Input iuran
             </div>
-            <?php form_open('iuran/bpjs/input_iuran', 'id="form_bpjs"'); ?>
+            <?= form_open('gaji/bpjs/input_iuran', 'id="form_bpjs"'); ?>
             <div class="card-body">
+              <input type="hidden" name="kode_iuran_bpjs">
               <div class="row align-items-center">
                 <div class="form-group col-sm-3">
                   <label for="ccmonth">Bulan</label>
-                  <select class="form-control form-control-sm" name="bulan" id="bulan">
+                  <select class="form-control form-control-sm" name="bulan" id="bulan" required>
                     <option selected="selected" value="">Pilih</option>
                     <?php
                     $bln = array(1 => "Januari", "Februari", "Maret", "April", "Mei", "Juni", "July", "Agustus", "September", "Oktober", "November", "Desember");
@@ -49,7 +50,7 @@
                 </div>
                 <div class="form-group col-sm-3">
                   <label for="tahun">Tahun</label>
-                  <select class="form-control form-control-sm" name="tahun" id="tahun">
+                  <select class="form-control form-control-sm" name="tahun" id="tahun" required>
                     <option value="<?= date('Y'); ?>" selected><?= date('Y'); ?></option>
                     <?php
                     for ($i = date('Y'); $i >= 2017; $i--) {
@@ -61,7 +62,7 @@
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="keterangan">Keterangan</label>
-                    <input class="form-control form-control-sm" name="ket_gaji" id="ket_gaji" type="text" placeholder="Keterangan" autocomplete="off">
+                    <input class="form-control form-control-sm input-app" name="ket_bpjs" id="ket_bpjs" type="text" placeholder="Singkat dan jelas..." autocomplete="off" required>
                   </div>
                 </div>
               </div>
@@ -74,7 +75,8 @@
                     <div class="col-md-9">
                       <span class="fa fa-search form-control-feedback "></span>
                       <input type="hidden" name="id_kry" id="id_kry">
-                      <input type="text" class="form-control flat" name="karyawan" id="karyawan" placeholder="Cari Karyawan...">
+                      <input type="hidden" name="id_user" id="id_user" value="<?= $user['id']; ?>">
+                      <input type="text" class="form-control flat input-app" name="karyawan" id="karyawan" placeholder="Cari Karyawan..." required>
                     </div>
                   </div>
                   <div class="form-group row hitung" style="display: none;">
@@ -94,25 +96,25 @@
                   <div class="form-group row upah" style="display: none;">
                     <label class="col-md-3 col-form-label" for="gaji">Upah</label>
                     <div class="col-md-6">
-                      <input type="text" class="form-control flat  text-right" name="upah" readonly>
+                      <input type="text" class="form-control flat  text-right input-app" name="upah" readonly>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="bps_ks">Bpjs <small>Kesehatan</small></label>
                     <div class="col-md-6">
-                      <input type="text" class="form-control flat money text-right" name="bpjs_ks" id="bpjs_ks">
+                      <input type="text" class="form-control flat money text-right input-app" name="bpjs_ks" id="bpjs_ks" required>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="bpjs_ktk">Bpjs KTK</label>
                     <div class="col-md-6">
-                      <input type="text" class="form-control flat money text-right" name="bpjs_ktk" id="bpjs_ktk">
+                      <input type="text" class="form-control flat money text-right input-app" name="bpjs_ktk" id="bpjs_ktk" required>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="total"><b>TOTAL IURAN</b></label>
                     <div class="col-md-6">
-                      <input type="text" class="form-control flat text-right" name="total" id="total" readonly>
+                      <input type="text" class="form-control flat text-right" style="font-weight: bold;font-size:medium;" name="total" id="total" readonly>
                     </div>
                   </div>
 
@@ -122,10 +124,12 @@
             </div>
 
             <div class="card-footer">
-              <button class="btn btn-sm btn-teal flat" type="submit">
+              <button class="btn btn-sm btn-teal flat" type="submit" id="btn_simpan">
                 <i class="fa fa-floppy-o"></i> Simpan & lanjutkan</button>
+              <button class="btn btn-sm btn-danger flat" type="submit" id="btn_selesai">
+                <i class="fa fa-check-square-o"></i> Selesai </button>
             </div>
-            <?php form_close(); ?>
+            </form>
           </div>
         </div>
         <!-- /.col-->

@@ -46,12 +46,9 @@ class Bpjs_model extends CI_model
 
 
 
-  // GAJIAN========= gaji/sdpa/0001
-
-  public function kode_gajian()
+  public function kode()
   {
-
-    $q = $this->db->query("SELECT MAX(RIGHT(kode_gajian,3)) AS kd_max FROM tb_gajian");
+    $q = $this->db->query("SELECT MAX(RIGHT(kode_bpjs,3)) AS kd_max FROM tb_bpjs");
     $kd = "";
     if ($q->num_rows() > 0) {
       foreach ($q->result() as $k) {
@@ -61,10 +58,53 @@ class Bpjs_model extends CI_model
     } else {
       $kd = "001";
     }
-    $car = "UPH";
+    $car = "IUR-BPJS";
 
-    return $car . "-" . $kd;
+    return $car . "/" . $kd;
   }
+
+
+  public function get_kode()
+  {
+    $this->db->select('*');
+    $this->db->where('status', 'pending');
+    $this->db->limit(1);
+    $query = $this->db->get('tb_bpjs');
+    if ($query->num_rows() > 0) {
+      return $query->row();
+    } else {
+      return false;
+    }
+  }
+
+  public function simpan_tb($kode, $bulan, $tahun, $ket, $id_user)
+  {
+    $data = array(
+      'kode_bpjs' => $kode,
+      'bulan' => $bulan,
+      'tahun' => $tahun,
+      'ket_bpjs' => $ket,
+      'id_usr' => $id_user,
+      'date_update' => time()
+    );
+    $this->db->insert('tb_bpjs', $data);
+  }
+
+  public function simpan_detil_bpjs($kode, $bulan, $tahun, $id_kry, $bpjs_ks, $bpjs_ktk, $id_user)
+  {
+    $data = array(
+      'kode_iuran_bpjs' => $kode,
+      'bulan' => $bulan,
+      'tahun' => $tahun,
+      'id_kry_bpjs' => $id_kry,
+      'bpjs_kesehatan' => $bpjs_ks,
+      'bpjs_ktk' => $bpjs_ktk,
+      'id_usr' => $id_user,
+      'date_update' => time()
+    );
+    $this->db->insert('detil_bpjs', $data);
+  }
+
 
   public function get_list()
   {
