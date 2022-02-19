@@ -77,14 +77,18 @@ class Bpjs_model extends CI_model
     }
   }
 
+
+
+
+
   public function list_iuran($kode)
   {
-    $this->db->select('d.id_detil_bpjs ,d.id_kry_bpjs,d.bpjs_kesehatan,d.bpjs_ktk,k.nama_karyawan as nama,d.date_update,u.name');
+    $this->db->select('d.id_detil_bpjs as id ,d.id_kry_bpjs,d.bpjs_kesehatan,d.bpjs_ktk,k.nama_karyawan as nama,d.date_update,u.name');
     $this->db->from('detil_bpjs d');
     $this->db->join('tb_karyawan k', 'k.id_karyawan=d.id_kry_bpjs');
     $this->db->join('user u', 'u.id=d.id_usr');
     $this->db->where('d.kode_iuran_bpjs', $kode);
-    $this->db->order_by('d.id_detil_bpjs', 'desc');
+    $this->db->order_by('id', 'desc');
     $query = $this->db->get();
     if ($query->num_rows() > 0) {
       return $query->result();
@@ -95,7 +99,19 @@ class Bpjs_model extends CI_model
 
 
 
-
+  public function get_total($kode)
+  {
+    $this->db->select_sum('bpjs_kesehatan', 'total_ks');
+    $this->db->select_sum('bpjs_ktk', 'total_ktk');
+    $this->db->from('detil_bpjs');
+    $this->db->where('kode_iuran_bpjs', $kode);
+    $query = $this->db->get();
+    if ($query->num_rows() > 0) {
+      return $query->row();
+    } else {
+      return false;
+    }
+  }
 
 
   public function simpan_tb($kode, $bulan, $tahun, $ket, $id_user)
@@ -141,6 +157,37 @@ class Bpjs_model extends CI_model
   }
 
 
+  public function get_detil($id)
+  {
+
+    $this->db->select('d.id_detil_bpjs as id ,d.id_kry_bpjs,d.bpjs_kesehatan,d.bpjs_ktk,k.nama_karyawan as nama,u.name');
+    $this->db->from('detil_bpjs d');
+    $this->db->join('tb_karyawan k', 'k.id_karyawan=d.id_kry_bpjs');
+    $this->db->join('user u', 'u.id=d.id_usr');
+    $this->db->where('d.id_detil_bpjs', $id);
+    $query = $this->db->get();
+    if ($query->num_rows() > 0) {
+      return $query->row();
+    } else {
+      return false;
+    }
+  }
+
+  public function update_detil($id, $bpjs_ks, $bpjs_ktk, $id_user)
+  {
+    $this->db->where('id_detil_bpjs', $id);
+    $data = array(
+      'bpjs_kesehatan' => $bpjs_ks,
+      'bpjs_ktk' => $bpjs_ktk,
+      'id_usr' => $id_user,
+      'date_update' => time()
+    );
+    $this->db->update('detil_bpjs', $data);
+  }
+
+
+
+
   public function get_list()
   {
     $this->db->select('d.id_gajian,d.kode_gaji,d.terima_gp,d.terima_tj,d.terima_um,d.status,d.id_usr,d.date_update ,k.nama_karyawan, u.name,d.pot_bpjs,d.pot_pph21,d.pot_pinjaman,d.pot_absensi,d.pot_lain');
@@ -154,11 +201,7 @@ class Bpjs_model extends CI_model
   }
 
 
-  public function get_gajian()
-  {
-    $query = $this->db->get('tb_gajian');
-    return $query;
-  }
+
 
 
   public function simpan_gajian($kode, $bulan, $tahun, $ket_gaji, $id_user)

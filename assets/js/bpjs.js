@@ -13,7 +13,7 @@ $(document).ready(function () {
     select: function (event, ui) {
       $('[name="id_kry"]').val(ui.item.description);
       $('[name="karyawan"]').val(ui.item.label);
-      let id_kry=$('[name="id_kry"]').val();
+      let id_kry = $('[name="id_kry"]').val();
       cek_karyawan(id_kry);
       // document.getElementById("bpjs_ks").focus();
       // $('.hitung').show();
@@ -55,11 +55,11 @@ $(document).ready(function () {
 
 
 // validasi karyawan
-const cek_karyawan=(id_kry)=>{
-  let idKry=id_kry;
+const cek_karyawan = (id_kry) => {
+  let idKry = id_kry;
   let bulan = $('#bulan').val();
   let tahun = $('#tahun').val();
- 
+
   $.ajax({
     url: base_url + 'gaji/bpjs/cek_karyawan',
     type: "get",
@@ -71,20 +71,20 @@ const cek_karyawan=(id_kry)=>{
     dataType: 'json',
     success: function (response) {
       // console.log(response[0].type);
-if (response[0].type=='ada') {
-  alert('Iuran Karyawan sudah di priode in !');
-  $('[name="id_kry"]').val('');
-  $('[name="karyawan"]').val('');
-}else if(response[0].type=='blm'){
-  document.getElementById("bpjs_ks").focus();
-  $('.hitung').show();
-  $('.upah').hide();
-  var upah = parseInt($('[name="upah"]').val());
-  // === hitung total ===
-  hitungTotal(upah);
-  //==== akhir hitung total =====
-}
-}
+      if (response[0].type == 'ada') {
+        alert('Iuran Karyawan sudah di priode in !');
+        $('[name="id_kry"]').val('');
+        $('[name="karyawan"]').val('');
+      } else if (response[0].type == 'blm') {
+        document.getElementById("bpjs_ks").focus();
+        $('.hitung').show();
+        $('.upah').hide();
+        var upah = parseInt($('[name="upah"]').val());
+        // === hitung total ===
+        hitungTotal(upah);
+        //==== akhir hitung total =====
+      }
+    }
 
   });
 }
@@ -119,13 +119,15 @@ const kode = () => {
         $('#bulan').prop('disabled', true);
         $('#tahun').prop('disabled', true);
         $('#ket_bpjs').prop('readonly', true);
-        $(".judul").append("<b>"+data[0].kode.kode_bpjs+"</b>.");
-        let kode =data[0].kode.kode_bpjs;
-        list_iuran(kode); 
+        $(".judul").append("<b> => " + data[0].kode.kode_bpjs + "</b>.");
+        let kode = data[0].kode.kode_bpjs;
+        list_iuran(kode);
+        get_total(kode);
       } else if (data[1].type == 'blm') {
         $('input[name="kode_iuran_bpjs"]').val(data[0].kode);
-        let kode =data[0].kode;
-        list_iuran(kode); 
+        let kode = data[0].kode;
+        list_iuran(kode);
+
       }
       // const kode = data[0].kode.ket_bpjs;
       // console.log(data[0].kode);
@@ -134,40 +136,53 @@ const kode = () => {
   });
 }
 
+const get_total = (kode) => {
+  $.ajax({
+    url: base_url + 'gaji/bpjs/get_total',
+    type: 'get',
+    data: { kode: kode },
+    dataType: 'json',
+    success: function (data) {
+      let ks = normalisasi(data.total_ks);
+      let ktk = normalisasi(data.total_ktk);
+      total_iuran = ks + ktk;
+      $(".judul_total").append('<b class="text-success"> Rp.' + money(total_iuran) + '</b>.');
+    }
+  });
+}
 
 // Tampil List
-const list_iuran =(kode)=>{
+const list_iuran = (kode) => {
   $.ajax({
     url: base_url + 'gaji/bpjs/list_iuran',
-    type:'get',
-    data:{kode:kode},
+    type: 'get',
+    data: { kode: kode },
     dataType: 'json',
-    success: function(data) {
-      console.log(data);
-        var html = '';
+    success: function (data) {
+      var html = '';
       var i;
-      var no = 1;
       for (i = 0; i < data.length; i++) {
         var ks = parseInt(data[i].bpjs_kesehatan);
         var tk = parseInt(data[i].bpjs_ktk);
         ks = isNaN(ks) ? 0 : ks
         tk = isNaN(tk) ? 0 : tk
-        let total = ks+tk;
+        let total = ks + tk;
         html += `  <tr>
                                   <td class="text-center">
                                       <div class="btn-group">
-                                          <a class="item-edit mr-3" href="javascript:;" data="` + data[i].id + `"><i class="fa fa-pencil  text-primary"></i></a>
-                                          <a class=" item-delete" href="javascript:;" data="` + data[i].id + `"><i class="fa fa-times  text-primary"></i></a>
+                                          <a class="item-edit mr-3" href="javascript:;" data="` + data[i].id + `"><i class="fa fa-pencil  text-success"></i></a>
+                                          <a class=" item-delete" href="javascript:;" data="` + data[i].id + `"><i class="fa fa-times  text-danger"></i></a>
                                       </div>
                                   </td>
-                                  <td class="text-center">` + data[i].nama + `</td>
-                                  <td>` + data[i].bpjs_kesehatan+ `</td>
-                                  <td>` +data[i].bpjs_ktk + `</td>
-                                  <td>` + total + `</td>
-                                  <td>` + data[i].name + `</td>
+                                  <td class="text-center">`+ data[i].nama + `</td>
+                                  <td class="text-right">` + money(ks) + `</td>
+                                  <td class="text-right">` + money(tk) + `</td>
+                                  <td class="text-right">` + money(total) + `</td>
+                                  <td class="text-center">` + data[i].name + `</td>
                               </tr>`;
 
       }
+
       $('#list_iuran').html(html);
       $('#table-iuran').DataTable();
     }
@@ -175,7 +190,37 @@ const list_iuran =(kode)=>{
 }
 
 
+$('#list_iuran').on('click', '.item-edit', function () {
+  const id = $(this).attr('data');
+  get_detil(id);
+});
 
+const get_detil = (id) => {
+  $.ajax({
+    url: base_url + 'gaji/bpjs/get_detil',
+    type: 'get',
+    data: { id: id },
+    dataType: 'json',
+    success: function (data) {
+      tampil_edit(data);
+    }
+  });
+}
+
+const tampil_edit = (data) => {
+  let ks = parseInt(data.bpjs_kesehatan);
+  let tk = parseInt(data.bpjs_ktk);
+  $('#form_bpjs').attr('action', base_url + 'gaji/bpjs/update_detil');
+  $('input[name="id_detil"]').val(data.id);
+  $('#id_kry').val(data.id_kry_bpjs);
+  $('[name="karyawan"]').val(data.nama);
+  $('#karyawan').prop('readonly', true);
+  $('[name="bpjs_ks"]').val(money(ks));
+  $('[name="bpjs_ktk"]').val(money(tk));
+  $('.hitung').show();
+  $('.upah').hide();
+  inputIuran();
+}
 
 
 
@@ -212,6 +257,7 @@ const cari_upah = (idKry) => {
     }
 
   });
+
 }
 
 const hitung_upah = (data) => {
@@ -272,8 +318,6 @@ const normalisasi = (angka) => {
   var a = angka.replace(".", "");
   var angkaJadi = parseInt(a);
   return angkaJadi;
-
-  console.log(angkaJadi);
 }
 
 

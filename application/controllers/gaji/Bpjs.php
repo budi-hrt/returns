@@ -62,22 +62,25 @@ class Bpjs extends CI_Controller
     }
   }
 
-
-
-  public function form_gajian()
+  public function get_total()
   {
-    $data['title'] = 'Form Gaji';
-    $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-    $data['gajian'] = $this->gaji->get_all()->result_array();
-    // $data['karyawan'] = $this->karyawan->get_all()->result_array();
-    $this->load->view('template/header', $data);
-    $this->load->view('template/sidebar', $data);
-    $this->load->view('gaji/form_gaji', $data);
+    $kode = $this->input->get('kode');
+    $data = $this->bpjs->get_total($kode);
+    echo json_encode($data);
   }
+
+
   public function list_iuran()
   {
     $kode = $this->input->get('kode');
     $data = $this->bpjs->list_iuran($kode);
+    echo json_encode($data);
+  }
+
+  public function get_detil()
+  {
+    $id = $this->input->get('id');
+    $data = $this->bpjs->get_detil($id);
     echo json_encode($data);
   }
 
@@ -126,6 +129,17 @@ class Bpjs extends CI_Controller
       redirect('gaji/bpjs/form_bpjs');
     }
   }
+
+  public function update_detil()
+  {
+    $id = $this->input->post('id_detil');
+    $bpjs_ks = str_replace('.', '', $this->input->post('bpjs_ks'));
+    $bpjs_ktk = str_replace('.', '', $this->input->post('bpjs_ktk'));
+    $id_user = $this->input->post('id_user');
+    $this->bpjs->update_detil($id, $bpjs_ks, $bpjs_ktk, $id_user);
+    redirect('gaji/bpjs/form_bpjs');
+  }
+
 
   public function detil_gajian()
   {
