@@ -74,6 +74,33 @@ class Bpjs extends CI_Controller
     $this->load->view('template/sidebar', $data);
     $this->load->view('gaji/form_gaji', $data);
   }
+  public function list_iuran()
+  {
+    $kode = $this->input->get('kode');
+    $data = $this->bpjs->list_iuran($kode);
+    echo json_encode($data);
+  }
+
+  public function cek_karyawan()
+  {
+    $id_kry = $this->input->get('idKry');
+    $bulan = $this->input->get('bulan');
+    $bln = ltrim($bulan, '0');
+    $tahun = $this->input->get('tahun');
+    $cek = $this->db->get_where('detil_bpjs', ['id_kry_bpjs' => $id_kry, 'bulan' => $bulan, 'tahun' => $tahun]);
+    if ($cek->num_rows() <> 0) {
+      $msg['success'] = false;
+      $msg['type'] = 'ada';
+      $msg['success'] = true;
+      echo json_encode([$msg]);
+    } else {
+      $msg['success'] = false;
+      $msg['type'] = 'blm';
+      $msg['success'] = true;
+      echo json_encode([$msg]);
+    }
+  }
+
 
 
   public function input_iuran()
@@ -81,6 +108,8 @@ class Bpjs extends CI_Controller
     $kode = $this->input->post('kode_iuran_bpjs');
     $bulan = $this->input->post('bulan');
     $tahun = $this->input->post('tahun');
+    $bulan_hide = $this->input->post('bulan_hide');
+    $tahun_hide = $this->input->post('tahun_hide');
     $ket = $this->input->post('ket_bpjs');
     $id_kry = $this->input->post('id_kry');
     $bpjs_ks = str_replace('.', '', $this->input->post('bpjs_ks'));
@@ -89,7 +118,7 @@ class Bpjs extends CI_Controller
     $id_user = $this->input->post('id_user');
     $cek = $this->db->get_where('tb_bpjs', ['kode_bpjs' => $kode]);
     if ($cek->num_rows() <> 0) {
-      $this->bpjs->simpan_detil_bpjs($kode, $bulan, $tahun, $id_kry, $bpjs_ks, $bpjs_ktk, $id_user);
+      $this->bpjs->simpan_detil_bpjs2($kode, $bulan_hide, $tahun_hide, $id_kry, $bpjs_ks, $bpjs_ktk, $id_user);
       redirect('gaji/bpjs/form_bpjs');
     } else {
       $this->bpjs->simpan_tb($kode, $bulan, $tahun, $ket, $id_user);

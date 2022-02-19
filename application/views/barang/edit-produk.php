@@ -18,14 +18,16 @@
                     <!-- end flashdata -->
                     <div class="card card-border-app flat">
                         <div class="card-header bg-primary flat">
-                            <strong>Form</strong> Tambah Barang</div>
+                            <strong>Form</strong> Tambah Barang
+                        </div>
                         <div class="card-body">
 
 
                             <!-- tab -->
                             <ul class="nav nav-tabs" id="myTab1" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link tabs-app active" id="spesifikasi-tab" data-toggle="tab" href="#spesifikasi" role="tab" aria-controls="spesifikasi" aria-selected="true"><i class="fa fa-pencil-square-o text-info fa-2x"></i> Spesifikasi </a>
+                                    <a class="nav-link tabs-app active" id="spesifikasi-tab" data-toggle="tab" href="#spesifikasi" role="tab" aria-controls="spesifikasi" aria-selected="true"><i class="fa fa-pencil-square-o text-info fa-2x"></i>
+                                        Spesifikasi </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="satuan-tab" data-toggle="tab" href="#satuan" role="tab" aria-controls="satuan" aria-selected="false"><i class="fa fa-qrcode text-success fa-2x"></i> Satuan & Harga</a>
@@ -41,7 +43,8 @@
                                             <div class="col-md-6">
                                                 <!-- Kode -->
                                                 <div class="form-group row">
-                                                    <label class="col-md-3 col-form-label" for="barcode">ID Produk</label>
+                                                    <label class="col-md-3 col-form-label" for="barcode">ID
+                                                        Produk</label>
                                                     <div class="col-md-5">
 
                                                         <input class="form-control flat" type="hidden" name="kode_produk" value="<?= $produk['kode']; ?>">
@@ -58,7 +61,8 @@
                                                 </div>
                                                 <!-- Nama Produk -->
                                                 <div class="form-group row has-icon">
-                                                    <label class="col-md-3 col-form-label" for="nama">Nama Produk</label>
+                                                    <label class="col-md-3 col-form-label" for="nama">Nama
+                                                        Produk</label>
                                                     <div class="col-md-9">
                                                         <?= form_error('nama', '<small class="text-danger">', '</small>'); ?>
                                                         <span class="fa fa-tag form-control-feedback "></span>
@@ -67,7 +71,8 @@
                                                 </div>
                                                 <!-- Merek produk -->
                                                 <div class="form-group row has-icon">
-                                                    <label class="col-md-3 col-form-label" for="merek">Merek Produk</label>
+                                                    <label class="col-md-3 col-form-label" for="merek">Merek
+                                                        Produk</label>
                                                     <div class="col-sm-7">
                                                         <span class="fa fa-search form-control-feedback "></span>
                                                         <input type="hidden" name="id_merek" value="<?= $produk['id_merek']; ?>">
@@ -96,10 +101,12 @@
                                                 </div>
                                                 <!-- Subkategori -->
                                                 <div class="form-group row">
-                                                    <label class="col-md-3 col-form-label" for="subkategori">Sub Kategori</label>
+                                                    <label class="col-md-3 col-form-label" for="subkategori">Sub
+                                                        Kategori</label>
                                                     <div class="col-md-7">
                                                         <select class="form-control " name="subkategori" id="subkategori" required disabled>
-                                                            <option value="<?= $produk['id_subkategori']; ?>"><?= $produk['nama_subkategori']; ?></option>
+                                                            <option value="<?= $produk['id_subkategori']; ?>">
+                                                                <?= $produk['nama_subkategori']; ?></option>
                                                         </select>
                                                     </div>
                                                     <div class="col-md-2">
@@ -121,7 +128,8 @@
                                                     <div class="col-md-9">
                                                         <div class="form-check checkbox">
                                                             <input class="form-check-input" name="is_active" id="is_active" type="checkbox" value="1" checked>
-                                                            <label class="form-check-label" for="is_active">Aktif ?</label>
+                                                            <label class="form-check-label" for="is_active">Aktif
+                                                                ?</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -138,12 +146,16 @@
                                             <div class="col-md-6">
                                                 <!-- Satuan 1-->
                                                 <div class="form-group row">
-                                                    <label class="col-md-3 col-form-label" for="satuan1">Satuan 1</label>
+                                                    <label class="col-md-3 col-form-label" for="satuan1">Satuan
+                                                        1</label>
+
                                                     <div class="col-md-7">
                                                         <select class="form-control flat" name="satuan1" id="satuan1" required>
-                                                            <option value="<?= $produk['satuan1']; ?>"><?= $produk['satuan1']; ?></option>
+                                                            <option value="<?= $produk['satuan1']; ?>">
+                                                                <?= $produk['satuan1']; ?></option>
                                                             <?php foreach ($satuan as $s1) : ?>
-                                                                <option value="<?= $s1['nama_satuan']; ?>"><?= $s1['nama_satuan']; ?></option>
+                                                                <option value="<?= $s1['nama_satuan']; ?>">
+                                                                    <?= $s1['nama_satuan']; ?></option>
                                                             <?php endforeach; ?>
                                                         </select>
                                                     </div>
@@ -154,12 +166,15 @@
                                                 </div>
                                                 <!-- Sataun 2 -->
                                                 <div class="form-group row">
-                                                    <label class="col-md-3 col-form-label" for="satuan2">Satuan 2</label>
+                                                    <label class="col-md-3 col-form-label" for="satuan2">Satuan
+                                                        2</label>
                                                     <div class="col-md-7">
                                                         <select class="form-control flat" name="satuan2" id="satuan2" required>
-                                                            <option value="<?= $produk['satuan2']; ?>"><?= $produk['satuan2']; ?></option>
+                                                            <option value="<?= $produk['satuan2']; ?>">
+                                                                <?= $produk['satuan2']; ?></option>
                                                             <?php foreach ($satuan as $s2) : ?>
-                                                                <option value="<?= $s2['nama_satuan']; ?>"><?= $s2['nama_satuan']; ?></option>
+                                                                <option value="<?= $s2['nama_satuan']; ?>">
+                                                                    <?= $s2['nama_satuan']; ?></option>
                                                             <?php endforeach; ?>
 
                                                         </select>
@@ -172,8 +187,10 @@
                                             <!-- akhir satuan -->
                                             <!-- col isi -->
                                             <div class="col-md-6">
+
                                                 <div class="form-group row has-icon">
-                                                    <label for="harga" class="col-md-2 col-form-label">Harga Jual</label>
+                                                    <label for="harga" class="col-md-2 col-form-label">Harga
+                                                        Jual</label>
                                                     <div class="col-md-5">
                                                         <span class="fa fa-usd form-control-feedback "></span>
                                                         <input type="text" class="form-control flat money" name="harga" value="<?= $produk['harga']; ?>">
@@ -208,11 +225,12 @@
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                                                                                                                                                                $tm = 1;
-                                                                                                                                                                                                $ts = 1;
-                                                                                                                                                                                                foreach ($level as $l) : ?>
+                                                $tm = 1;
+                                                $ts = 1;
+                                                foreach ($level as $l) : ?>
                                                     <tr>
-                                                        <td><input type="hidden" class="level" name="id_level[]" id="id_level" value="<?= $l['level_id']; ?>"> <?= $l['nama_level']; ?></td>
+                                                        <td><input type="hidden" class="level" name="id_level[]" id="id_level" value="<?= $l['level_id']; ?>">
+                                                            <?= $l['nama_level']; ?></td>
                                                         <td>
                                                             <input type="hidden" class="kode" name="id_harga[]" id="id_harga" value="<?= $l['idharga']; ?>">
                                                             <input type="text" class="form-control qty text-center flat" value="<?= $l['quantity']; ?>" name="quantity[]">
@@ -220,6 +238,11 @@
                                                         <td>
                                                             <input type="text" class="form-control disc flat money" value="<?= $l['discount']; ?>" name="discount[]">
                                                         </td>
+
+
+
+
+
                                                         <td>
 
                                                             <div class="input-group">

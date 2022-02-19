@@ -140,7 +140,7 @@
 
 .input-app:focus {
   background-color: yellow ;
-  box-shadow:0 0 0 1px rgb(253, 213, 14);
+  box-shadow:0 0 0 0.5px rgb(247, 247, 244);
 }
 
 /* Nav-tabs */

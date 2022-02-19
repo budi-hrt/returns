@@ -9,6 +9,7 @@
     <!-- Breadcrumb Menu-->
 
   </ol>
+
   <div class="container-fluid">
     <div class="animated fadeIn">
       <div class="row">
@@ -199,7 +200,8 @@
                     <td>
                       <div>Yiorgos Avraamu</div>
                       <div class="small text-muted">
-                        <span>New</span> | Registered: Jan 1, 2015</div>
+                        <span>New</span> | Registered: Jan 1, 2015
+                      </div>
                     </td>
                     <td class="text-center">
                       <i class="flag-icon flag-icon-us h4 mb-0" id="us" title="us"></i>
@@ -235,7 +237,8 @@
                     <td>
                       <div>Avram Tarasios</div>
                       <div class="small text-muted">
-                        <span>Recurring</span> | Registered: Jan 1, 2015</div>
+                        <span>Recurring</span> | Registered: Jan 1, 2015
+                      </div>
                     </td>
                     <td class="text-center">
                       <i class="flag-icon flag-icon-br h4 mb-0" id="br" title="br"></i>
@@ -271,7 +274,8 @@
                     <td>
                       <div>Quintin Ed</div>
                       <div class="small text-muted">
-                        <span>New</span> | Registered: Jan 1, 2015</div>
+                        <span>New</span> | Registered: Jan 1, 2015
+                      </div>
                     </td>
                     <td class="text-center">
                       <i class="flag-icon flag-icon-in h4 mb-0" id="in" title="in"></i>
@@ -307,7 +311,8 @@
                     <td>
                       <div>Enéas Kwadwo</div>
                       <div class="small text-muted">
-                        <span>New</span> | Registered: Jan 1, 2015</div>
+                        <span>New</span> | Registered: Jan 1, 2015
+                      </div>
                     </td>
                     <td class="text-center">
                       <i class="flag-icon flag-icon-fr h4 mb-0" id="fr" title="fr"></i>
@@ -343,7 +348,8 @@
                     <td>
                       <div>Agapetus Tadeáš</div>
                       <div class="small text-muted">
-                        <span>New</span> | Registered: Jan 1, 2015</div>
+                        <span>New</span> | Registered: Jan 1, 2015
+                      </div>
                     </td>
                     <td class="text-center">
                       <i class="flag-icon flag-icon-es h4 mb-0" id="es" title="es"></i>
@@ -379,7 +385,8 @@
                     <td>
                       <div>Friderik Dávid</div>
                       <div class="small text-muted">
-                        <span>New</span> | Registered: Jan 1, 2015</div>
+                        <span>New</span> | Registered: Jan 1, 2015
+                      </div>
                     </td>
                     <td class="text-center">
                       <i class="flag-icon flag-icon-pl h4 mb-0" id="pl" title="pl"></i>

@@ -13,11 +13,13 @@ $(document).ready(function () {
     select: function (event, ui) {
       $('[name="id_kry"]').val(ui.item.description);
       $('[name="karyawan"]').val(ui.item.label);
-      document.getElementById("bpjs_ks").focus();
-      $('.hitung').show();
-      $('.upah').hide();
-      var upah = parseInt($('[name="upah"]').val());
-      hitungTotal(upah);
+      let id_kry=$('[name="id_kry"]').val();
+      cek_karyawan(id_kry);
+      // document.getElementById("bpjs_ks").focus();
+      // $('.hitung').show();
+      // $('.upah').hide();
+      // var upah = parseInt($('[name="upah"]').val());
+      // hitungTotal(upah);
     }
   });
   // input nama produk
@@ -44,8 +46,50 @@ $(document).ready(function () {
     reverse: true
   });
 
+
+
+
+
   // Akhir document ready
 });
+
+
+// validasi karyawan
+const cek_karyawan=(id_kry)=>{
+  let idKry=id_kry;
+  let bulan = $('#bulan').val();
+  let tahun = $('#tahun').val();
+ 
+  $.ajax({
+    url: base_url + 'gaji/bpjs/cek_karyawan',
+    type: "get",
+    data: {
+      idKry: idKry,
+      bulan: bulan,
+      tahun: tahun
+    },
+    dataType: 'json',
+    success: function (response) {
+      // console.log(response[0].type);
+if (response[0].type=='ada') {
+  alert('Iuran Karyawan sudah di priode in !');
+  $('[name="id_kry"]').val('');
+  $('[name="karyawan"]').val('');
+}else if(response[0].type=='blm'){
+  document.getElementById("bpjs_ks").focus();
+  $('.hitung').show();
+  $('.upah').hide();
+  var upah = parseInt($('[name="upah"]').val());
+  // === hitung total ===
+  hitungTotal(upah);
+  //==== akhir hitung total =====
+}
+}
+
+  });
+}
+
+
 
 // === function input iuran
 const inputIuran = () => {
@@ -69,19 +113,68 @@ const kode = () => {
         $('input[name="kode_iuran_bpjs"]').val(data[0].kode.kode_bpjs);
         $('#bulan').val(0 + data[0].kode.bulan);
         $('#tahun').val(data[0].kode.tahun);
+        $('#bulan_hide').val(0 + data[0].kode.bulan);
+        $('#tahun_hide').val(data[0].kode.tahun);
         $('input[name="ket_bpjs"]').val(data[0].kode.ket_bpjs);
         $('#bulan').prop('disabled', true);
         $('#tahun').prop('disabled', true);
         $('#ket_bpjs').prop('readonly', true);
+        $(".judul").append("<b>"+data[0].kode.kode_bpjs+"</b>.");
+        let kode =data[0].kode.kode_bpjs;
+        list_iuran(kode); 
       } else if (data[1].type == 'blm') {
         $('input[name="kode_iuran_bpjs"]').val(data[0].kode);
+        let kode =data[0].kode;
+        list_iuran(kode); 
       }
-      const kode = $('#bulan').val();
-      console.log(kode);
+      // const kode = data[0].kode.ket_bpjs;
+      // console.log(data[0].kode);
 
     }
   });
 }
+
+
+// Tampil List
+const list_iuran =(kode)=>{
+  $.ajax({
+    url: base_url + 'gaji/bpjs/list_iuran',
+    type:'get',
+    data:{kode:kode},
+    dataType: 'json',
+    success: function(data) {
+      console.log(data);
+        var html = '';
+      var i;
+      var no = 1;
+      for (i = 0; i < data.length; i++) {
+        var ks = parseInt(data[i].bpjs_kesehatan);
+        var tk = parseInt(data[i].bpjs_ktk);
+        ks = isNaN(ks) ? 0 : ks
+        tk = isNaN(tk) ? 0 : tk
+        let total = ks+tk;
+        html += `  <tr>
+                                  <td class="text-center">
+                                      <div class="btn-group">
+                                          <a class="item-edit mr-3" href="javascript:;" data="` + data[i].id + `"><i class="fa fa-pencil  text-primary"></i></a>
+                                          <a class=" item-delete" href="javascript:;" data="` + data[i].id + `"><i class="fa fa-times  text-primary"></i></a>
+                                      </div>
+                                  </td>
+                                  <td class="text-center">` + data[i].nama + `</td>
+                                  <td>` + data[i].bpjs_kesehatan+ `</td>
+                                  <td>` +data[i].bpjs_ktk + `</td>
+                                  <td>` + total + `</td>
+                                  <td>` + data[i].name + `</td>
+                              </tr>`;
+
+      }
+      $('#list_iuran').html(html);
+      $('#table-iuran').DataTable();
+    }
+  });
+}
+
+
 
 
 
@@ -204,3 +297,6 @@ const simpanDetil = (data) => {
     }
   })
 }
+
+
+
