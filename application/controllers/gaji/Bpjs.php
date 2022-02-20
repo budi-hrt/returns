@@ -88,7 +88,6 @@ class Bpjs extends CI_Controller
   {
     $id_kry = $this->input->get('idKry');
     $bulan = $this->input->get('bulan');
-    $bln = ltrim($bulan, '0');
     $tahun = $this->input->get('tahun');
     $cek = $this->db->get_where('detil_bpjs', ['id_kry_bpjs' => $id_kry, 'bulan' => $bulan, 'tahun' => $tahun]);
     if ($cek->num_rows() <> 0) {
@@ -137,6 +136,48 @@ class Bpjs extends CI_Controller
     $bpjs_ktk = str_replace('.', '', $this->input->post('bpjs_ktk'));
     $id_user = $this->input->post('id_user');
     $this->bpjs->update_detil($id, $bpjs_ks, $bpjs_ktk, $id_user);
+    redirect('gaji/bpjs/form_bpjs');
+  }
+
+
+  public function selesai_keluar()
+  {
+    $id =  $this->input->post('id');
+    $jml_org = $this->input->post('jml_org');
+    $sb_iuran = $this->input->post('sb_iuran');
+    $id_usr = $this->input->post('id_usr');
+    $result = $this->bpjs->selesai_keluar($id, $jml_org, $sb_iuran, $id_usr);
+    $msg['success'] = false;
+    if ($result) {
+      $msg['type'] = 'simpan';
+      $msg['success'] = true;
+      echo json_encode([$msg]);
+    } else {
+      $msg['type'] = 'error';
+      $msg['success'] = true;
+      echo json_encode([$msg]);
+    }
+  }
+
+  public function selesai_detil()
+  {
+    $idDetil = $_POST['idDetil'];
+    $result = array();
+    foreach ($idDetil as $key => $value) {
+      $result[] = array(
+        'id_detil_bpjs' => $idDetil[$key],
+        // 'date_update' => time(),
+        'status' => 'selesai'
+      );
+    }
+    $this->db->update_batch('detil_bpjs', $result, 'id_detil_bpjs');
+  }
+
+  public function hapus_detil()
+  {
+    $id = $this->input->post('idHapus');
+    $this->db->where('id_detil_bpjs', $id);
+    $this->db->delete('detil_bpjs');
     redirect('gaji/bpjs/form_bpjs');
   }
 

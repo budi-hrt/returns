@@ -103,6 +103,7 @@ class Bpjs_model extends CI_model
   {
     $this->db->select_sum('bpjs_kesehatan', 'total_ks');
     $this->db->select_sum('bpjs_ktk', 'total_ktk');
+    $this->db->select('COUNT(id_kry_bpjs) as total_orang');
     $this->db->from('detil_bpjs');
     $this->db->where('kode_iuran_bpjs', $kode);
     $query = $this->db->get();
@@ -193,7 +194,7 @@ class Bpjs_model extends CI_model
     $this->db->select('d.id_gajian,d.kode_gaji,d.terima_gp,d.terima_tj,d.terima_um,d.status,d.id_usr,d.date_update ,k.nama_karyawan, u.name,d.pot_bpjs,d.pot_pph21,d.pot_pinjaman,d.pot_absensi,d.pot_lain');
     $this->db->from('detil_gajian d');
     $this->db->join('tb_karyawan k', 'k.id_karyawan=d.id_kryn', 'left');
-    $this->db->join('user u', 'u.id=d.id_usr');
+    $this->db->join('user u', 'u.id=d.id_usr', 'left');
     $this->db->order_by('k.nama_karyawan', 'asc');
     $this->db->where('d.status', 'pending');
     $query =  $this->db->get();
@@ -204,18 +205,18 @@ class Bpjs_model extends CI_model
 
 
 
-  public function simpan_gajian($kode, $bulan, $tahun, $ket_gaji, $id_user)
+  public function selesai_keluar($id, $jml_org, $sb_iuran, $id_usr)
   {
-
+    $this->db->where('id_bpjs', $id);
     $data = array(
-      'kode_gajian' => $kode,
-      'bulan' => $bulan,
-      'tahun' => $tahun,
-      'ket_gajian' => $ket_gaji,
-      'id_user' => $id_user,
+      'total_orang' => $jml_org,
+      'total_bpjs' => $sb_iuran,
+      'id_usr' => $id_usr,
+      'status' => 'selesai',
       'date_update' => time()
     );
-    $this->db->insert('tb_gajian', $data);
+    $query = $this->db->update('tb_bpjs', $data);
+    return $query;
   }
 
   public function get_kode_pending()

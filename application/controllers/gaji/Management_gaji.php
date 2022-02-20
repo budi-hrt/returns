@@ -45,20 +45,20 @@ class Management_gaji extends CI_Controller
       $this->session->set_flashdata('message', 'kode');
     } else {
 
-      $result=array();
+      $result = array();
       foreach ($id_kry as $key => $value) {
-        $result[]=array(
-          'kode_gaji'=>$kode,
-          'id_kryn'=>$id_kry[$key],
+        $result[] = array(
+          'kode_gaji' => $kode,
+          'id_kryn' => $id_kry[$key],
           'terima_gp' => $t_gp[$key],
-         'terima_tj' => $t_tj[$key],
-         'terima_um' => $t_um[$key],
+          'terima_tj' => $t_tj[$key],
+          'terima_um' => $t_um[$key],
           'id_usr' => $id_user,
           'date_update' => time()
         );
       }
-      
-      
+
+
       $this->db->insert_batch('detil_gajian', $result);
       $this->gaji->simpan_gajian($kode, $bulan, $tahun, $ket_gaji, $id_user);
       redirect('gaji/management_gaji');
@@ -93,9 +93,9 @@ class Management_gaji extends CI_Controller
     $this->load->view('gaji/detil_gajian', $data);
   }
 
-public function kode_pending() {
-  $data['kode_pending'] = $this->gaji->get_kode_pending();
-        echo json_encode($data);
-}
-
+  public function kode_pending()
+  {
+    $data['kode_pending'] = $this->gaji->get_kode_pending();
+    echo json_encode($data);
+  }
 }

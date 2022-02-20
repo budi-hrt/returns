@@ -26,3 +26,4 @@
 <script src="<?= base_url('assets/'); ?>src/js/main.js"></script>
 <script src="<?= base_url('assets/'); ?>toastr/toastr.min.js"></script>
 <script src="<?= base_url('assets/jquery-ui-1.12.1/jquery-ui.js'); ?>"></script>
+<!-- <script src="<?= base_url('assets/src/js/tooltips.js'); ?>"></script> -->

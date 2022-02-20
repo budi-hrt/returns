@@ -1,11 +1,10 @@
 $(document).ready(function () {
 
   kode();
-  // Kategori
-  list_kategori();
-  // Subkategori
-  list_subkategori();
 
+  $('.money').mask('000.000.000.000.000', {
+    reverse: true
+  });
 
   // Autocomplate
   $("#karyawan").autocomplete({
@@ -34,6 +33,8 @@ $(document).ready(function () {
   });
 
   $('#bpjs_ks').on('input', function () {
+    // const ks = $('[name="bpjs_ks"]').val();
+    // console.log(ks);
     inputIuran();
   });
 
@@ -42,9 +43,7 @@ $(document).ready(function () {
   });
 
 
-  $('.money').mask('000.000.000.000.000', {
-    reverse: true
-  });
+
 
 
 
@@ -70,7 +69,7 @@ const cek_karyawan = (id_kry) => {
     },
     dataType: 'json',
     success: function (response) {
-      // console.log(response[0].type);
+      console.log(response[0].type);
       if (response[0].type == 'ada') {
         alert('Iuran Karyawan sudah di priode in !');
         $('[name="id_kry"]').val('');
@@ -93,11 +92,13 @@ const cek_karyawan = (id_kry) => {
 
 // === function input iuran
 const inputIuran = () => {
+
   let ks = normalisasi($('[name="bpjs_ks"]').val());
   let tk = normalisasi($('[name="bpjs_ktk"]').val());
   ks = isNaN(ks) ? 0 : ks
   tk = isNaN(tk) ? 0 : tk
-  let ttl = ks + tk;
+  ttl = ks + tk;
+  // ttl = isNaN(ttl) ? 0 : ttl
   $('[name="total"]').val(money(ttl));
 }
 
@@ -110,6 +111,7 @@ const kode = () => {
     dataType: 'json',
     success: function (data) {
       if (data[1].type == 'ada') {
+        $('input[name="id_iuran"]').val(data[0].kode.id_bpjs);
         $('input[name="kode_iuran_bpjs"]').val(data[0].kode.kode_bpjs);
         $('#bulan').val(0 + data[0].kode.bulan);
         $('#tahun').val(data[0].kode.tahun);
@@ -119,7 +121,7 @@ const kode = () => {
         $('#bulan').prop('disabled', true);
         $('#tahun').prop('disabled', true);
         $('#ket_bpjs').prop('readonly', true);
-        $(".judul").append("<b> => " + data[0].kode.kode_bpjs + "</b>.");
+        $(".judul").append("<b> => " + data[0].kode.kode_bpjs + "</b>");
         let kode = data[0].kode.kode_bpjs;
         list_iuran(kode);
         get_total(kode);
@@ -146,7 +148,9 @@ const get_total = (kode) => {
       let ks = normalisasi(data.total_ks);
       let ktk = normalisasi(data.total_ktk);
       total_iuran = ks + ktk;
-      $(".judul_total").append('<b class="text-success"> Rp.' + money(total_iuran) + '</b>.');
+      $(".judul_total").append('<b class="text-success"> Rp.' + money(total_iuran) + '</b>' + '<small><b> ( Jumlah karyawan : ' + data.total_orang + ' orang )</b></small>');
+      $('input[name="subtotal_iuran"]').val(total_iuran);
+      $('input[name="jumlah_orang"]').val(data.total_orang);
     }
   });
 }
@@ -168,18 +172,19 @@ const list_iuran = (kode) => {
         tk = isNaN(tk) ? 0 : tk
         let total = ks + tk;
         html += `  <tr>
+        <input type="hidden" class="idDetil"  value="`+ data[i].id + `">
                                   <td class="text-center">
                                       <div class="btn-group">
                                           <a class="item-edit mr-3" href="javascript:;" data="` + data[i].id + `"><i class="fa fa-pencil  text-success"></i></a>
-                                          <a class=" item-delete" href="javascript:;" data="` + data[i].id + `"><i class="fa fa-times  text-danger"></i></a>
-                                      </div>
-                                  </td>
+                                          <a class=" item-delete" href="javascript:;" data="` + data[i].id + `" data-nama="` + data[i].nama + `" > <i class="fa fa-times  text-danger"></i></a >
+                                      </div >
+                                  </td >
                                   <td class="text-center">`+ data[i].nama + `</td>
                                   <td class="text-right">` + money(ks) + `</td>
                                   <td class="text-right">` + money(tk) + `</td>
                                   <td class="text-right">` + money(total) + `</td>
                                   <td class="text-center">` + data[i].name + `</td>
-                              </tr>`;
+                              </tr > `;
 
       }
 
@@ -219,8 +224,27 @@ const tampil_edit = (data) => {
   $('[name="bpjs_ktk"]').val(money(tk));
   $('.hitung').show();
   $('.upah').hide();
+  $('#manual').prop('checked', true);
+  $('#otomatis').prop('checked', false);
+  $('#bpjs_ks').prop('readonly', false);
+  $('#bpjs_ktk').prop('readonly', false);
+  $('#reset').show();
+  $('#btn_selesai').hide();
   inputIuran();
 }
+
+
+// Function Hapus
+$('#list_iuran').on('click', '.item-delete', function () {
+  const id = $(this).attr('data');
+  const nama = $(this).attr('data-nama');
+  $(".nama_hapus").append("<b> " + nama + " ...?</b>");
+  $('input[name="idHapus"]').val(id);
+  $('#modal-hapusdetil').modal('show');
+
+});
+
+
 
 
 
@@ -230,6 +254,7 @@ $('#otomatis').on('click', function () {
   cari_upah(idKry);
 
 });
+
 $('#manual').on('click', function () {
   const idKry = $('#id_kry').val();
   $('#otomatis').prop('checked', false);
@@ -315,32 +340,97 @@ const money = (angka) => {
 }
 
 const normalisasi = (angka) => {
-  var a = angka.replace(".", "");
+
+  var a = angka.replaceAll(".", "");
   var angkaJadi = parseInt(a);
   return angkaJadi;
 }
 
 
 // Action =====
-const simpanDetil = (data) => {
+// const simpanDetil = (data) => {
+//   $.ajax({
+//     type: 'post',
+//     url: base_url + 'transaksi/stokAwal/simpanDetil',
+//     data: data,
+//     dataType: 'json',
+//     success: function (response) {
+//       if (response.success) {
+//         if (response.type === 'ok') {
+//           tampilDetil();
+//           $('#item').val('');
+//         } else {
+//           console.log(response.type);
+
+//         }
+//       }
+//     }
+//   })
+// }
+
+
+// reset update
+
+$('#reset').on('click', function () {
+  $('#form_bpjs').attr('action', base_url + 'gaji/bpjs/input_iuran');
+  $('input[name="id_detil"]').val('');
+  $('#id_kry').val('');
+  $('[name="karyawan"]').val('');
+  $('#karyawan').prop('readonly', false);
+  $('[name="bpjs_ks"]').val('');
+  $('[name="bpjs_ktk"]').val('');
+  $('.hitung').hide();
+  $('.upah').hide();
+  $('#manual').prop('checked', true);
+  $('#otomatis').prop('checked', false);
+  $('#bpjs_ks').prop('readonly', false);
+  $('#bpjs_ktk').prop('readonly', false);
+  $('#reset').hide();
+  $('#btn_selesai').show();
+  inputIuran();
+});
+
+
+// selesai & keluar
+
+$('#btn_selesai').on('click', function () {
+  let id = $('[name="id_iuran"]').val();
+  let jml_org = $('[name="jumlah_orang"]').val();
+  let sb_iuran = $('[name="subtotal_iuran"]').val();
+  let id_usr = $('[name="id_user"]').val();
+  data = {
+    id, jml_org, sb_iuran, id_usr
+  };
+  selesai_detil();
+  selesai_keluar(data);
+});
+
+const selesai_keluar = () => {
+
   $.ajax({
+    url: base_url + 'gaji/bpjs/selesai_keluar',
     type: 'post',
-    url: base_url + 'transaksi/stokAwal/simpanDetil',
     data: data,
     dataType: 'json',
     success: function (response) {
-      if (response.success) {
-        if (response.type === 'ok') {
-          tampilDetil();
-          $('#item').val('');
-        } else {
-          console.log(response.type);
-
-        }
+      console.log(response[0].type);
+      if (response[0].type == 'simpan') {
+        document.location.href = base_url + 'gaji/bpjs/';
+      } else if (response.type == 'error') {
+        console.log(response);
       }
     }
-  })
+  });
 }
 
-
-
+const selesai_detil = () => {
+  const idDetil = [];
+  $('.idDetil').each(function () {
+    idDetil.push($(this).val());
+  });
+  $.ajax({
+    type: 'post',
+    url: base_url + 'gaji/bpjs/selesai_detil',
+    data: { idDetil: idDetil }
+  });
+}
