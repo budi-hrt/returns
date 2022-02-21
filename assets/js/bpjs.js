@@ -5,6 +5,7 @@ $(document).ready(function () {
   $('.money').mask('000.000.000.000.000', {
     reverse: true
   });
+  // $(".dataTables_scrollBody").css('width', '102%');
 
   // Autocomplate
   $("#karyawan").autocomplete({
@@ -183,13 +184,25 @@ const list_iuran = (kode) => {
                                   <td class="text-right">` + money(ks) + `</td>
                                   <td class="text-right">` + money(tk) + `</td>
                                   <td class="text-right">` + money(total) + `</td>
-                                  <td class="text-center">` + data[i].name + `</td>
+                                  <td class="text-center"><label style="font-size:7pt;">` + data[i].name + `</label></td>
                               </tr > `;
 
       }
 
       $('#list_iuran').html(html);
-      $('#table-iuran').DataTable();
+      $('#table-iuran').DataTable({
+        "bLengthChange": false,
+        "bPaginate": false,
+        "bFilter": true,
+        "bSort": true,
+        "bInfo": true,
+        "bAutoWidth": false,
+        "sScrollY": "330px",
+        "sScrollX": "100%",
+        "sPaginationType": "full_numbers",
+        "bRetrieve": true,
+        "bScrollCollapse": true,
+      });
     }
   });
 }
@@ -238,7 +251,8 @@ const tampil_edit = (data) => {
 $('#list_iuran').on('click', '.item-delete', function () {
   const id = $(this).attr('data');
   const nama = $(this).attr('data-nama');
-  $(".nama_hapus").append("<b> " + nama + " ...?</b>");
+  $('.nama_hapus').text('');
+  $(".nama_hapus").append( nama + " ...?");
   $('input[name="idHapus"]').val(id);
   $('#modal-hapusdetil').modal('show');
 
@@ -405,7 +419,7 @@ $('#btn_selesai').on('click', function () {
   selesai_keluar(data);
 });
 
-const selesai_keluar = () => {
+const selesai_keluar = (data) => {
 
   $.ajax({
     url: base_url + 'gaji/bpjs/selesai_keluar',

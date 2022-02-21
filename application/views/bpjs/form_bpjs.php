@@ -62,7 +62,9 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="keterangan">Keterangan</label>
-                                        <input class="form-control form-control-sm input-app" name="ket_bpjs" id="ket_bpjs" type="text" placeholder="Singkat dan jelas..." autocomplete="off" required>
+                                        <input class="form-control form-control-sm input-app" name="ket_bpjs"
+                                            id="ket_bpjs" type="text" placeholder="Singkat dan jelas..."
+                                            autocomplete="off" required>
                                     </div>
                                 </div>
                             </div>
@@ -76,18 +78,21 @@
                                             <span class="fa fa-search form-control-feedback "></span>
                                             <input type="hidden" name="id_kry" id="id_kry">
 
-                                            <input type="text" class="form-control flat input-app" name="karyawan" id="karyawan" placeholder="Cari Karyawan..." required>
+                                            <input type="text" class="form-control flat input-app" name="karyawan"
+                                                id="karyawan" placeholder="Cari Karyawan..." required>
                                         </div>
                                     </div>
                                     <div class="form-group row hitung" style="display: none;">
                                         <label class="col-md-3 col-form-label" for="is_active">Hitung Iuran</label>
                                         <div class="col-md-9">
                                             <div class="form-check checkbox">
-                                                <input class="form-check-input" name="manual" id="manual" type="checkbox" value="1" checked>
+                                                <input class="form-check-input" name="manual" id="manual"
+                                                    type="checkbox" value="1" checked>
                                                 <label class="form-check-label" for="manual">Manual</label>
                                             </div>
                                             <div class="form-check checkbox">
-                                                <input class="form-check-input otomatis" name="otomatis" id="otomatis" type="checkbox" value="">
+                                                <input class="form-check-input otomatis" name="otomatis" id="otomatis"
+                                                    type="checkbox" value="">
                                                 <label class="form-check-label" for="otomatis">Otomatis</label>
                                             </div>
                                         </div>
@@ -97,26 +102,31 @@
 
                                         <label class="col-md-3 col-form-label" for="gaji">Upah</label>
                                         <div class="col-md-6">
-                                            <input type="text" class="form-control flat  text-right input-app" name="upah" readonly>
+                                            <input type="text" class="form-control flat  text-right input-app"
+                                                name="upah" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-md-3 col-form-label" for="bps_ks">Bpjs
                                             <small>Kesehatan</small></label>
                                         <div class="col-md-6">
-                                            <input type="text" class="form-control flat text-right input-app money" name="bpjs_ks" id="bpjs_ks" required autocomplete="off">
+                                            <input type="text" class="form-control flat text-right input-app money"
+                                                name="bpjs_ks" id="bpjs_ks" required autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-md-3 col-form-label" for="bpjs_ktk">Bpjs KTK</label>
                                         <div class="col-md-6">
-                                            <input type="text" class="form-control flat text-right input-app money" name="bpjs_ktk" id="bpjs_ktk" required>
+                                            <input type="text" class="form-control flat text-right input-app money"
+                                                name="bpjs_ktk" id="bpjs_ktk" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-md-3 col-form-label" for="total"><b>TOTAL IURAN</b></label>
                                         <div class="col-md-6">
-                                            <input type="text" class="form-control flat text-right" style="font-weight: bold;font-size:medium;" name="total" id="total" readonly>
+                                            <input type="text" class="form-control flat text-right"
+                                                style="font-weight: bold;font-size:medium;" name="total" id="total"
+                                                readonly>
                                         </div>
                                     </div>
 
@@ -130,7 +140,8 @@
                                 <i class="fa fa-floppy-o"></i> Simpan & lanjutkan</button>
                             <button class="btn btn-sm btn-danger flat" type="button" id="btn_selesai">
                                 <i class="fa fa-check-square-o"></i> Selesai & keluar </button>
-                            <button class="btn btn-sm btn-warning flat" type="button" id="reset" style="display: none;"> <i class="fa fa-repeat"></i> Batal Update</button>
+                            <button class="btn btn-sm btn-warning flat" type="button" id="reset" style="display: none;">
+                                <i class="fa fa-repeat"></i> Batal Update</button>
                         </div>
                         </form>
                     </div>
@@ -154,11 +165,12 @@
                             <!-- inpit hidden 2-->
                             <input type="hidden" name="subtotal_iuran">
                             <input type="hidden" name="jumlah_orang">
-                            <table class="table table-responsive-sm table-bordered  table-sm" id="table-iuran">
+                            <table class="table table-responsive-sm table-bordered  table-sm dataTables_scrollBody"
+                                id="table-iuran" style="margin-left: 0px; width: 815px;">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th class="text-center"> Action</th>
-                                        <th class="text-center" width="20px">Nama</th>
+                                        <th class="text-center" width="35px"> Action</th>
+                                        <th class="text-center">Nama</th>
                                         <th>Bpjs KS</th>
                                         <th>Bpjs KTK</th>
                                         <th>Total Iuran</th>
@@ -184,24 +196,25 @@
 
 <!-- Modal Kategori-->
 <!-- Modal Hapus -->
-<div class="modal fade" id="modal-hapusdetil" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-hapusdetil" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-danger" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h6 class="modal-title">Konfirmasi hapus data</h6>
+        <div class="modal-content modal-app">
+            <div class="modal-header  modal-header-app flat">
+                <h6 class=" modal-title">Konfirmasi hapus data</h6>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body flat">
                 <?= form_open('gaji/bpjs/hapus_detil', 'id="form_hapus"'); ?>
 
-                <h5 class="nama_hapus">Yakin menghapus data iuran <b class="text-success">BPJS</b> -></h5>
+                <h6>Yakin membatalkan iuran <b class="text-success">BPJS</b> -><b class="nama_hapus"></b></h6>
                 <input name="idHapus" id="idHapus" type="hidden">
             </div>
             <div class="modal-footer">
-                <button class="btn btn-danger btn-sm flat" type="submit" id="btn-hapus">Ya Hapus !</button>
-                <button class="btn btn-success btn-sm flat" type="button" data-dismiss="modal">Batal hapus</button>
+                <button class="btn btn-danger btn-sm flat" type="submit" id="btn-hapus">Ya, batalkan !</button>
+                <button class="btn btn-success btn-sm flat" type="button" data-dismiss="modal">Tutup</button>
             </div>
             </form>
         </div>
