@@ -198,4 +198,11 @@ class Bpjs extends CI_Controller
     $data['kode_pending'] = $this->gaji->get_kode_pending();
     echo json_encode($data);
   }
+
+
+  public function tampil_copy()
+  {
+    $data = $this->bpjs->get_bpjs()->result();
+    echo json_encode($data);
+  }
 }

@@ -164,6 +164,7 @@ const list_iuran = (kode) => {
     data: { kode: kode },
     dataType: 'json',
     success: function (data) {
+      console.log(data);
       var html = '';
       var i;
       for (i = 0; i < data.length; i++) {
@@ -252,7 +253,7 @@ $('#list_iuran').on('click', '.item-delete', function () {
   const id = $(this).attr('data');
   const nama = $(this).attr('data-nama');
   $('.nama_hapus').text('');
-  $(".nama_hapus").append( nama + " ...?");
+  $(".nama_hapus").append(nama + " ...?");
   $('input[name="idHapus"]').val(id);
   $('#modal-hapusdetil').modal('show');
 
@@ -361,26 +362,6 @@ const normalisasi = (angka) => {
 }
 
 
-// Action =====
-// const simpanDetil = (data) => {
-//   $.ajax({
-//     type: 'post',
-//     url: base_url + 'transaksi/stokAwal/simpanDetil',
-//     data: data,
-//     dataType: 'json',
-//     success: function (response) {
-//       if (response.success) {
-//         if (response.type === 'ok') {
-//           tampilDetil();
-//           $('#item').val('');
-//         } else {
-//           console.log(response.type);
-
-//         }
-//       }
-//     }
-//   })
-// }
 
 
 // reset update
@@ -446,5 +427,52 @@ const selesai_detil = () => {
     type: 'post',
     url: base_url + 'gaji/bpjs/selesai_detil',
     data: { idDetil: idDetil }
+  });
+}
+
+
+$('#copy_data').on('click', function () {
+  $('#modal-copy').modal('show');
+  tampil_copy()
+});
+
+const tampil_copy = () => {
+  $.ajax({
+    url: base_url + 'gaji/bpjs/tampil_copy',
+    dataType: 'json',
+    success: function (data) {
+      console.log(data);
+      var html = '';
+      var i;
+      for (i = 0; i < data.length; i++) {
+        html += `  <tr>
+        <input type="hidden" class="idDetil"  value="`+ data[i].id_bpjs + `">
+                                  <td class="text-center">
+                                      <div class="btn-group">
+                                          <a class="item-edit mr-3" href="javascript:;" data="` + data[i].id_bpjs + `"><i class="fa fa-pencil  text-success"></i></a>
+                                      </div >
+                                  </td >
+                                  <td class="text-center">`+ data[i].ket_bpjs + `</td>
+                                  <td class="text-right">` + data[i].bulan + `-` + data[i].tahun + `</td>
+                                  <td class="text-right">` + data[i].total_bpjs + `</td>
+                              </tr > `;
+
+      }
+
+      $('#list_copy').html(html);
+      $('#table-copy').DataTable({
+        "bLengthChange": false,
+        "bPaginate": false,
+        "bFilter": true,
+        "bSort": true,
+        "bInfo": true,
+        "bAutoWidth": false,
+        "sScrollY": "330px",
+        "sScrollX": "100%",
+        "sPaginationType": "full_numbers",
+        "bRetrieve": true,
+        "bScrollCollapse": true,
+      });
+    }
   });
 }
