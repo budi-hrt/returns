@@ -235,10 +235,6 @@
 
                     </tbody>
                 </table>
-                <!-- <div class="modal-footer">
-                    <button class="btn btn-danger btn-sm flat" type="submit" id="btn-hapus">Ya, batalkan !</button>
-                    <button class="btn btn-success btn-sm flat" type="button" data-dismiss="modal">Tutup</button>
-                </div> -->
 
             </div>
             <!-- /.modal-content-->
@@ -247,10 +243,91 @@
     </div>
 
 
-    <?php $this->load->view('template/footer'); ?>
-    <script src="<?= base_url('assets/mask-input/jquery.mask.min.js'); ?>"></script>
-    <script src="<?= base_url('assets/js/bpjs.js'); ?>"></script>
+</div>
+
+
+<div class="modal fade" id="modal-copy_detil" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-app">
+            <div class="modal-header  modal-header-app flat">
+                <h6 class=" modal-title">Pilih Priode Iuran</h6>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body flat">
+                <h6>Copy data <b class="text-success"> BPJS</b><b class="judul_copy"></b> ke priode... <i class="fa fa-hand-o-down text-info" aria-hidden="true"></i></h6>
+                <?= form_open('gaji/bpjs/copy_detil', 'id="form_copy"'); ?>
+                <input name="kd" id="kd" type="hidden">
+                <input type="hidden" name="id_user_copy" id="id_user_copy" value="<?= $user['id']; ?>">
+
+                <div class="row align-items-center">
+                    <div class="form-group col-sm-3">
+                        <label for="ccmonth">Bulan</label>
+                        <select class="form-control form-control-sm input-app" name="bulan_copy" id="bulan_copy" required>
+                            <option selected="selected" value="">Pilih</option>
+                            <?php
+                            $bln = array(1 => "Januari", "Februari", "Maret", "April", "Mei", "Juni", "July", "Agustus", "September", "Oktober", "November", "Desember");
+                            for ($bulan = 1; $bulan <= 12; $bulan++) {
+                                if ($bulan <= 9) {
+                                    echo "<option value='0$bulan'>$bln[$bulan]</option>";
+                                } else {
+                                    echo "<option value='$bulan'>$bln[$bulan]</option>";
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="tahun">Tahun</label>
+                        <select class="form-control form-control-sm input-app" name="tahun_copy" id="tahun_copy" required>
+                            <option value="<?= date('Y'); ?>" selected><?= date('Y'); ?></option>
+                            <?php for ($i = date('Y'); $i >= 2017; $i--) {
+                                echo "<option value='$i'> $i </option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="keterangan">Keterangan</label>
+                            <input class="form-control form-control-sm input-app" name="ket_bpjs_copy" id="ket_bpjs_copy" type="text" placeholder="Singkat dan jelas..." autocomplete="off" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: none;">
+                    <table class="table table-responsive-sm table-bordered  table-sm " id="table-copy_detil">
+                        <thead class="thead-light">
+                            <tr>
+                                <th class="text-center"> Id</th>
+                                <th class="text-center">Bpjs Ks</th>
+                                <th>Bpjs Ktk</th>
+                            </tr>
+                        </thead>
+                        <tbody id="list_copy_detil">
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-sm flat" type="submit" id="btn-copy">Ya, copy data !</button>
+                    <button class="btn btn-danger btn-sm flat" type="button" data-dismiss="modal">Tutup</button>
+                </div>
+
+            </div>
+            <!-- /.modal-content-->
+        </div>
+        <!-- /.modal-dialog-->
+    </div>
+
+</div>
+
+
+<?php $this->load->view('template/footer'); ?>
+<script src="<?= base_url('assets/mask-input/jquery.mask.min.js'); ?>"></script>
+<script src="<?= base_url('assets/js/bpjs.js'); ?>"></script>
 
 
 
-    <?php $this->load->view('template/footHtml'); ?>
+<?php $this->load->view('template/footHtml'); ?>

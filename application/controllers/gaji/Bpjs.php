@@ -205,4 +205,32 @@ class Bpjs extends CI_Controller
     $data = $this->bpjs->get_bpjs()->result();
     echo json_encode($data);
   }
+
+  public function copy_detil()
+  {
+    $kode = $_POST['kd'];
+    $id_user = $_POST['id_user_copy'];
+    $bulan = $_POST['bulan_copy'];
+    $tahun = $_POST['tahun_copy'];
+    $ket = $_POST['ket_bpjs_copy'];
+    $id_kry = $_POST['id_kry_copy'];
+    $ks = $_POST['ks'];
+    $ktk = $_POST['ktk'];
+    $result = array();
+    foreach ($id_kry as $key => $value) {
+      $result[] = array(
+        'kode_iuran_bpjs' => $kode,
+        'bulan' => $bulan,
+        'tahun' => $tahun,
+        'id_kry_bpjs' => $id_kry[$key],
+        'bpjs_kesehatan' => $ks[$key],
+        'bpjs_ktk' => $ktk[$key],
+        'id_usr' => $id_user,
+        'date_update' => time()
+      );
+    }
+    $this->bpjs->simpan_tb($kode, $bulan, $tahun, $ket, $id_user);
+    $this->db->insert_batch('detil_bpjs', $result);
+    redirect('gaji/bpjs/form_bpjs');
+  }
 }

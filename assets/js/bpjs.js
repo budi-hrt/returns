@@ -34,8 +34,6 @@ $(document).ready(function () {
   });
 
   $('#bpjs_ks').on('input', function () {
-    // const ks = $('[name="bpjs_ks"]').val();
-    // console.log(ks);
     inputIuran();
   });
 
@@ -70,7 +68,6 @@ const cek_karyawan = (id_kry) => {
     },
     dataType: 'json',
     success: function (response) {
-      console.log(response[0].type);
       if (response[0].type == 'ada') {
         alert('Iuran Karyawan sudah di priode in !');
         $('[name="id_kry"]').val('');
@@ -122,6 +119,7 @@ const kode = () => {
         $('#bulan').prop('disabled', true);
         $('#tahun').prop('disabled', true);
         $('#ket_bpjs').prop('readonly', true);
+        $('#copy_data').hide();
         $(".judul").append("<b> => " + data[0].kode.kode_bpjs + "</b>");
         let kode = data[0].kode.kode_bpjs;
         list_iuran(kode);
@@ -132,8 +130,6 @@ const kode = () => {
         list_iuran(kode);
 
       }
-      // const kode = data[0].kode.ket_bpjs;
-      // console.log(data[0].kode);
 
     }
   });
@@ -164,7 +160,6 @@ const list_iuran = (kode) => {
     data: { kode: kode },
     dataType: 'json',
     success: function (data) {
-      console.log(data);
       var html = '';
       var i;
       for (i = 0; i < data.length; i++) {
@@ -408,11 +403,9 @@ const selesai_keluar = (data) => {
     data: data,
     dataType: 'json',
     success: function (response) {
-      console.log(response[0].type);
       if (response[0].type == 'simpan') {
         document.location.href = base_url + 'gaji/bpjs/';
       } else if (response.type == 'error') {
-        console.log(response);
       }
     }
   });
@@ -441,18 +434,16 @@ const tampil_copy = () => {
     url: base_url + 'gaji/bpjs/tampil_copy',
     dataType: 'json',
     success: function (data) {
-      console.log(data);
       var html = '';
       var i;
       for (i = 0; i < data.length; i++) {
         html += `  <tr>
-        <input type="hidden" class="idDetil"  value="`+ data[i].id_bpjs + `">
                                   <td class="text-center">
                                       <div class="btn-group">
-                                          <a class="item-edit mr-3" href="javascript:;" data="` + data[i].id_bpjs + `"><i class="fa fa-pencil  text-success"></i></a>
+                                          <a class="item-copy mr-3" href="javascript:;" data="` + data[i].kode_bpjs + `" data-ket="` + data[i].ket_bpjs + `"><i class="fa fa-copy  text-success"></i></a>
                                       </div >
                                   </td >
-                                  <td class="text-center">`+ data[i].ket_bpjs + `</td>
+                                  <td class="text-center">` + data[i].ket_bpjs + `</td>
                                   <td class="text-right">` + data[i].bulan + `-` + data[i].tahun + `</td>
                                   <td class="text-right">` + data[i].total_bpjs + `</td>
                               </tr > `;
@@ -476,3 +467,43 @@ const tampil_copy = () => {
     }
   });
 }
+
+
+$('#list_copy').on('click', '.item-copy', function () {
+  const nomor_bpjs = $(this).attr('data');
+  const ket = $(this).attr('data-ket');
+  const kd = $('input[name="kode_iuran_bpjs"]').val();
+  $('input[name="kd"]').val(kd);
+  $('.judul_copy').text('');
+  $('.judul_copy').append(' => ' + ket + '');
+  tampil_copy_detil(nomor_bpjs);
+});
+
+const tampil_copy_detil = (kode) => {
+  $.ajax({
+    url: base_url + 'gaji/bpjs/list_iuran',
+    type: 'get',
+    data: { kode: kode },
+    dataType: 'json',
+    success: function (data) {
+      let kd = $('input[name="kode_iuran_bpjs"]').val();
+      let html = '';
+      let i;
+      for (i = 0; i < data.length; i++) {
+        html += `  <tr>
+                      <td>
+                          <input type="hidden"  name="id_kry_copy[]"  value="`+ data[i].id_kry_bpjs + `">
+                          <input type="hidden" " name="ks[]"  value="`+ data[i].bpjs_kesehatan + `">
+                          <input type="hidden" " name="ktk[]"  value="`+ data[i].bpjs_ktk + `">
+                      </td>
+                    </tr > `;
+      }
+      $('#list_copy_detil').html(html);
+      console.log(data);
+      $('#kd').val(kd);
+      $('#modal-copy').modal('hide');
+      $('#modal-copy_detil').modal('show');
+    }
+  });
+}
+
