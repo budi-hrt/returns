@@ -5,7 +5,7 @@ class Bpjs_model extends CI_model
 {
   public function get_bpjs()
   {
-    $this->db->select('b.id_bpjs,b.kode_bpjs,b.bulan,b.tahun,b.ket_bpjs,b.total_bpjs,b.id_usr,u.name,b.date_update');
+    $this->db->select('b.id_bpjs,b.kode_bpjs,b.bulan,b.tahun,b.ket_bpjs,b.total_bpjs,b.id_usr,u.name,b.date_update,b.status');
     $this->db->from('tb_bpjs b');
     $this->db->join('user u', 'u.id=b.id_usr', 'left');
     $this->db->order_by('b.id_bpjs', 'asc');
@@ -230,5 +230,17 @@ class Bpjs_model extends CI_model
     } else {
       return false;
     }
+  }
+
+
+
+  public function update_status($id)
+  {
+    $this->db->where('id_bpjs', $id);
+    $data = array(
+      'status' => 'pending'
+    );
+    $query = $this->db->update('tb_bpjs', $data);
+    return $query;
   }
 }

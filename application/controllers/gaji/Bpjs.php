@@ -19,22 +19,69 @@ class Bpjs extends CI_Controller
     $data['title'] = 'Iuran BPJS';
     $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
     $data['bpjs'] = $this->bpjs->get_bpjs()->result_array();
-    // $data['detil'] = $this->gaji->get_detil_gaji()->result_array();
-    // $data['kode'] = $this->gaji->kode_gajian();
-    // $data['list_gaji'] = $this->gaji->get_list()->result_array();
     $this->load->view('template/header', $data);
     $this->load->view('template/sidebar', $data);
     $this->load->view('bpjs/index', $data);
   }
+
+
+  public function cek_pending()
+  {
+    $cek = $this->db->get_where('tb_bpjs', ['status' => 'pending']);
+    if ($cek->num_rows() <> 0) {
+      $msg['success'] = false;
+      $msg['type'] = 'ada';
+      $msg['success'] = true;
+      echo json_encode([$msg]);
+    } else {
+      $msg['success'] = false;
+      $msg['type'] = 'blm';
+      $msg['success'] = true;
+      echo json_encode([$msg]);
+    }
+  }
+  public function cek_update()
+  {
+    $id = $this->input->get('id_bpjs');
+    $status = $this->input->get('sts');
+    $cek = $this->db->get_where('tb_bpjs', ['id_bpjs' => $id, 'status' => 'pending']);
+    $msg['success'] = false;
+    if ($cek->num_rows() <> 0) {
+      $msg['type'] = 'sama';
+      $msg['success'] = true;
+      echo json_encode([$msg]);
+    } else {
+      $cek2 = $this->db->get_where('tb_bpjs', ['status' => 'pending']);
+      if ($cek2->num_rows() <> 0) {
+        $msg['type'] = 'ada_tdk_sama';
+        $msg['success'] = true;
+        echo json_encode([$msg]);
+      } else {
+        $msg['type'] = 'blm';
+        $msg['success'] = true;
+        echo json_encode([$msg]);
+      }
+    }
+  }
+
+  public function update_status()
+  {
+    $id = $this->input->post('data_id');
+    $result = $this->bpjs->update_status($id);
+    $msg['success'] = false;
+    if ($result) {
+      $msg['type'] = 'ok';
+      $msg['success'] = true;
+      echo json_encode([$msg]);
+    }
+  }
+
 
   public function form_bpjs()
   {
     $data['title'] = 'Form BPJS';
     $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
     $data['karyawan'] = $this->karyawan->get_all()->result_array();
-    // $data['detil'] = $this->gaji->get_detil_gaji()->result_array();
-    // $data['kode'] = $this->gaji->kode_gajian();
-    // $data['list_gaji'] = $this->gaji->get_list()->result_array();
     $this->load->view('template/header_m', $data);
     $this->load->view('template/sidebar', $data);
     $this->load->view('bpjs/form_bpjs', $data);
