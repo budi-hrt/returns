@@ -261,6 +261,7 @@ $('#list_iuran').on('click', '.item-delete', function () {
 $('#otomatis').on('click', function () {
   const idKry = $('#id_kry').val();
   $('#manual').prop('checked', false);
+  $('.tambahan').show();
   cari_upah(idKry);
 
 });
@@ -276,6 +277,11 @@ $('#manual').on('click', function () {
   document.getElementById("bpjs_ks").focus();
 });
 
+$('#tambahan').on('change',function(){
+  // const tbhn = $('#tambahan').find(':selected').val();
+  const idKry = $('#id_kry').val();
+  cari_upah(idKry);
+});
 
 const cari_upah = (idKry) => {
   $.ajax({
@@ -326,14 +332,17 @@ const hitung_upah = (data) => {
 const hitungTotal = (upah) => {
   // var uph = parseInt($('[name="upah"]').val());
 
+  let tambahan=parseInt($('#tambahan').find(':selected').val());
+  tmb = isNaN(tambahan) ? 0 : tambahan
   upah = isNaN(upah) ? 0 : upah
-
-  const iurBpjsKs = upah * 1 / 100;
+  const iurBpjsKs = upah * 1  / 100;
+  const tmbhks = upah * tmb / 100;
+  const iurKesehatan= iurBpjsKs + tmbhks;
   const iurBpjsKtk = upah * 3 / 100;
-  const ttlIuran = iurBpjsKs + iurBpjsKtk;
+  const ttlIuran = iurKesehatan + iurBpjsKtk;
   // let ttl=ttlIuran.toFixed(0);
   // let ttlIur= ttl.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
-  $('[name="bpjs_ks"]').val(money(iurBpjsKs));
+  $('[name="bpjs_ks"]').val(money(iurKesehatan));
   $('[name="bpjs_ktk"]').val(money(iurBpjsKtk));
   $('[name="total"]').val(money(ttlIuran));
 
