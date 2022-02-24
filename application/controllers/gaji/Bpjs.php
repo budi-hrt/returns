@@ -161,17 +161,19 @@ class Bpjs extends CI_Controller
     $tahun_hide = $this->input->post('tahun_hide');
     $ket = $this->input->post('ket_bpjs');
     $id_kry = $this->input->post('id_kry');
+    $type = $this->input->post('type');
     $bpjs_ks = str_replace('.', '', $this->input->post('bpjs_ks'));
+    $tambahan =  $this->input->post('tambahan');
     $bpjs_ktk = str_replace('.', '', $this->input->post('bpjs_ktk'));
     $total = str_replace('.', '', $this->input->post('total'));
     $id_user = $this->input->post('id_user');
     $cek = $this->db->get_where('tb_bpjs', ['kode_bpjs' => $kode]);
     if ($cek->num_rows() <> 0) {
-      $this->bpjs->simpan_detil_bpjs2($kode, $bulan_hide, $tahun_hide, $id_kry, $bpjs_ks, $bpjs_ktk, $id_user);
+      $this->bpjs->simpan_detil_bpjs2($kode, $bulan_hide, $tahun_hide, $id_kry, $bpjs_ks, $bpjs_ktk, $tambahan, $type, $id_user);
       redirect('gaji/bpjs/form_bpjs');
     } else {
       $this->bpjs->simpan_tb($kode, $bulan, $tahun, $ket, $id_user);
-      $this->bpjs->simpan_detil_bpjs($kode, $bulan, $tahun, $id_kry, $bpjs_ks, $bpjs_ktk, $id_user);
+      $this->bpjs->simpan_detil_bpjs($kode, $bulan, $tahun, $id_kry, $bpjs_ks, $bpjs_ktk, $tambahan, $type, $id_user);
       redirect('gaji/bpjs/form_bpjs');
     }
   }
@@ -180,9 +182,11 @@ class Bpjs extends CI_Controller
   {
     $id = $this->input->post('id_detil');
     $bpjs_ks = str_replace('.', '', $this->input->post('bpjs_ks'));
+    $tambahan =  $this->input->post('tambahan');
     $bpjs_ktk = str_replace('.', '', $this->input->post('bpjs_ktk'));
+    $type = $this->input->post('type');
     $id_user = $this->input->post('id_user');
-    $this->bpjs->update_detil($id, $bpjs_ks, $bpjs_ktk, $id_user);
+    $this->bpjs->update_detil($id, $bpjs_ks, $bpjs_ktk, $tambahan, $type, $id_user);
     redirect('gaji/bpjs/form_bpjs');
   }
 

@@ -128,7 +128,7 @@ class Bpjs_model extends CI_model
     $this->db->insert('tb_bpjs', $data);
   }
 
-  public function simpan_detil_bpjs($kode, $bulan, $tahun, $id_kry, $bpjs_ks, $bpjs_ktk, $id_user)
+  public function simpan_detil_bpjs($kode, $bulan, $tahun, $id_kry, $bpjs_ks, $bpjs_ktk, $tambahan, $type, $id_user)
   {
     $data = array(
       'kode_iuran_bpjs' => $kode,
@@ -137,12 +137,14 @@ class Bpjs_model extends CI_model
       'id_kry_bpjs' => $id_kry,
       'bpjs_kesehatan' => $bpjs_ks,
       'bpjs_ktk' => $bpjs_ktk,
+      'tambahan' => $tambahan,
+      'type' => $type,
       'id_usr' => $id_user,
       'date_update' => time()
     );
     $this->db->insert('detil_bpjs', $data);
   }
-  public function simpan_detil_bpjs2($kode, $bulan_hide, $tahun_hide, $id_kry, $bpjs_ks, $bpjs_ktk, $id_user)
+  public function simpan_detil_bpjs2($kode, $bulan_hide, $tahun_hide, $id_kry, $bpjs_ks, $bpjs_ktk, $tambahan, $type, $id_user)
   {
     $data = array(
       'kode_iuran_bpjs' => $kode,
@@ -151,6 +153,8 @@ class Bpjs_model extends CI_model
       'id_kry_bpjs' => $id_kry,
       'bpjs_kesehatan' => $bpjs_ks,
       'bpjs_ktk' => $bpjs_ktk,
+      'tambahan' => $tambahan,
+      'type' => $type,
       'id_usr' => $id_user,
       'date_update' => time()
     );
@@ -161,7 +165,7 @@ class Bpjs_model extends CI_model
   public function get_detil($id)
   {
 
-    $this->db->select('d.id_detil_bpjs as id ,d.id_kry_bpjs,d.bpjs_kesehatan,d.bpjs_ktk,k.nama_karyawan as nama,u.name');
+    $this->db->select('d.id_detil_bpjs as id ,d.id_kry_bpjs,d.bpjs_kesehatan,d.bpjs_ktk,d.tambahan,d.type,k.nama_karyawan as nama,u.name');
     $this->db->from('detil_bpjs d');
     $this->db->join('tb_karyawan k', 'k.id_karyawan=d.id_kry_bpjs');
     $this->db->join('user u', 'u.id=d.id_usr');
@@ -174,12 +178,14 @@ class Bpjs_model extends CI_model
     }
   }
 
-  public function update_detil($id, $bpjs_ks, $bpjs_ktk, $id_user)
+  public function update_detil($id, $bpjs_ks, $bpjs_ktk, $tambahan, $type, $id_user)
   {
     $this->db->where('id_detil_bpjs', $id);
     $data = array(
       'bpjs_kesehatan' => $bpjs_ks,
       'bpjs_ktk' => $bpjs_ktk,
+      'tambahan' => $tambahan,
+      'type' => $type,
       'id_usr' => $id_user,
       'date_update' => time()
     );

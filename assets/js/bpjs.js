@@ -74,12 +74,14 @@ const cek_karyawan = (id_kry) => {
         $('[name="karyawan"]').val('');
       } else if (response[0].type == 'blm') {
         document.getElementById("bpjs_ks").focus();
+        $('input[name="type"]').val('manual');
         $('.hitung').show();
         $('.upah').hide();
         var upah = parseInt($('[name="upah"]').val());
         // === hitung total ===
         hitungTotal(upah);
         //==== akhir hitung total =====
+
       }
     }
 
@@ -222,6 +224,27 @@ const get_detil = (id) => {
 }
 
 const tampil_edit = (data) => {
+
+  if (data.type == 'manual') {
+    $('#manual').prop('checked', true);
+    $('#otomatis').prop('checked', false);
+    $('#bpjs_ks').prop('readonly', false);
+    $('#bpjs_ktk').prop('readonly', false);
+    $('.upah').hide();
+    $('.tambahan').hide();
+  } else if (data.type == 'auto') {
+    let idKry = data.id_kry_bpjs;
+    $('#manual').prop('checked', false);
+    $('#otomatis').prop('checked', true);
+    // $('#bpjs_ks').prop('readonly', true);
+    // $('#bpjs_ktk').prop('readonly', true);
+    // $('.upah').show();
+    // $('.tambahan').show();
+    cari_upah(idKry);
+    $('#tambahan').val(data.tambahan);
+  }
+
+  $('#type').val(data.type);
   let ks = parseInt(data.bpjs_kesehatan);
   let tk = parseInt(data.bpjs_ktk);
   $('#form_bpjs').attr('action', base_url + 'gaji/bpjs/update_detil');
@@ -232,13 +255,9 @@ const tampil_edit = (data) => {
   $('[name="bpjs_ks"]').val(money(ks));
   $('[name="bpjs_ktk"]').val(money(tk));
   $('.hitung').show();
-  $('.upah').hide();
-  $('#manual').prop('checked', true);
-  $('#otomatis').prop('checked', false);
-  $('#bpjs_ks').prop('readonly', false);
-  $('#bpjs_ktk').prop('readonly', false);
   $('#reset').show();
   $('#btn_selesai').hide();
+
   inputIuran();
 }
 
@@ -259,9 +278,9 @@ $('#list_iuran').on('click', '.item-delete', function () {
 
 
 $('#otomatis').on('click', function () {
+
   const idKry = $('#id_kry').val();
   $('#manual').prop('checked', false);
-  $('.tambahan').show();
   cari_upah(idKry);
 
 });
@@ -270,14 +289,21 @@ $('#manual').on('click', function () {
   const idKry = $('#id_kry').val();
   $('#otomatis').prop('checked', false);
   $('.upah').hide();
+  $('.tambahan').hide();
+  $('#tambahan').val('');
+  $('#tambahan').find(':selected').val('');
   var upah = $('[name="upah"]').val('');
   hitungTotal(upah);
   $('#bpjs_ks').prop('readonly', false);
   $('#bpjs_ktk').prop('readonly', false);
   document.getElementById("bpjs_ks").focus();
+  $('input[name="type"]').val('manual');
+  let type = $('#type').val();
+  console.log(type);
+
 });
 
-$('#tambahan').on('change',function(){
+$('#tambahan').on('change', function () {
   // const tbhn = $('#tambahan').find(':selected').val();
   const idKry = $('#id_kry').val();
   cari_upah(idKry);
@@ -314,6 +340,7 @@ const hitung_upah = (data) => {
     $('#manual').prop('checked', true);
     $('#otomatis').prop('checked', false);
     $('.upah').hide();
+    $('.tambahan').hide();
     $('#bpjs_ks').prop('readonly', false);
     $('#bpjs_ktk').prop('readonly', false);
     document.getElementById("bpjs_ks").focus();
@@ -321,9 +348,11 @@ const hitung_upah = (data) => {
   } else {
     $('[name="upah"]').val(money(upah));
     $('.upah').show();
+    $('.tambahan').show();
     hitungTotal(upah);
     $('#bpjs_ks').prop('readonly', true);
     $('#bpjs_ktk').prop('readonly', true);
+    $('input[name="type"]').val('auto');
   }
 }
 
@@ -332,12 +361,12 @@ const hitung_upah = (data) => {
 const hitungTotal = (upah) => {
   // var uph = parseInt($('[name="upah"]').val());
 
-  let tambahan=parseInt($('#tambahan').find(':selected').val());
+  let tambahan = parseInt($('#tambahan').find(':selected').val());
   tmb = isNaN(tambahan) ? 0 : tambahan
   upah = isNaN(upah) ? 0 : upah
-  const iurBpjsKs = upah * 1  / 100;
+  const iurBpjsKs = upah * 1 / 100;
   const tmbhks = upah * tmb / 100;
-  const iurKesehatan= iurBpjsKs + tmbhks;
+  const iurKesehatan = iurBpjsKs + tmbhks;
   const iurBpjsKtk = upah * 3 / 100;
   const ttlIuran = iurKesehatan + iurBpjsKtk;
   // let ttl=ttlIuran.toFixed(0);
