@@ -267,6 +267,8 @@ class Bpjs extends CI_Controller
     $id_kry = $_POST['id_kry_copy'];
     $ks = $_POST['ks'];
     $ktk = $_POST['ktk'];
+    $tmb = $_POST['tmb'];
+    $tp = $_POST['tp'];
     $cek = $this->db->get_where('tb_bpjs', ['bulan' => $bulan, 'tahun' => $tahun]);
     if ($cek->num_rows() <> 0) {
       $this->session->set_flashdata('messege', 'sama');
@@ -281,6 +283,8 @@ class Bpjs extends CI_Controller
           'id_kry_bpjs' => $id_kry[$key],
           'bpjs_kesehatan' => $ks[$key],
           'bpjs_ktk' => $ktk[$key],
+          'tambahan' => $tmb[$key],
+          'type' => $tp[$key],
           'id_usr' => $id_user,
           'date_update' => time()
         );

@@ -533,6 +533,8 @@ const tampil_copy_detil = (kode) => {
                           <input type="hidden"  name="id_kry_copy[]"  value="`+ data[i].id_kry_bpjs + `">
                           <input type="hidden" " name="ks[]"  value="`+ data[i].bpjs_kesehatan + `">
                           <input type="hidden" " name="ktk[]"  value="`+ data[i].bpjs_ktk + `">
+                          <input type="hidden" " name="tmb[]"  value="`+ data[i].tambahan + `">
+                          <input type="hidden" " name="tp[]"  value="`+ data[i].type + `">
                       </td>
                     </tr > `;
       }

@@ -83,7 +83,7 @@ class Bpjs_model extends CI_model
 
   public function list_iuran($kode)
   {
-    $this->db->select('d.id_detil_bpjs as id ,d.id_kry_bpjs,d.bpjs_kesehatan,d.bpjs_ktk,k.nama_karyawan as nama,d.date_update,u.name');
+    $this->db->select('d.id_detil_bpjs as id ,d.id_kry_bpjs,d.bpjs_kesehatan,d.bpjs_ktk,k.nama_karyawan as nama,d.date_update,d.tambahan,d.type,u.name');
     $this->db->from('detil_bpjs d');
     $this->db->join('tb_karyawan k', 'k.id_karyawan=d.id_kry_bpjs');
     $this->db->join('user u', 'u.id=d.id_usr');
