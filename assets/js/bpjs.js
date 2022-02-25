@@ -545,3 +545,11 @@ const tampil_copy_detil = (kode) => {
   });
 }
 
+
+
+const flashdata = $('.flash-data').data('flashdata');
+if (flashdata == 'sama') {
+    $('.alert-danger').html('Ops....gagal Copy, Priode ini sudah ada !').fadeIn().delay(3000).fadeOut('slow');
+  }else if (flashdata == 'berhasil') {
+  $('.alert-success').html('Berhasil Copy data !').fadeIn().delay(3000).fadeOut('slow');
+}

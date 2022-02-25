@@ -73,3 +73,16 @@ const cek_update = (data) => {
     });
   }
 }
+
+
+
+$('#table-bpjs').on('click', '.item-delete', function () {
+  let id_bpjs = $(this).attr('data');
+  let nomor = $(this).attr('data-kode');
+  let priode = $(this).attr('data-priode');
+  $('input[name="id_bpjs"]').val(id_bpjs);
+  $('input[name="nomor"]').val(nomor);
+  $('.nomor').text('');
+  $('.nomor').append("=>"+nomor+"=>"+priode);
+  $('#modal-hapus').modal('show');
+});

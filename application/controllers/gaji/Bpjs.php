@@ -233,16 +233,16 @@ class Bpjs extends CI_Controller
   }
 
 
-  public function detil_gajian()
-  {
-    $data['title'] = 'Detil Gajian';
-    $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-    $data['gajian'] = $this->gaji->get_gajian()->result_array();
-    // $data['karyawan'] = $this->karyawan->get_all()->result_array();
-    $this->load->view('template/header', $data);
-    $this->load->view('template/sidebar', $data);
-    $this->load->view('gaji/detil_gajian', $data);
-  }
+  // public function detil_gajian()
+  // {
+  //   $data['title'] = 'Detil Gajian';
+  //   $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+  //   $data['gajian'] = $this->gaji->get_gajian()->result_array();
+  //   // $data['karyawan'] = $this->karyawan->get_all()->result_array();
+  //   $this->load->view('template/header', $data);
+  //   $this->load->view('template/sidebar', $data);
+  //   $this->load->view('gaji/detil_gajian', $data);
+  // }
 
   public function kode_pending()
   {
@@ -267,21 +267,36 @@ class Bpjs extends CI_Controller
     $id_kry = $_POST['id_kry_copy'];
     $ks = $_POST['ks'];
     $ktk = $_POST['ktk'];
-    $result = array();
-    foreach ($id_kry as $key => $value) {
-      $result[] = array(
-        'kode_iuran_bpjs' => $kode,
-        'bulan' => $bulan,
-        'tahun' => $tahun,
-        'id_kry_bpjs' => $id_kry[$key],
-        'bpjs_kesehatan' => $ks[$key],
-        'bpjs_ktk' => $ktk[$key],
-        'id_usr' => $id_user,
-        'date_update' => time()
-      );
+    $cek = $this->db->get_where('tb_bpjs', ['bulan' => $bulan, 'tahun' => $tahun]);
+    if ($cek->num_rows() <> 0) {
+      $this->session->set_flashdata('messege', 'sama');
+      redirect('gaji/bpjs/form_bpjs');
+    } else {
+      $result = array();
+      foreach ($id_kry as $key => $value) {
+        $result[] = array(
+          'kode_iuran_bpjs' => $kode,
+          'bulan' => $bulan,
+          'tahun' => $tahun,
+          'id_kry_bpjs' => $id_kry[$key],
+          'bpjs_kesehatan' => $ks[$key],
+          'bpjs_ktk' => $ktk[$key],
+          'id_usr' => $id_user,
+          'date_update' => time()
+        );
+      }
+      $this->bpjs->simpan_tb($kode, $bulan, $tahun, $ket, $id_user);
+      $this->db->insert_batch('detil_bpjs', $result);
+      $this->session->set_flashdata('messege', 'berhasil');
+      redirect('gaji/bpjs/form_bpjs');
     }
-    $this->bpjs->simpan_tb($kode, $bulan, $tahun, $ket, $id_user);
-    $this->db->insert_batch('detil_bpjs', $result);
-    redirect('gaji/bpjs/form_bpjs');
+  }
+  public function hapus_bpjs()
+  {
+    $id = $this->input->post('id_bpjs');
+    $nomor = $this->input->post('nomor');
+    $this->bpjs->batal($id);
+    $this->bpjs->batal_detil($nomor);
+    redirect('gaji/bpjs');
   }
 }

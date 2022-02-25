@@ -249,4 +249,16 @@ class Bpjs_model extends CI_model
     $query = $this->db->update('tb_bpjs', $data);
     return $query;
   }
+
+
+  public function batal($id)
+  {
+    $this->db->where('id_bpjs', $id);
+    $this->db->delete('tb_bpjs');
+  }
+  public function batal_detil($nomor)
+  {
+    $this->db->where('kode_iuran_bpjs', $nomor);
+    $this->db->delete('detil_bpjs');
+  }
 }
