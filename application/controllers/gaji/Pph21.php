@@ -22,6 +22,6 @@ class Pph21 extends CI_Controller
     // $data['karyawan'] = $this->karyawan->get_all()->result_array();
     $this->load->view('template/header', $data);
     $this->load->view('template/sidebar', $data);
-    $this->load->view('gaji/pph21', $data);
+    $this->load->view('pph/pph21', $data);
   }
 }

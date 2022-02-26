@@ -6,6 +6,17 @@
             Bpjs
         </li>
         <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn " href="javascript:;" id="tambah">
+                    <i class="icon-note"></i> Tambah data Iuran Bpjs
+                </a>
+                <a class="btn" href="./">
+                    <i class="icon-action-undo"></i> Kembali</a>
+                <a class="btn" href="#">
+                    <i class="icon-home"></i>  Dashboard</a>
+            </div>
+        </li>
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn">
@@ -15,8 +26,7 @@
                     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('suplierupdate'); ?>"></div>
                     <div class="alert alert-success" role="alert" style="display:none;">Menu Updated</div>
                     <div class="alert alert-danger" role="alert" style="display:none;">Menu Updated</div>
-                    <a class="btn btn-success flat btn-sm mb-3" href="javascript:;" id="tambah"><i
-                            class="fa fa-file-o"></i> Tambah data Iuran Bpjs</a>
+
                     <div class="card">
                         <div class="card-header">
                             <i class="fa fa-align-justify"></i>Table Iuran Bpjs

@@ -1,15 +1,35 @@
 <main class="main">
     <!-- Breadcrumb-->
-    <ol class="breadcrumb d-flex justify-content-center">
+    <!-- <ol class="breadcrumb d-flex justify-content-end">
         <div class="row">
             <div class="col-md-12">
-                <a href="#" class="btn btn-sm btn-flat btn-warning"><i class="fa fa-undo"></i> Kembali</a>
                 <a href="javascript:;" class="btn btn-sm btn-flat btn-success flat" id="copy_data"><i
                         class="fa fa-copy"></i> Copy dari priode sebelumnya </a>
+                <a href="#" class="btn btn-sm btn-flat btn-warning"><i class="fa fa-undo"></i> Kembali</a>
             </div>
         </div>
 
+    </ol> -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Iuran</li>
+        <li class="breadcrumb-item">
+            Bpjs
+        </li>
+        <li class="breadcrumb-item">Form Iuran</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn " href="javascript:;" id="copy_data">
+                    <i class="icon-docs"></i> Copy dari priode sebelumnya
+                </a>
+                <a class="btn" href="./">
+                    <i class="icon-action-undo"></i> Kembali</a>
+            </div>
+        </li>
     </ol>
+
+
+
     <div class="container-fluid">
         <div class="flash-data" data-flashdata="<?= $this->session->flashdata('messege'); ?>"></div>
         <div class="alert alert-success" role="alert" style="display:none;">Berhasil</div>
