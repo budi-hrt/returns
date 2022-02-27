@@ -6,6 +6,15 @@
       PPH 21
     </li>
     <!-- Breadcrumb Menu-->
+    <li class="breadcrumb-menu d-md-down-none">
+      <div class="btn-group" role="group" aria-label="Button group">
+        <a class="btn text-primary" href="javascript:;" id="tambah">
+          <i class="icon-note"></i> Tambah data Iuran PPh21
+        </a>
+        <a class="btn" href="#">
+          <i class="icon-home"></i>  Dashboard</a>
+      </div>
+    </li>
   </ol>
   <div class="container-fluid">
     <div class="animated fadeIn">
@@ -15,13 +24,12 @@
           <div class="flash-data" data-flashdata="<?= $this->session->flashdata('suplierupdate'); ?>"></div>
           <div class="alert alert-success" role="alert" style="display:none;">success</div>
           <div class="alert alert-danger" role="alert" style="display:none;">erorr</div>
-          <a class="btn btn-success flat btn-sm mb-3" href="javascript:;" id="tambah"><i class="fa fa-file-o"></i> Tambah data Iuran PPh 21</a>
           <div class="card">
             <div class="card-header">
               <i class="fa fa-align-justify"></i>Table Iuran PPh 21
             </div>
             <div class="card-body">
-              <table class="table table-responsive-sm table-bordered table-striped table-sm" id="table-bpjs">
+              <table class="table table-responsive-sm table-bordered table-striped table-sm" id="table-pph">
                 <thead>
                   <tr>
                     <th class="text-center">Aksi</th>
