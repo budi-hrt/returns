@@ -49,4 +49,46 @@ class Pph21 extends CI_Controller
     $this->load->view('template/sidebar', $data);
     $this->load->view('pph/form-pph21', $data);
   }
+
+  public function kode()
+  {
+    $cek = $this->db->get_where('tb_pph21', ['status' => 'pending']);
+    if ($cek->num_rows() <> 0) {
+      $data['kode'] = $this->pph->get_kode();
+      $msg['success'] = false;
+      $msg['type'] = 'ada';
+      if ($data) {
+        $msg['success'] = true;
+        echo json_encode([$data, $msg]);
+      }
+    } else {
+      $data['kode'] = $this->pph->kode();
+      $msg['success'] = false;
+      $msg['type'] = 'blm';
+      if ($data) {
+        $msg['success'] = true;
+        echo json_encode([$data, $msg]);
+      }
+    }
+  }
+
+
+  public function cek_karyawan()
+  {
+    $id_kry = $this->input->get('idKry');
+    $bulan = $this->input->get('bulan');
+    $tahun = $this->input->get('tahun');
+    $cek = $this->db->get_where('detil_pph21', ['id_kry_pph21' => $id_kry, 'bulan' => $bulan, 'tahun' => $tahun]);
+    if ($cek->num_rows() <> 0) {
+      $msg['success'] = false;
+      $msg['type'] = 'ada';
+      $msg['success'] = true;
+      echo json_encode([$msg]);
+    } else {
+      $msg['success'] = false;
+      $msg['type'] = 'blm';
+      $msg['success'] = true;
+      echo json_encode([$msg]);
+    }
+  }
 }
