@@ -17,12 +17,19 @@ class Ptkp_model extends CI_Model
         }
     }
 
-    public function editdata()
+    public function insert_ptkp($mulai, $sampai, $ptkp, $tanggungan)
     {
-        $id = $this->input->post('idedit_level');
-        $data = ['nama_level' => $this->input->post('leveledit')];
-        $this->db->where('id', $id);
-        $this->db->update('level_customer', $data);
+        $id_user = $this->input->post('id_user');
+        $data = array(
+            'start_tahun' => $mulai,
+            'end_tahun' => $sampai,
+            'ptkp' => $ptkp,
+            'tanggungan' => $tanggungan,
+            'date_update' => time(),
+            'id_user' => $id_user
+        );
+        $query = $this->db->insert('tb_ptkp', $data);
+        return $query;
     }
 
 

@@ -45,6 +45,8 @@ class Pph21 extends CI_Controller
     $data['title'] = 'Form PPh 21';
     $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
     $data['karyawan'] = $this->karyawan->get_all()->result_array();
+    $data['status_ptkp'] = $this->pph->get_ptkp()->result_array();
+    $data['ptkp'] = $this->db->get_where('tb_ptkp', ['aktif' => 'aktif'])->row_array();
     $this->load->view('template/header_m', $data);
     $this->load->view('template/sidebar', $data);
     $this->load->view('pph/form-pph21', $data);

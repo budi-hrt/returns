@@ -39,17 +39,16 @@
                         </div>
                         <?= form_open('master/ptkp/input_ptkp', 'id="form_ptkp"'); ?>
                         <div class="card-body">
+
+
                             <!-- input hidden1 -->
-                            <input type="hidden" name="kode_ptkp">
                             <input type="hidden" name="id_ptkp">
-                            <input type="hidden" name="id_detil">
                             <input type="hidden" name="id_user" id="id_user" value="<?= $user['id']; ?>">
                             <div class="row align-items-center">
                                 <div class="form-group col-sm-4">
                                     <label for="ccmonth">Berlaku Mulai</label>
                                     <input type="hidden" name="tahun1_hide" id="tahun1_hide">
-                                    <select class="form-control form-control-sm" name="start_tahun" id="start_tahun"
-                                        required>
+                                    <select class="form-control form-control-sm" name="start_tahun" id="start_tahun" required disabled>
                                         <?php for ($i = date('Y'); $i >= 2017; $i--) {
                                             echo "<option value='$i'> $i </option>";
                                         }
@@ -59,8 +58,7 @@
                                 <div class="form-group col-sm-4">
                                     <label for="tahun">Sampai</label>
                                     <input type="hidden" name="tahun_hide" id="tahun_hide">
-                                    <select class="form-control form-control-sm" name="end_tahun" id="end_tahun"
-                                        required>
+                                    <select class="form-control form-control-sm" name="end_tahun" id="end_tahun" required disabled>
                                         <option value="<?= date('Y'); ?>" selected><?= date('Y'); ?></option>
                                         <?php for ($i = date('Y'); $i >= 2017; $i--) {
                                             echo "<option value='$i'> $i </option>";
@@ -75,18 +73,16 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group row">
-                                        <label class="col-md-3 col-form-label" for="bpjs_ktk">PTKP</label>
+                                        <label class="col-md-3 col-form-label" for="ptkp">PTKP</label>
                                         <div class="col-md-6">
-                                            <input type="text" class="form-control flat text-right input-app money"
-                                                name="bpjs_ktk" id="bpjs_ktk" required>
+                                            <input type="text" class="form-control flat text-right input-app money" name="ptkp" id="ptkp" required disabled>
                                         </div>
 
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-3 col-form-label" for="bpjs_ktk">Tanggungan</label>
+                                        <label class="col-md-3 col-form-label" for="tanggungan">Tanggungan</label>
                                         <div class="col-md-6">
-                                            <input type="text" class="form-control flat text-right input-app money"
-                                                name="bpjs_ktk" id="bpjs_ktk" required>
+                                            <input type="text" class="form-control flat text-right input-app money" name="tanggungan" id="tanggungan" required disabled>
                                         </div>
 
                                     </div>
@@ -97,9 +93,9 @@
                         </div>
 
                         <div class="card-footer">
-                            <button class="btn btn-sm btn-teal flat" type="submit" id="btn_simpan">
+                            <button class="btn btn-sm btn-teal flat" type="submit" id="btn_simpan" disabled>
                                 <i class="fa fa-floppy-o"></i> Simpan & lanjutkan</button>
-                            <button class="btn btn-sm btn-danger flat" type="button" id="btn_selesai">
+                            <button class="btn btn-sm btn-danger flat" type="reset" id="btn_batal" disabled>
                                 <i class="fa fa-check-square-o"></i>Batal </button>
 
                         </div>
@@ -120,11 +116,10 @@
                             <!-- inpit hidden 2-->
                             <input type="hidden" name="subtotal_iuran">
                             <input type="hidden" name="jumlah_orang">
-                            <table class="table table-responsive-sm table-bordered  table-sm dataTables_scrollBody"
-                                id="table-ptkp" style="margin-left: 0px; width: 815px;">
+                            <table class="table table-responsive-sm table-bordered  table-sm dataTables_scrollBody" id="table-ptkp" style="margin-left: 0px; width: 815px;">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th class="text-center" width="35px" rowspan="2"> Action</th>
+                                        <th class="text-center" width="105px" rowspan="2"> Action</th>
                                         <th class="text-center" width="125px" rowspan="2">PTKP</th>
                                         <th class="text-center" rowspan="2">Tanggungan</th>
                                         <th class="text-center" colspan="2">Berlaku</th>
@@ -138,13 +133,17 @@
                                 </thead>
                                 <tbody>
                                     <?php foreach ($ptkp as $p) : ?>
-                                    <tr>
-                                        <td><?= $p['ptkp']; ?></td>
-                                        <td><?= $p['tanggungan']; ?></td>
-                                        <td><?= $p['start_tahun']; ?></td>
-                                        <td><?= $p['end_tahun']; ?></td>
-                                        <td><?= $p['id_user']; ?></td>
-                                    </tr>
+                                        <tr>
+                                            <td class="text-center">
+                                                <a class="badge badge-sm badge-success item-edit" href="javascript:;" data="<?= $p['id_ptkp']; ?>">Edit</a>
+                                                <a class="badge badge-sm badge-danger item-delete" href="javascript:;" data="<?= $p['id_ptkp']; ?>">Delete</a>
+                                            </td>
+                                            <td class="text-center"><?= number_format($p['ptkp'], 0, ',', '.'); ?></td>
+                                            <td class="text-center"><?= number_format($p['tanggungan'], 0, ',', '.'); ?></td>
+                                            <td class="text-center"><?= $p['start_tahun']; ?></td>
+                                            <td class="text-center"><?= $p['end_tahun']; ?></td>
+                                            <td class="text-center"><?= $p['id_user']; ?></td>
+                                        </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
@@ -163,8 +162,7 @@
 
 
 <!-- Modal Hapus -->
-<div class="modal fade" id="modal-hapusdetil" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="modal-hapusdetil" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-danger" role="document">
         <div class="modal-content modal-app">
             <div class="modal-header  modal-header-app flat">

@@ -40,4 +40,11 @@ class Pph_model extends CI_model
       return false;
     }
   }
+
+
+  public function get_ptkp()
+  {
+    $query = $this->db->get('tb_status');
+    return $query;
+  }
 }
