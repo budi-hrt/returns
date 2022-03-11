@@ -65,7 +65,8 @@
                                         <div class="form-group col-sm-3">
                                             <label for="ccmonth">Bulan</label>
                                             <input type="hidden" name="bulan_hide" id="bulan_hide">
-                                            <select class="form-control form-control-sm" name="bulan" id="bulan" required>
+                                            <select class="form-control form-control-sm" name="bulan" id="bulan"
+                                                required>
                                                 <option selected="selected" value="">Pilih</option>
                                                 <?php
                                                 $bln = array(1 => "Januari", "Februari", "Maret", "April", "Mei", "Juni", "July", "Agustus", "September", "Oktober", "November", "Desember");
@@ -87,7 +88,8 @@
                                         <div class="form-group col-sm-3">
                                             <label for="tahun">Tahun</label>
                                             <input type="hidden" name="tahun_hide" id="tahun_hide">
-                                            <select class="form-control form-control-sm" name="tahun" id="tahun" required>
+                                            <select class="form-control form-control-sm" name="tahun" id="tahun"
+                                                required>
                                                 <option value="<?= date('Y'); ?>" selected><?= date('Y'); ?></option>
                                                 <?php for ($i = date('Y'); $i >= 2017; $i--) {
                                                     echo "<option value='$i'> $i </option>";
@@ -104,7 +106,8 @@
                                             <span class="fa fa-search form-control-feedback "></span>
                                             <input type="hidden" name="id_kry" id="id_kry">
 
-                                            <input type="text" class="form-control form-control-sm flat input-app" name="karyawan" id="karyawan" placeholder="Cari Karyawan..." required>
+                                            <input type="text" class="form-control form-control-sm flat input-app"
+                                                name="karyawan" id="karyawan" placeholder="Cari Karyawan..." required>
                                         </div>
                                     </div>
                                     <div class="form-group row hitung" style="display: none;">
@@ -112,11 +115,13 @@
                                         <div class="col-md-6">
                                             <input type="hidden" name="type" id="type">
                                             <div class="form-check checkbox">
-                                                <input class="form-check-input" name="manual" id="manual" type="checkbox" value="1" checked>
+                                                <input class="form-check-input" name="manual" id="manual"
+                                                    type="checkbox" value="1" checked>
                                                 <label class="form-check-label" for="manual">Manual</label>
                                             </div>
                                             <div class="form-check checkbox">
-                                                <input class="form-check-input otomatis" name="otomatis" id="otomatis" type="checkbox" value="">
+                                                <input class="form-check-input otomatis" name="otomatis" id="otomatis"
+                                                    type="checkbox" value="">
                                                 <label class="form-check-label" for="otomatis">Otomatis</label>
                                             </div>
                                         </div>
@@ -133,19 +138,25 @@
                                             <label class="col-md-5 col-form-label" for="gaji">Gaji pokok +
                                                 Tunjangan</label>
                                             <div class="col-md-7">
-                                                <input type="text" class="form-control form-control-sm flat  text-right input-app money" name="upah" id="upah">
+                                                <input type="text"
+                                                    class="form-control form-control-sm flat  text-right input-app money"
+                                                    name="upah" id="upah">
                                             </div>
                                         </div>
                                         <div class="form-group row jkk mb-1">
                                             <label class="col-md-5 col-form-label" for="gaji">JKK 0,24%</label>
                                             <div class="col-md-7">
-                                                <input type="text" class="form-control form-control-sm flat  text-right " name="jkk" id="jkk">
+                                                <input type="text"
+                                                    class="form-control form-control-sm flat  text-right " name="jkk"
+                                                    id="jkk">
                                             </div>
                                         </div>
                                         <div class="form-group row jk mb-1">
                                             <label class="col-md-5 col-form-label" for="gaji">JK 0,3%</label>
                                             <div class="col-md-7">
-                                                <input type="text" class="form-control form-control-sm flat  text-right " name="jk" id="jk">
+                                                <input type="text"
+                                                    class="form-control form-control-sm flat  text-right " name="jk"
+                                                    id="jk">
                                             </div>
                                         </div>
                                         <hr class="mb-1 mt-1">
@@ -154,11 +165,14 @@
                                             <label class="col-md-5 col-form-label" for="gaji"><b>Penghasilan
                                                     Bruto</b></label>
                                             <div class="col-md-7">
-                                                <input type="text" class="form-control form-control-sm flat  text-right " name="bruto" readonly>
+                                                <input type="text"
+                                                    class="form-control form-control-sm flat  text-right font-weight-bold"
+                                                    name="bruto" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group row mb-1">
-                                            <label class="col-md-3 col-form-label text-danger" for="gaji">Pengurangan
+                                            <label class="col-md-3 col-form-label text-primary font-weight-bold"
+                                                for="gaji">Pengurangan
                                                 :</label>
 
                                         </div>
@@ -167,21 +181,27 @@
                                                     dari pengh.bruto
                                                 </small></label>
                                             <div class="col-md-7">
-                                                <input type="text" class="form-control form-control-sm flat  text-right " name="by_jabatan" readonly>
+                                                <input type="text"
+                                                    class="form-control form-control-sm flat  text-right text-primary"
+                                                    name="by_jabatan" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group row jht mb-1">
                                             <label class="col-md-5 col-form-label" for="gaji">Iuran JHT 2% <small>dari
                                                     Upah</small> </label>
                                             <div class="col-md-7">
-                                                <input type="text" class="form-control form-control-sm flat  text-right " name="jht" id="jht">
+                                                <input type="text"
+                                                    class="form-control form-control-sm flat  text-right text-primary"
+                                                    name="jht" id="jht">
                                             </div>
                                         </div>
                                         <div class="form-group row jp mb-1">
                                             <label class="col-md-5 col-form-label" for="gaji">Iuran JP 1% <small>dari
                                                     Upah</small></label>
                                             <div class="col-md-7">
-                                                <input type="text" class="form-control form-control-sm flat  text-right " name="jp" id="jp">
+                                                <input type="text"
+                                                    class="form-control form-control-sm flat  text-right text-primary"
+                                                    name="jp" id="jp">
                                             </div>
                                         </div>
                                         <hr class="mb-1 mt-1">
@@ -189,62 +209,91 @@
                                             <label class="col-md-5 col-form-label" for="gaji"><b>Penghasilan neto
                                                     sebulan</b></label>
                                             <div class="col-md-7">
-                                                <input type="text" class="form-control form-control-sm flat  text-right " name="neto_bulan" readonly>
+                                                <input type="text"
+                                                    class="form-control form-control-sm flat  text-right font-weight-bold"
+                                                    name="neto_bulan" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group row neto_tahun mb-1">
                                             <label class="col-md-5 col-form-label" for="gaji">Penghasilan neto
                                                 setahun</label>
                                             <div class="col-md-7">
-                                                <input type="text" class="form-control form-control-sm flat  text-right " name="neto_tahun" readonly>
+                                                <input type="text"
+                                                    class="form-control form-control-sm flat  text-right "
+                                                    name="neto_tahun" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group row ptkp mb-1 ">
                                             <label class="col-md-2 col-form-label" for="gaji">PTKP</label>
                                             <div class="col-md-3">
-                                                <select class="form-control form-control-sm input-app" name="ptkp" id="ptkp">
+                                                <select class="form-control form-control-sm input-app" name="ptkp"
+                                                    id="ptkp">
                                                     <option value="0" selected>TK/0</option>
                                                     <?php foreach ($status_ptkp as $p) : ?>
-                                                        <option value="<?= $p['status_tg']; ?>"><?= $p['nama_status']; ?></option>
+                                                    <option value="<?= $p['status_tg']; ?>"><?= $p['nama_status']; ?>
+                                                    </option>
                                                     <?php endforeach; ?>
                                                 </select>
                                             </div>
                                             <div class="col-md-7">
-                                                <input type="hidden" value="<?= $ptkp['ptkp']; ?>" name="ptkp_hide" id="ptkp_hide">
-                                                <input type="hidden" value="<?= $ptkp['tanggungan']; ?>" name="tanggungan_hide" id="tanggungan_hide">
-                                                <input type="text" class="form-control form-control-sm money flat  text-right text-danger" name="val_ptkp" id="val_ptkp" value="<?= $ptkp['ptkp']; ?>" readonly>
+                                                <input type="hidden" value="<?= $ptkp['ptkp']; ?>" name="ptkp_hide"
+                                                    id="ptkp_hide">
+                                                <input type="hidden" value="<?= $ptkp['tanggungan']; ?>"
+                                                    name="tanggungan_hide" id="tanggungan_hide">
+                                                <input type="text"
+                                                    class="form-control form-control-sm money flat  text-right text-success"
+                                                    name="val_ptkp" id="val_ptkp" value="<?= $ptkp['ptkp']; ?>"
+                                                    readonly>
                                             </div>
                                         </div>
                                         <hr class="mb-1 mt-1">
                                         <div class="form-group row pkp mb-1">
                                             <label class="col-md-5 col-form-label" for="gaji">PKP setahun</label>
                                             <div class="col-md-7">
-                                                <input type="text" class="form-control form-control-sm flat  text-right " name="pkp" readonly>
+                                                <input type="text"
+                                                    class="form-control form-control-sm flat  text-right " name="pkp"
+                                                    readonly>
                                             </div>
                                         </div>
                                         <div class="form-group row pembulatan mb-2">
                                             <label class="col-md-5 col-form-label" for="gaji">Pembulatan ke
                                                 bawah</label>
                                             <div class="col-md-7">
-                                                <input type="text" class="form-control form-control-sm flat  text-right " name="pembulatan" readonly>
+                                                <input type="text"
+                                                    class="form-control form-control-sm flat  text-right "
+                                                    name="pembulatan" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group row lima mb-1">
                                             <label class="col-md-5 col-form-label" for="gaji">5%</label>
                                             <div class="col-md-7">
-                                                <input type="text" class="form-control form-control-sm flat  text-right " name="lima_persen" readonly>
+                                                <input type="text"
+                                                    class="form-control form-control-sm flat  text-right "
+                                                    name="lima_persen" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group row lima_belas mb-1">
                                             <label class="col-md-5 col-form-label" for="gaji">15%</label>
                                             <div class="col-md-7">
-                                                <input type="text" class="form-control form-control-sm flat  text-right " name="lima_belas" readonly>
+                                                <input type="text"
+                                                    class="form-control form-control-sm flat  text-right "
+                                                    name="lima_belas" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group row dua_lima mb-1">
                                             <label class="col-md-5 col-form-label" for="gaji">25%</label>
                                             <div class="col-md-7">
-                                                <input type="text" class="form-control form-control-sm flat  text-right " name="dua_lima" readonly>
+                                                <input type="text"
+                                                    class="form-control form-control-sm flat  text-right "
+                                                    name="dua_lima" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row dua_lima mb-1">
+                                            <label class="col-md-5 col-form-label" for="gaji">30%</label>
+                                            <div class="col-md-7">
+                                                <input type="text"
+                                                    class="form-control form-control-sm flat  text-right "
+                                                    name="tiga_puluh" readonly>
                                             </div>
                                         </div>
                                         <hr class="mb-1 mt-1">
@@ -252,7 +301,9 @@
                                             <label class="col-md-5 col-form-label" for="gaji">PPh terhutang
                                                 setahun</label>
                                             <div class="col-md-7">
-                                                <input type="text" class="form-control form-control-sm flat  text-right " name="pph_tahun" readonly>
+                                                <input type="text"
+                                                    class="form-control form-control-sm flat  text-right "
+                                                    name="pph_tahun" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group row iuran_pph mb-1">
@@ -260,7 +311,8 @@
                                                     100.000.000
                                                     /12</b></label>
                                             <div class="col-md-5">
-                                                <input type="text" class="form-control form-control-sm flat  text-right" name="pph_bulan" readonly>
+                                                <input type="text" class="form-control form-control-sm flat  text-right"
+                                                    name="pph_bulan" readonly>
                                             </div>
                                         </div>
 
@@ -272,7 +324,9 @@
                                         <div class="form-group row iuran_pph mb-1">
                                             <label class="col-md-3 col-form-label" for="gaji">Iuran PPh 21</label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control form-control-sm flat  text-right input-app" name="iuran" id="iuran">
+                                                <input type="text"
+                                                    class="form-control form-control-sm flat  text-right input-app"
+                                                    name="iuran" id="iuran">
                                             </div>
                                         </div>
                                     </div>
@@ -280,7 +334,8 @@
                                     <div class="form-group row keterangan mb-1">
                                         <label class="col-md-3 col-form-label" for="gaji">Keterangan</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control form-control-sm flat input-app" name="ket" placeholder="singkat & jelas..." autocomplete="off">
+                                            <input type="text" class="form-control form-control-sm flat input-app"
+                                                name="ket" placeholder="singkat & jelas..." autocomplete="off">
                                         </div>
                                     </div>
 
@@ -319,7 +374,8 @@
                             <!-- inpit hidden 2-->
                             <input type="hidden" name="subtotal_iuran">
                             <input type="hidden" name="jumlah_orang">
-                            <table class="table table-responsive-sm table-bordered  table-sm dataTables_scrollBody" id="table-iuran" style="margin-left: 0px; width: 815px;">
+                            <table class="table table-responsive-sm table-bordered  table-sm dataTables_scrollBody"
+                                id="table-iuran" style="margin-left: 0px; width: 815px;">
                                 <thead class="thead-light">
                                     <tr>
                                         <th class="text-center" width="35px"> Action</th>
@@ -349,7 +405,8 @@
 
 
 <!-- Modal Hapus -->
-<div class="modal fade" id="modal-hapusdetil" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-hapusdetil" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-danger" role="document">
         <div class="modal-content modal-app">
             <div class="modal-header  modal-header-app flat">
@@ -385,7 +442,8 @@
                 </button>
             </div>
             <div class="modal-body flat">
-                <table class="table table-responsive-sm table-bordered  table-sm dataTables_scrollBody" id="table-copy" style="margin-left: 0px; width: 575px;">
+                <table class="table table-responsive-sm table-bordered  table-sm dataTables_scrollBody" id="table-copy"
+                    style="margin-left: 0px; width: 575px;">
                     <thead class="thead-light">
                         <tr>
                             <th class="text-center" width="35px"> Action</th>
@@ -409,7 +467,8 @@
 </div>
 
 
-<div class="modal fade" id="modal-copy_detil" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-copy_detil" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content modal-app">
             <div class="modal-header  modal-header-app flat">
@@ -419,7 +478,8 @@
                 </button>
             </div>
             <div class="modal-body flat">
-                <h6>Copy data <b class="text-success"> BPJS</b><b class="judul_copy"></b> ke priode... <i class="fa fa-hand-o-down text-info" aria-hidden="true"></i></h6>
+                <h6>Copy data <b class="text-success"> BPJS</b><b class="judul_copy"></b> ke priode... <i
+                        class="fa fa-hand-o-down text-primary" aria-hidden="true"></i></h6>
                 <?= form_open('gaji/bpjs/copy_detil', 'id="form_copy"'); ?>
                 <input name="kd" id="kd" type="hidden">
                 <input type="hidden" name="id_user_copy" id="id_user_copy" value="<?= $user['id']; ?>">
@@ -427,7 +487,8 @@
                 <div class="row align-items-center">
                     <div class="form-group col-sm-3">
                         <label for="ccmonth">Bulan</label>
-                        <select class="form-control form-control-sm input-app" name="bulan_copy" id="bulan_copy" required>
+                        <select class="form-control form-control-sm input-app" name="bulan_copy" id="bulan_copy"
+                            required>
                             <option selected="selected" value="">Pilih</option>
                             <?php
                             $bln = array(1 => "Januari", "Februari", "Maret", "April", "Mei", "Juni", "July", "Agustus", "September", "Oktober", "November", "Desember");
@@ -443,7 +504,8 @@
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="tahun">Tahun</label>
-                        <select class="form-control form-control-sm input-app" name="tahun_copy" id="tahun_copy" required>
+                        <select class="form-control form-control-sm input-app" name="tahun_copy" id="tahun_copy"
+                            required>
                             <option value="<?= date('Y'); ?>" selected><?= date('Y'); ?></option>
                             <?php for ($i = date('Y'); $i >= 2017; $i--) {
                                 echo "<option value='$i'> $i </option>";
@@ -454,7 +516,9 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="keterangan">Keterangan</label>
-                            <input class="form-control form-control-sm input-app" name="ket_bpjs_copy" id="ket_bpjs_copy" type="text" placeholder="Singkat dan jelas..." autocomplete="off" required>
+                            <input class="form-control form-control-sm input-app" name="ket_bpjs_copy"
+                                id="ket_bpjs_copy" type="text" placeholder="Singkat dan jelas..." autocomplete="off"
+                                required>
                         </div>
                     </div>
                 </div>

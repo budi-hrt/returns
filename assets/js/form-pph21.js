@@ -307,11 +307,83 @@ const hitungPph = () => {
   if (pkp <= 0) {
     $('[name="pkp"]').val(0);
     $('[name="pembulatan"]').val(0);
+    $('[name="lima_persen"]').val(0);
+    $('[name="lima_belas"]').val(0);
+    $('[name="dua_lima"]').val(0);
+    $('[name="tiga_puluh"]').val(0);
+    $('[name="pph_tahun"]').val(0);
+    $('[name="pph_bulan"]').val('nihil');
   } else {
     $('[name="pkp"]').val(money(pkp));
     $('[name="pembulatan"]').val(money(pembulatan));
+    hitungPersen();
   }
 };
+
+
+
+
+
+// ====== Hitung persen =====
+
+const hitungPersen=()=>{
+  let pkp = normalisasi($('[name="pembulatan"]').val()) ;
+  pkp = isNaN(pkp) ? 0 : pkp;
+ 
+  // cari 5%
+  if (pkp>50000000) {
+    let lima_persen=(50000000*5)/100;
+    $('[name="lima_persen"]').val(money(lima_persen));
+    // cari 15% =======
+    hitungLimaBelas(pkp);
+  
+   
+  }else if(pkp>0 || ptkp<50000000){
+    let limaPersen = (pkp*5)/100;
+    $('[name="lima_persen"]').val(money(limaPersen));
+  }
+}
+
+const hitungLimaBelas=(pkp)=>{
+  let sisaPkp= pkp - 50000000;
+  if (sisaPkp>200000000) {
+    let limaBelas=(200000000*15)/100;
+    $('[name="lima_belas"]').val(money(limaBelas));
+    hitungDuaLima(pkp);
+  }else if(sisaPkp>0 || sisaPkp<200000000){
+    let limaBelasPersen = (sisaPkp*15)/100;
+    $('[name="lima_belas"]').val(money(limaBelasPersen));
+  }else if(sisaPkp<=0){
+    $('[name="lima_belas"]').val(0);
+    $('[name="dua_lima"]').val(0);
+    $('[name="tiga_puluh"]').val(0);
+  }
+}
+
+const hitungDuaLima=(pkp)=>{
+  let sisaPkp= pkp - 250000000;
+  if (sisaPkp>250000000) {
+    let duaLima=(250000000*25)/100;
+    $('[name="dua_lima"]').val(money(duaLima));
+     hitungTigaPuluh(pkp);
+  }else if(sisaPkp>0 || sisaPkp<250000000){
+    let duaLimaPersen = (sisaPkp*25)/100;
+    $('[name="dua_lima"]').val(money(duaLimaPersen));
+  }
+}
+
+const hitungTigaPuluh=(pkp)=>{
+  let sisaPkp= pkp - 500000000;
+  if (sisaPkp>500000000) {
+    let tigaPuluh=(500000000*30)/100;
+    $('[name="tiga_puluh"]').val(money(tigaPuluh));
+  }else if(sisaPkp>0 || sisaPkp<500000000){
+    let tigaPuluhPersen = (sisaPkp*30)/100;
+    $('[name="tiga_puluh"]').val(money(tigaPuluhPersen));
+  }
+}
+
+
 
 const money = (angka) => {
   //   $('.money').mask('000.000.000.000.000', {
