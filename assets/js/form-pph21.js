@@ -312,11 +312,14 @@ const hitungPph = () => {
     $('[name="dua_lima"]').val(0);
     $('[name="tiga_puluh"]').val(0);
     $('[name="pph_tahun"]').val(0);
-    $('[name="pph_bulan"]').val('nihil');
+    $('[name="pph_bulan"]').val(0);
+    $('.pph').text('');
+    $('.pph').append('<b>PPh bulan ini : </b><b class="text-danger">nihil</b>');
   } else {
     $('[name="pkp"]').val(money(pkp));
     $('[name="pembulatan"]').val(money(pembulatan));
     hitungPersen();
+   
   }
 };
 
@@ -341,6 +344,10 @@ const hitungPersen=()=>{
   }else if(pkp>0 || ptkp<50000000){
     let limaPersen = (pkp*5)/100;
     $('[name="lima_persen"]').val(money(limaPersen));
+    $('[name="lima_belas"]').val(0);
+    $('[name="dua_lima"]').val(0);
+    $('[name="tiga_puluh"]').val(0);
+    pphTahun();
   }
 }
 
@@ -353,11 +360,15 @@ const hitungLimaBelas=(pkp)=>{
   }else if(sisaPkp>0 || sisaPkp<200000000){
     let limaBelasPersen = (sisaPkp*15)/100;
     $('[name="lima_belas"]').val(money(limaBelasPersen));
-  }else if(sisaPkp<=0){
-    $('[name="lima_belas"]').val(0);
     $('[name="dua_lima"]').val(0);
     $('[name="tiga_puluh"]').val(0);
+    pphTahun();
   }
+  // else if(sisaPkp<=0){
+  //   $('[name="lima_belas"]').val(0);
+  //   $('[name="dua_lima"]').val(0);
+  //   $('[name="tiga_puluh"]').val(0);
+  // }
 }
 
 const hitungDuaLima=(pkp)=>{
@@ -369,6 +380,8 @@ const hitungDuaLima=(pkp)=>{
   }else if(sisaPkp>0 || sisaPkp<250000000){
     let duaLimaPersen = (sisaPkp*25)/100;
     $('[name="dua_lima"]').val(money(duaLimaPersen));
+    $('[name="tiga_puluh"]').val(0);
+    pphTahun();
   }
 }
 
@@ -380,6 +393,23 @@ const hitungTigaPuluh=(pkp)=>{
   }else if(sisaPkp>0 || sisaPkp<500000000){
     let tigaPuluhPersen = (sisaPkp*30)/100;
     $('[name="tiga_puluh"]').val(money(tigaPuluhPersen));
+    pphTahun();
+  }
+}
+
+const pphTahun=()=>{
+  let limaPersen= normalisasi( $('[name="lima_persen"]').val());
+  let limaBelas = normalisasi( $('[name="lima_belas"]').val());
+  let duaLima= normalisasi( $('[name="dua_lima"]').val());
+  let tigaPuluh= normalisasi( $('[name="tiga_puluh"]').val());
+  let pphTahun= limaPersen+limaBelas+duaLima+tigaPuluh;
+  if (pphTahun>0) {
+    $('[name="pph_tahun"]').val(money(pphTahun));
+    $('.pph').text('');
+    $('.pph').append('<b>PPh bulan ini : </b><b class="text-success"> Rp.'+ money(pphTahun) +'</b><b> / 12</b>');
+    let pphBulan=pphTahun/12;
+    $('[name="pph_bulan"]').val(money(pphBulan));
+
   }
 }
 

@@ -307,9 +307,8 @@
                                             </div>
                                         </div>
                                         <div class="form-group row iuran_pph mb-1">
-                                            <label class="col-md-7 col-form-label" for="gaji"><b>PPh bulan ini :
-                                                    100.000.000
-                                                    /12</b></label>
+                                            <label class="col-md-7 col-form-label pph" for="gaji"><b>PPh bulan ini :
+                                                </b></label>
                                             <div class="col-md-5">
                                                 <input type="text" class="form-control form-control-sm flat  text-right"
                                                     name="pph_bulan" readonly>
