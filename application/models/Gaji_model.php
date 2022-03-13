@@ -5,12 +5,10 @@ class Gaji_model extends CI_model
 {
   public function get_all()
   {
-    $this->db->select('g.id_gaji,g.gaji_pokok,g.tunjangan,g.um,g.id_kry,k.nama_karyawan,k.jabatan_karyawan,u.name,g.date_update');
-    $this->db->from('tb_karyawan k');
-    $this->db->join('tb_gaji g', 'g.id_kry=k.id_karyawan', 'left');
+    $this->db->select('g.id_gaji,g.kode_gaji,g.bulan,g.tahun,g.jumlah_kry,g.total_upah,g.status,u.name,g.date_update');
+    $this->db->from('tb_gaji g');
     $this->db->join('user u', 'u.id=g.id_user', 'dsc');
-    $this->db->order_by('k.nama_karyawan', 'asc');
-    $this->db->where('k.aktif', 1);
+    $this->db->order_by('g.id_gaji', 'desc');
     $query =  $this->db->get();
     return $query;
   }
@@ -53,7 +51,7 @@ class Gaji_model extends CI_model
   public function kode_gajian()
   {
 
-    $q = $this->db->query("SELECT MAX(RIGHT(kode_gajian,3)) AS kd_max FROM tb_gajian");
+    $q = $this->db->query("SELECT MAX(RIGHT(kode_gaji,3)) AS kd_max FROM tb_gaji");
     $kd = "";
     if ($q->num_rows() > 0) {
       foreach ($q->result() as $k) {
@@ -68,16 +66,22 @@ class Gaji_model extends CI_model
     return $car . "-" . $kd;
   }
 
-  public function get_list()
+  public function get_detil($kode)
   {
-    $this->db->select('d.id_gajian,d.kode_gaji,d.terima_gp,d.terima_tj,d.terima_um,d.status,d.id_usr,d.date_update ,k.nama_karyawan, u.name,d.pot_bpjs,d.pot_pph21,d.pot_pinjaman,d.pot_absensi,d.pot_lain');
+    $this->db->select('d.id_gajian,d.kode_gaji,d.terima_gp,d.terima_tj,d.terima_um,d.status,d.id_usr,d.date_update,d.id_kryn ,k.nama_karyawan, u.name,d.pot_pph21,d.pot_pinjaman,d.pot_absensi,d.pot_lain,b.bpjs_kesehatan');
     $this->db->from('detil_gajian d');
-    $this->db->join('tb_karyawan k','k.id_karyawan=d.id_kryn','left');
+    $this->db->join('tb_karyawan k', 'k.id_karyawan=d.id_kryn', 'left');
+    $this->db->join('detil_bpjs b', 'b.bulan=d.bulan', 'b.tahun=d.tahun', 'b.id_kry_bpjs=d.id_kryn', 'left');
     $this->db->join('user u', 'u.id=d.id_usr');
     $this->db->order_by('k.nama_karyawan', 'asc');
-    $this->db->where('d.status','pending');
+    $this->db->group_by('d.id_kryn');
+    $this->db->where('d.kode_gaji', $kode);
     $query =  $this->db->get();
-    return $query;
+    if ($query->num_rows() > 0) {
+      return $query->result();
+    } else {
+      return false;
+    }
   }
 
 
@@ -88,30 +92,30 @@ class Gaji_model extends CI_model
   }
 
 
-  public function simpan_gajian($kode, $bulan, $tahun, $ket_gaji, $id_user)
+  public function simpan_gajian($kode, $bulan, $tahun, $ket_gaji, $mengetahui, $id_user)
   {
 
     $data = array(
-      'kode_gajian' => $kode,
+      'kode_gaji' => $kode,
       'bulan' => $bulan,
       'tahun' => $tahun,
+      'id_mengetahui' => $mengetahui,
       'ket_gajian' => $ket_gaji,
       'id_user' => $id_user,
       'date_update' => time()
     );
-    $this->db->insert('tb_gajian', $data);
+    $this->db->insert('tb_gaji', $data);
   }
 
-  public function get_kode_pending()
+  public function get_kode()
   {
-      $this->db->select('*');
-      $this->db->where('status', 'pending');
-      $this->db->limit(1);
-      $query = $this->db->get('tb_gajian');
-      if ($query->num_rows() > 0) {
-          return $query->row();
-      } else {
-          return false;
-      }
+    $this->db->where('status', 'pending');
+    $this->db->limit(1);
+    $query = $this->db->get('tb_gaji');
+    if ($query->num_rows() > 0) {
+      return $query->row();
+    } else {
+      return false;
+    }
   }
 }

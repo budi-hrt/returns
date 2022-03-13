@@ -632,6 +632,9 @@ foreach ($e_satuan as $s) {
         });
     }
 
+
+
+
     function nmr_po() {
         const no_faktur = $('#faktur').val();
         $.ajax({

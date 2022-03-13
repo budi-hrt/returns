@@ -18,31 +18,57 @@ class Management_gaji extends CI_Controller
   {
     $data['title'] = 'Management Gaji';
     $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-    // $data['detil'] = $this->gaji->get_detil_gaji()->result_array();
-    $data['gaji'] = $this->gaji->get_all()->result_array();
-    $data['kode'] = $this->gaji->kode_gajian();
-    $data['list_gaji'] = $this->gaji->get_list()->result_array();
+    $data['karyawan'] = $this->karyawan->get_all()->result_array();
     $this->load->view('template/header_m', $data);
     $this->load->view('template/sidebar', $data);
     $this->load->view('gaji/management_gaji', $data);
   }
 
+  public function kode()
+  {
+    $cek = $this->db->get_where('tb_gaji', ['status' => 'pending']);
+    if ($cek->num_rows() <> 0) {
+      $data['kode'] = $this->gaji->get_kode();
+      $msg['success'] = false;
+      $msg['type'] = 'ada';
+      if ($data) {
+        $msg['success'] = true;
+        echo json_encode([$data, $msg]);
+      }
+    } else {
+      $data['kode'] = $this->gaji->kode_gajian();
+      $msg['success'] = false;
+      $msg['type'] = 'blm';
+      if ($data) {
+        $msg['success'] = true;
+        echo json_encode([$data, $msg]);
+      }
+    }
+  }
+
+
+
+
+
+
 
   public function simpan_detil()
   {
-    $kode = $_POST['kode'];;
+    $kode = $_POST['kode'];
     $id_user = $_POST['id_user'];
     $bulan = $this->input->post('bulan');
     $tahun = $this->input->post('tahun');
-    $ket_gaji = $this->input->post('ket_gaji');
-    $id_kry = $_POST['id_karyawan'];
-    $t_gp = $_POST['gp'];
-    $t_tj = $_POST['tj'];
-    $t_um = $_POST['um'];
-    $cek = $this->db->get_where('tb_gajian', ['bulan' => $bulan, 'tahun' => $tahun]);
+    $ket_gaji = $this->input->post('ket');
+    $id_kry = $_POST['id'];
+    $mengetahui = $_POST['mengetahui'];
+    // $t_tj = $_POST['tj'];
+    // $t_um = $_POST['um'];
+    $msg['success'] = false;
+    $cek = $this->db->get_where('tb_gaji', ['bulan' => $bulan, 'tahun' => $tahun]);
     if ($cek->num_rows() > 0) {
-      redirect('gaji/management_gaji');
-      $this->session->set_flashdata('message', 'kode');
+      $msg['type'] = 'ada';
+      $msg['success'] = true;
+      echo json_encode($msg);
     } else {
 
       $result = array();
@@ -50,9 +76,8 @@ class Management_gaji extends CI_Controller
         $result[] = array(
           'kode_gaji' => $kode,
           'id_kryn' => $id_kry[$key],
-          'terima_gp' => $t_gp[$key],
-          'terima_tj' => $t_tj[$key],
-          'terima_um' => $t_um[$key],
+          'bulan' => $bulan,
+          'tahun' => $tahun,
           'id_usr' => $id_user,
           'date_update' => time()
         );
@@ -60,13 +85,26 @@ class Management_gaji extends CI_Controller
 
 
       $this->db->insert_batch('detil_gajian', $result);
-      $this->gaji->simpan_gajian($kode, $bulan, $tahun, $ket_gaji, $id_user);
-      redirect('gaji/management_gaji');
-      $this->session->set_flashdata('message', 'kode');
+      $this->gaji->simpan_gajian($kode, $bulan, $tahun, $ket_gaji, $mengetahui, $id_user);
+      $msg['type'] = 'simpan';
+      $msg['success'] = true;
+      echo json_encode($msg);
     }
   }
-
-
+  public function get_detil()
+  {
+    $kode = $this->input->get('kode');
+    $bulan = $this->input->get('bulan');
+    $tahun = $this->input->get('tahun');
+    $cek = $this->db->get_where('detil_gajian', ['kode_gaji' => $kode, 'bulan' => $bulan, 'tahun' => $tahun]);
+    if ($cek->num_rows() > 0) {
+      $data = $this->gaji->get_detil($kode);
+      echo json_encode($data);
+    } else {
+      $data = "kosong";
+      echo json_encode($data);
+    }
+  }
 
 
 
@@ -91,11 +129,5 @@ class Management_gaji extends CI_Controller
     $this->load->view('template/header', $data);
     $this->load->view('template/sidebar', $data);
     $this->load->view('gaji/detil_gajian', $data);
-  }
-
-  public function kode_pending()
-  {
-    $data['kode_pending'] = $this->gaji->get_kode_pending();
-    echo json_encode($data);
   }
 }
