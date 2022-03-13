@@ -66,16 +66,18 @@ class Gaji_model extends CI_model
     return $car . "-" . $kd;
   }
 
-  public function get_detil($kode)
+  public function get_detil($kode, $bulan, $tahun)
   {
     $this->db->select('d.id_gajian,d.kode_gaji,d.terima_gp,d.terima_tj,d.terima_um,d.status,d.id_usr,d.date_update,d.id_kryn ,k.nama_karyawan, u.name,d.pot_pph21,d.pot_pinjaman,d.pot_absensi,d.pot_lain,b.bpjs_kesehatan');
     $this->db->from('detil_gajian d');
     $this->db->join('tb_karyawan k', 'k.id_karyawan=d.id_kryn', 'left');
-    $this->db->join('detil_bpjs b', 'b.bulan=d.bulan', 'b.tahun=d.tahun', 'b.id_kry_bpjs=d.id_kryn', 'left');
+    $this->db->join('detil_bpjs b', 'b.id_kry_bpjs=d.id_kryn', 'left');
     $this->db->join('user u', 'u.id=d.id_usr');
-    $this->db->order_by('k.nama_karyawan', 'asc');
-    $this->db->group_by('d.id_kryn');
     $this->db->where('d.kode_gaji', $kode);
+    $this->db->where('d.bulan', $bulan);
+    $this->db->where('d.tahun', $tahun);
+    $this->db->group_by('d.id_kryn');
+    $this->db->order_by('k.nama_karyawan', 'asc');
     $query =  $this->db->get();
     if ($query->num_rows() > 0) {
       return $query->result();

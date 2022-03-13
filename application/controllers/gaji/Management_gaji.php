@@ -98,7 +98,7 @@ class Management_gaji extends CI_Controller
     $tahun = $this->input->get('tahun');
     $cek = $this->db->get_where('detil_gajian', ['kode_gaji' => $kode, 'bulan' => $bulan, 'tahun' => $tahun]);
     if ($cek->num_rows() > 0) {
-      $data = $this->gaji->get_detil($kode);
+      $data = $this->gaji->get_detil($kode, $bulan, $tahun);
       echo json_encode($data);
     } else {
       $data = "kosong";

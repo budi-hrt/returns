@@ -167,18 +167,23 @@ const tampil_detil = () => {
       let html = "";
       let i;
       for (i = 0; i < data.length; i++) {
-        html += `<tr>                                
+        html +=
+          `<tr>                                
            <td class="text-center">
        <div class="btn-group">
            <a class="item-edit mr-3" href="javascript:;""><i class="fa fa-pencil  text-success"></i></a>
            <a class=" item-delete" href="javascript:;" > <i class="fa fa-times  text-danger"></i></a >
        </div >
    </td >
+   <td>` +
+          data[i].nama_karyawan +
+          `</td>
    <td></td>
    <td></td>
    <td></td>
-   <td></td>
-   <td></td>
+   <td>` +
+          data[i].bpjs_kesehatan +
+          `</td>
    <td></td>
    <td></td>
    <td></td>
