@@ -68,7 +68,7 @@ class Gaji_model extends CI_model
 
   public function get_detil($kode, $bulan, $tahun)
   {
-    $this->db->select('d.id_gajian,d.kode_gaji,d.terima_gp,d.terima_tj,d.terima_um,d.status,d.id_usr,d.date_update,d.id_kryn ,k.nama_karyawan, u.name,d.pot_pph21,d.pot_pinjaman,d.pot_absensi,d.pot_lain,b.bpjs_kesehatan');
+    $this->db->select('d.id_gajian,d.kode_gaji,d.terima_gp,d.terima_tj,d.terima_um,d.status,d.id_usr,d.date_update,d.id_kryn ,k.nama_karyawan, u.name,d.pot_pph21,d.pot_pinjaman,d.pot_absensi,d.pot_lain,b.bpjs_kesehatan,b.bpjs_ktk');
     $this->db->from('detil_gajian d');
     $this->db->join('tb_karyawan k', 'k.id_karyawan=d.id_kryn', 'left');
     $this->db->join('detil_bpjs b', 'b.id_kry_bpjs=d.id_kryn', 'left');
@@ -119,5 +119,17 @@ class Gaji_model extends CI_model
     } else {
       return false;
     }
+  }
+
+
+
+  public function update_status($id)
+  {
+    $this->db->where('id_gaji', $id);
+    $data = array(
+      'status' => 'pending'
+    );
+    $query = $this->db->update('tb_gaji', $data);
+    return $query;
   }
 }

@@ -163,10 +163,16 @@ const tampil_detil = () => {
     data: { kode: kode, bulan: bulan, tahun: tahun },
     dataType: "json",
     success: function (data) {
-      console.log(data[0].nama_karyawan);
+      
       let html = "";
       let i;
       for (i = 0; i < data.length; i++) {
+        let bpjs_ks= parseInt(data[i].bpjs_kesehatan) ;
+        let bpjs_tk= parseInt(data[i].bpjs_ktk);
+        bpjs_ks = isNaN(bpjs_ks) ? 0 : bpjs_ks;
+        bpjs_tk = isNaN(bpjs_tk) ? 0 : bpjs_tk;
+        let ttl_bpjs = bpjs_ks + bpjs_tk ;
+        console.log(ttl_bpjs);
         html +=
           `<tr>                                
            <td class="text-center">
@@ -181,8 +187,8 @@ const tampil_detil = () => {
    <td></td>
    <td></td>
    <td></td>
-   <td>` +
-          data[i].bpjs_kesehatan +
+   <td class="text-right">` +
+          money(ttl_bpjs) +
           `</td>
    <td></td>
    <td></td>
@@ -218,4 +224,20 @@ const disable = () => {
     $("#buat").css("display", "none");
     $("#simpan_keluar").css("display", "block");
   }
+};
+
+
+
+const money = (angka) => {
+  //   $('.money').mask('000.000.000.000.000', {
+  //     reverse: true
+  // });
+  let ttl = angka.toFixed(0);
+  let ttlIur = ttl.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+  return ttlIur;
+};
+const normalisasi = (angka) => {
+  var a = angka.replaceAll(".", "");
+  var angkaJadi = parseInt(a);
+  return angkaJadi;
 };
