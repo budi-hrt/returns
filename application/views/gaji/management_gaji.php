@@ -24,7 +24,8 @@
                                 <a class="card-header-action btn-setting" href="javascript:;">
                                     <i class="icon-settings"></i>
                                 </a>
-                                <a class="card-header-action btn-minimize" href="#" data-toggle="collapse" data-target="#collapseExample" aria-expanded="true">
+                                <a class="card-header-action btn-minimize" href="#" data-toggle="collapse"
+                                    data-target="#collapseExample" aria-expanded="true">
                                     <i class="icon-arrow-up"></i>
                                 </a>
                                 <a class="card-header-action btn-close" href="javascript:;">
@@ -46,7 +47,8 @@
                                         <div class="form-group col-sm-2">
                                             <label for="ccmonth">Bulan</label>
                                             <input type="hidden" name="bulan_hide" id="bulan_hide">
-                                            <select class="form-control form-control-sm" name="bulan" id="bulan" required>
+                                            <select class="form-control form-control-sm" name="bulan" id="bulan"
+                                                required>
                                                 <option selected="selected" value="">Pilih</option>
                                                 <?php
                                                 $bln = array(1 => "Januari", "Februari", "Maret", "April", "Mei", "Juni", "July", "Agustus", "September", "Oktober", "November", "Desember");
@@ -74,7 +76,8 @@
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="mengetahui">Mengetahui</label>
-                                                <select class="form-control form-control-sm input-app" name="mengetahui" id="mengetahui">
+                                                <select class="form-control form-control-sm input-app" name="mengetahui"
+                                                    id="mengetahui">
                                                     <option value="">Pilih....</option>
                                                     <option value="1">Bos</option>
                                                     <option value="2">Bendahara</option>
@@ -84,27 +87,38 @@
                                         <div class="col-sm-3">
                                             <div class="form-group ">
                                                 <label for="keterangan">Keterangan</label>
-                                                <input class="form-control form-control-sm input-app" name="ket_gaji" id="ket_gaji" type="text" placeholder="Singkat & jelas" autocomplete="off">
+                                                <input class="form-control form-control-sm input-app" name="ket_gaji"
+                                                    id="ket_gaji" type="text" placeholder="Singkat & jelas"
+                                                    autocomplete="off">
                                             </div>
                                         </div>
                                         <div class="col-sm-1 ">
-                                            <button class="btn btn-sm btn-success flat " id="buat" type="button" style="margin-top:12px;margin-left:-10px"> <i class="fa fa-refresh"></i> Buat data gaji</button>
-                                            <button class="btn btn-sm btn-danger flat" id="simpan_keluar" type="submit" style="margin-top:12px;margin-left:-10px;display:none">Simpan & Keluar</button>
+                                            <button class="btn btn-sm btn-success flat " id="buat" type="button"
+                                                style="margin-top:12px;margin-left:-10px"> <i class="fa fa-refresh"></i>
+                                                Buat data gaji</button>
+                                            <button class="btn btn-sm btn-danger flat" id="simpan_keluar" type="submit"
+                                                style="margin-top:12px;margin-left:-10px;display:none">Simpan &
+                                                Keluar</button>
                                         </div>
                                         <div class="col-sm-2">
-                                            <button class="btn btn-sm btn-primary flat" type="button" id="copy" style="margin-top:12px"><i class="icon-docs"></i> Copy data sebelumnya</button>
+                                            <button class="btn btn-sm btn-primary flat" type="button" id="copy"
+                                                style="margin-top:12px"><i class="icon-docs"></i> Copy data
+                                                sebelumnya</button>
                                         </div>
                                         <div class="col-sm-1">
-                                            <button class="btn btn-sm btn-warning flat" style="margin-top:12px;margin-left:-40px" type="button" id="kembali"><i class="fa fa-reply"></i> Kembali</button>
+                                            <button class="btn btn-sm btn-warning flat"
+                                                style="margin-top:12px;margin-left:-40px" type="button" id="kembali"><i
+                                                    class="fa fa-reply"></i> Kembali</button>
                                         </div>
                                     </div>
                                     <!-- table karyawan hide -->
                                     <div style="display: none;">
                                         <table>
                                             <?php foreach ($karyawan as $k) : ?>
-                                                <tr>
-                                                    <td><input type="text" class="id_karyawan" name="id_karyawan[]" id="id_karyawan" value="<?= $k['id_karyawan']; ?>"></td>
-                                                </tr>
+                                            <tr>
+                                                <td><input type="text" class="id_karyawan" name="id_karyawan[]"
+                                                        id="id_karyawan" value="<?= $k['id_karyawan']; ?>"></td>
+                                            </tr>
                                             <?php endforeach; ?>
                                         </table>
                                     </div>
@@ -118,7 +132,9 @@
 
                                 <div class="col-md-12">
 
-                                    <table class="table table-responsive-sm table-bordered table-striped table-sm dataTables_scrollBody" id="table-listGaji" style="margin-left: 0px; width: 1165px;">
+                                    <table
+                                        class="table table-responsive-sm table-bordered table-striped table-sm dataTables_scrollBody"
+                                        id="table-listGaji" style="margin-left: 0px; width: 1165px;">
                                         <thead class="thead-blue text-white">
                                             <tr>
                                                 <th class="text-center" rowspan="2"> Aksi</th>
@@ -176,11 +192,13 @@
                     <input type="hidden" name="id">
                     <input type="hidden" name="id_user" value="<?= $user['id']; ?>">
                     <div class="form-group">
-                        <input class="form-control" name="ket" type="text" placeholder="Isi Keterangan" autocomplete="off" required>
+                        <input class="form-control" name="ket" type="text" placeholder="Isi Keterangan"
+                            autocomplete="off" required>
                     </div>
                     <div class="form-group">
                         <label for="priode">Priode Gaji</label>
-                        <input class="form-control" id="priode" name="priode" type="text" value="<?= date('d-m-Y'); ?>" autocomplete="off" required>
+                        <input class="form-control" id="priode" name="priode" type="text" value="<?= date('d-m-Y'); ?>"
+                            autocomplete="off" required>
                         <span id="pesan"></span></p>
                     </div>
                 </div>
@@ -196,7 +214,8 @@
 <!-- /.modal-->
 
 <!-- Loader -->
-<div id="throbber" class="modal" role="dialog" style="display:none; position:relative; opacity:0.6; background-color:white;">
+<div id="throbber" class="modal" role="dialog"
+    style="display:none; position:relative; opacity:0.6; background-color:white;">
     <img style="margin: 0 auto;
                 position: absolute;
                 top: 0; bottom: 0; left:0; right:0;
@@ -216,6 +235,6 @@
 <script src="<?= base_url('assets/js/gajian.js'); ?>"></script>
 
 <script>
-    // Klik Edit Role
+// Klik Edit Role
 </script>
 <?php $this->load->view('template/footHtml'); ?>

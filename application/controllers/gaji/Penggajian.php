@@ -60,7 +60,40 @@ class Penggajian extends CI_Controller
             redirect('gaji/master_gaji');
         }
     }
-
+    public function cek_update()
+    {
+        $id = $this->input->get('id_gaji');
+        $status = $this->input->get('sts');
+        $cek = $this->db->get_where('tb_gaji', ['id_gaji' => $id, 'status' => 'pending']);
+        $msg['success'] = false;
+        if ($cek->num_rows() <> 0) {
+            $msg['type'] = 'sama';
+            $msg['success'] = true;
+            echo json_encode([$msg]);
+        } else {
+            $cek2 = $this->db->get_where('tb_gaji', ['status' => 'pending']);
+            if ($cek2->num_rows() <> 0) {
+                $msg['type'] = 'ada_tdk_sama';
+                $msg['success'] = true;
+                echo json_encode([$msg]);
+            } else {
+                $msg['type'] = 'blm';
+                $msg['success'] = true;
+                echo json_encode([$msg]);
+            }
+        }
+    }
+    public function update_status()
+    {
+        $id = $this->input->post('data_id');
+        $result = $this->gaji->update_status($id);
+        $msg['success'] = false;
+        if ($result) {
+            $msg['type'] = 'ok';
+            $msg['success'] = true;
+            echo json_encode([$msg]);
+        }
+    }
 
 
     public function ubah_gaji()
