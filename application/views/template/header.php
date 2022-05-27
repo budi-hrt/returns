@@ -24,7 +24,8 @@
     <link href="<?= base_url('assets/vendors'); ?>/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="<?= base_url('assets/vendors'); ?>/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
     <!-- DataTables -->
-    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/'); ?>DataTables/Bootstrap-4-4.1.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css"
+        href="<?= base_url('assets/'); ?>DataTables/Bootstrap-4-4.1.1/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/'); ?>DataTables/datatables.min.css" />
     <!-- Main styles for this application-->
     <link href="<?= base_url('assets/vendors'); ?>/css/style.css" rel="stylesheet">
@@ -37,21 +38,21 @@
     <!-- Global site tag (gtag.js) - Google Analytics-->
     <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-118965717-3"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
+    window.dataLayer = window.dataLayer || [];
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-        // Shared ID
-        gtag('config', 'UA-118965717-3');
-        // Bootstrap ID
-        gtag('config', 'UA-118965717-5');
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    // Shared ID
+    gtag('config', 'UA-118965717-3');
+    // Bootstrap ID
+    gtag('config', 'UA-118965717-5');
     </script>
 
     <script>
-        var base_url = "<?= base_url(); ?>";
-        var site_url = "<?= site_url(); ?>";
+    var base_url = "<?= base_url(); ?>";
+    var site_url = "<?= site_url(); ?>";
     </script>
 </head>
 
@@ -63,8 +64,10 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand" href="#">
-            <img class="navbar-brand-full" src="<?= base_url('assets'); ?>/img/brand/logo.svg" width="89" height="25" alt="CoreUI Logo">
-            <img class="navbar-brand-minimized" src="<?= base_url('assets'); ?>/img/brand/sygnet.svg" width="30" height="30" alt="CoreUI Logo">
+            <img class="navbar-brand-full" src="<?= base_url('assets'); ?>/img/brand/logo.svg" width="89" height="25"
+                alt="CoreUI Logo">
+            <img class="navbar-brand-minimized" src="<?= base_url('assets'); ?>/img/brand/sygnet.svg" width="30"
+                height="30" alt="CoreUI Logo">
         </a>
         <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
             <span class="navbar-toggler-icon"></span>
@@ -81,7 +84,8 @@
                 <small><?= $user['name']; ?></small>
             </li>
             <li class="nav-item dropdown mr-3">
-                <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                    aria-expanded="false">
                     <img class="img-avatar" src="<?= base_url('assets/img/profile/') . $user['image']; ?>">
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
