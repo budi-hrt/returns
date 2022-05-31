@@ -19,24 +19,40 @@ class Menu extends CI_Controller
     {
         $data['title'] = 'Menu Management';
 
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        $data['menu'] = $this->db->get('user_menu')->result_array();
+        $user = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $menu = $this->db->get('user_menu')->result_array();
+        $data = array(
+            'title' => 'Menu Management',
+            'mn' => 'Menu',
+            'user' => $user,
+            'menu' => $menu,
 
-        $this->form_validation->set_rules('menu', 'Menu', 'required|trim');
-        $this->form_validation->set_rules('icon', 'Icon', 'required|trim');
+            // Set plugin js
+            'list_js_plugin' => array(
+                '',
+            ),
+            'app_js' => array('menu.js'),
+            'page_content' => 'menu/index'
+        );
+        $this->load->view('template/v_main', $data);
 
-        if ($this->form_validation->run() == false) {
 
-            $this->load->view('template/header', $data);
-            $this->load->view('template/sidebar', $data);
-            $this->load->view('menu/index', $data);
-            // $this->load->view('template/footer', $data);
-        } else {
-            $this->db->insert('user_menu', ['menu' => $this->input->post('menu'), 'icon' => $this->input->post('icon')]);
-            $this->session->set_flashdata('massage', '<div class="alert alert-success" role="alert">
-            New menu added</div>');
-            redirect('menu');
-        }
+
+        // $this->form_validation->set_rules('menu', 'Menu', 'required|trim');
+        // $this->form_validation->set_rules('icon', 'Icon', 'required|trim');
+
+        // if ($this->form_validation->run() == false) {
+
+        //     $this->load->view('template/header', $data);
+        //     $this->load->view('template/sidebar', $data);
+        //     $this->load->view('menu/index', $data);
+        //     // $this->load->view('template/footer', $data);
+        // } else {
+        //     $this->db->insert('user_menu', ['menu' => $this->input->post('menu'), 'icon' => $this->input->post('icon')]);
+        //     $this->session->set_flashdata('massage', '<div class="alert alert-success" role="alert">
+        //     New menu added</div>');
+        //     redirect('menu');
+        // }
     }
 
 

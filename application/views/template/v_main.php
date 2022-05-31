@@ -26,6 +26,17 @@
     <!-- Main styles for this application-->
     <link href="<?= base_url('assets/'); ?>vendors/css/style.css" rel="stylesheet">
     <link href="<?= base_url('assets/'); ?>vendors/pace-progress/css/pace.min.css" rel="stylesheet">
+    <?php
+    if (isset($list_css_plugin)) {
+        foreach ($list_css_plugin as $list_css) { ?>
+    <!-- CSS plugin -->
+    <link rel="stylesheet" href="<?= base_url('assets/css/' . $list_css); ?>" />
+    <?php
+        }
+    }
+    ?>
+
+    <link rel="stylesheet" href="<?= base_url('assets'); ?>/css/appstyle.css">
     <!-- Global site tag (gtag.js) - Google Analytics-->
     <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-118965717-3"></script>
     <script>
@@ -44,9 +55,11 @@
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
     <!-- Start Header -->
+    <?php $this->load->view('template/v_header'); ?>
     <!-- End Header -->
     <div class="app-body">
         <!-- Start Sidebar -->
+        <?php $this->load->view('template/v_sidebar'); ?>
         <!-- end Sidebar -->
         <main class="main">
             <!-- Breadcrumb-->
@@ -75,9 +88,9 @@
                 <div class="animated fadeIn">
 
                     <!-- page content -->
+                    <?php $this->load->view($page_content); ?>
 
                     <!-- /.row-->
-
                     <!-- end page konten -->
                 </div>
             </div>
@@ -388,6 +401,7 @@
         </aside>
     </div>
     <!-- start Footer -->
+    <?php $this->load->view('template/v_footer'); ?>
     <!-- end Footer -->
 
     <!-- CoreUI and necessary plugins-->
@@ -398,11 +412,26 @@
     <script src="<?= base_url('assets/'); ?>vendors/perfect-scrollbar/js/perfect-scrollbar.min.js"></script>
     <script src="<?= base_url('assets/'); ?>vendors/@coreui/coreui/js/coreui.min.js"></script>
     <!-- Plugins and scripts required by this view-->
-    <script src="<?= base_url('assets/'); ?>vendors/chart.js/js/Chart.min.js"></script>
-    <script
-        src="<?= base_url('assets/'); ?>vendors/@coreui/coreui-plugin-chartjs-custom-tooltips/js/custom-tooltips.min.js">
-    </script>
+    <?php
+    if (isset($list_js_plugin)) {
+        foreach ($list_js_plugin as $list_js) { ?>
+    <!-- JS plugin -->
+    <script src="<?= base_url('assets/' . $list_js); ?>"></script>
+    <?php
+        }
+    }
+    ?>
     <script src="<?= base_url('assets/'); ?>src/js/main.js"></script>
+
+    <?php
+    if (isset($app_js)) {
+        foreach ($app_js as $app_js) { ?>
+    <!-- JS App -->
+    <script src="<?= base_url('assets/js/' . $app_js); ?>"></script>
+    <?php
+        }
+    }
+    ?>
 </body>
 
 </html>

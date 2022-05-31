@@ -14,15 +14,24 @@ class Admin extends CI_Controller
     public function index()
     {
 
-        $data['mn'] = 'Dashboard';
-        $data['title'] = 'Dashboard';
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
+        $user = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data = array(
+            'title' => 'Dashboard',
+            'mn' => 'Dashboard',
+            'user' => $user,
+            // 'total' => $total,
+            // 'permanent' => $permanent,
+            // Set plugin js
+            'list_js_plugin' => array(
+                'vendors/chart.js/js/Chart.min.js',
+                'vendors/@coreui/coreui-plugin-chartjs-custom-tooltips/js/custom-tooltips.min.js'
 
-        $this->load->view('template/header', $data);
-        $this->load->view('template/sidebar', $data);
-        $this->load->view('admin/index', $data);
-        $this->load->view('template/footer', $data);
+            ),
+            // 'app_js' => array('dashboard.js'),
+            'page_content' => 'admin/v_dashboard'
+        );
+        $this->load->view('template/v_main', $data);
     }
 
     // =====ROLE===
