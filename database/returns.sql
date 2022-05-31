@@ -253,8 +253,12 @@ CREATE TABLE `detil_po` (
   `kode_produk` varchar(50) NOT NULL,
   `qty` int(11) NOT NULL,
   `id_satuan` int(11) NOT NULL,
-  `terkirim` int(11) NOT NULL DEFAULT
-) ;
+  `terkirim` int(11) NOT NULL,
+  `retur` int(11) NOT NULL,
+  `harga_item` int(11) NOT NULL,
+  `subtotal`int(11) NOT NULL,
+  `status_detil_po`varchar(50) NOT NULL DEFAULT 'Pending'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `detil_po`
